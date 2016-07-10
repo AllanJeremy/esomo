@@ -1,0 +1,28 @@
+brookhurst 7-10-2016.zip
+
+DONE
+- added assignment tab content that sends an assignment to the database (handlers/submitAss.php)
+- students assignments are received accordingly based on class/stream and teacher_id.
+- changed assignment content type from url to file to allow users to upload files
+.zip .pdf .docx .xls
+TODO
+
+[admin]
+- limit the date input of assignments to a minimum of the current date and a maximum of 12/12/2050
+	-variables in place for this : $minDueDate and $maxDueDate
+- Allow user to upload assignment content
+	- the path of the content will then be stored in the assignment_content table 
+	- users viewing assignments will be able to download the content when they click download
+
+- Allow people to view their profiles
+	- change username
+	- change password (send email after user enters old password)
+	- change email (send an email to the current email to confirm identity)
+
+- Allow scheduling
+	- add schedule
+	- remove schedule
+
+- Work on forgot password
+
+- Allow teachers to add content

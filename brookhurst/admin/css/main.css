@@ -1,0 +1,57 @@
+#pageContent
+{
+	margin-top:2.5%
+}
+
+#loginContainer
+{
+	margin-top:20%;
+}
+
+.col-xs-12 .col-sm-10
+{
+	margin-top:1%;
+}
+
+.center_text
+{
+	text-align:center;
+}
+
+.float_right
+{
+	float:right;
+}
+
+.top_offset
+{
+margin-top:1em;
+}
+
+.form_footer
+{
+	margin-top:1em;
+}
+
+.md_text_size
+{
+	font-size:1.15em;
+}
+
+.adminSubmitBtn
+{
+	margin-left:35%;
+	margin-top:2%;
+	margin-bottom:2.5%;
+}
+
+textarea
+{
+	resize:none;
+	overflow: scroll;
+}
+
+sup
+{
+	font-size:1.5em;
+}

@@ -1,0 +1,4 @@
+<?php
+  #RELOADS THE PAGE AND SET AN ERROR CODE - FUNCTIONS CAN BE ADDED LATER TO DETERMINE THE ERROR CODE BASED ON ERROR TYPE
+  header('Location:login.php?admin_loginError=1');
+exit;
