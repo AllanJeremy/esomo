@@ -68,7 +68,7 @@
 		
 		$tmp_email = $_POST['loginUserInput'];
 		//initialize the password input to be used for comparison
-		$passInput = $_POST['loginPassInput'];
+		$passInput = htmlspecialchars($_POST['loginPassInput']);
 		
 		if ($stmt = $dbCon->prepare($query))
 		{
@@ -94,19 +94,14 @@
 
 				foreach ($result as $item) {
 					# password information from database
-					$tmp_salt = $item['salt'];//get the current salt
 					$tmp_password = $item['password'];//get the current password
-
-					$passInput =  $passEncrypt->encryptPass($passInput,$tmp_salt);#encrypt the password for comparison
 
 					//student information variables from database
 					$tmp_stud_id = $item['student_id'];
 					
 					//if the password entered is the same as the password in the database
-					if ($passInput == $tmp_password)#credentials are valid, return true
-					{
-						
-						
+					if (password_verify($passInput,$tmp_password))#credentials are valid, return true
+					{					
 						$student = getStudentInfo($tmp_stud_id);
 
 						if($student!==null)//if the student query ran successfully
