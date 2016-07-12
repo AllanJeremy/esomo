@@ -30,7 +30,7 @@
               
           <?php
 
-            const SALT_LENGTH = 256;
+            const SALT_LENGTH = 128;
             
 
             
@@ -145,16 +145,15 @@
           {
             require('../esomoDbConnect.php');//require the database connection
 
-            $fName = $_POST['fNameInput'];
-            $lName = $_POST['lNameInput'];
-            $email = $_POST['emailInput'];
-            $userName = $_POST['usernameInput'];
-            $password = $_POST['passwordInput'];
-            $passConfirm = $_POST['passConfirmInput'];
-            $std_id = $_POST['std_id_Input'];
+            $fName = htmlspecialchars($_POST['fNameInput']);
+            $lName = htmlspecialchars($_POST['lNameInput']);
+            $email = htmlspecialchars($_POST['emailInput']);
+            $userName = htmlspecialchars($_POST['usernameInput']);
+            $password = htmlspecialchars($_POST['passwordInput']);
+            $passConfirm = htmlspecialchars($_POST['passConfirmInput']);
+            $std_id = htmlspecialchars($_POST['std_id_Input']);
 
             require('../functions/pass_encrypt.php');
-
             $passEncrypt = new PasswordEncrypt();
             
             $salt = random_bytes(SALT_LENGTH);//generate a random salt
@@ -178,20 +177,16 @@
               {
                 $GLOBALS['handler']->displaySignupSuccess();
               }
+              else
+              {
+                echo "<h4>The student Id you entered does not exist in the database. Please try a valid student ID</h4>";
+              }
 
 
             }else
             {
               echo "<h2>Was unable to prepare query".$dbCon->error."</h2>";
             }
-
-
-          }
-
-          //returns encrypted password
-          function encryptPass($password,$saltInput)
-          {
-            return crypt($password,$saltInput);
           }
 
         ?>
