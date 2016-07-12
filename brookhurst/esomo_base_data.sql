@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2016 at 11:53 PM
+-- Generation Time: Jul 12, 2016 at 10:16 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -32,6 +32,17 @@ CREATE TABLE `access_levels` (
   `level_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `access_levels`
+--
+
+INSERT INTO `access_levels` (`access_level_id`, `level_name`, `level_description`) VALUES
+(1, 'None', 'Cannot make any modifications or view content of any of the admin navigation'),
+(2, 'Content creator', 'Can add content but cannot access other parts of admin'),
+(3, 'Teacher', 'Has all content creator rights\r\n- Can add assignments and schedule classes'),
+(4, 'Principal', 'Has all teacher rights\r\n- Can view statistics on teacher/student performance'),
+(5, 'Superuser', 'Has all principal rights\r\n- Can change access levels');
+
 -- --------------------------------------------------------
 
 --
@@ -46,8 +57,7 @@ CREATE TABLE `accounts` (
   `phone` varchar(12) NOT NULL,
   `username` varchar(100) NOT NULL,
   `student_id` int(255) UNSIGNED NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `salt` varchar(50) NOT NULL
+  `password` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -64,7 +74,6 @@ CREATE TABLE `admin_accounts` (
   `access_level_id` int(255) UNSIGNED NOT NULL COMMENT 'id representing the access level of the admin',
   `email` varchar(256) NOT NULL COMMENT 'email address of the admin',
   `password` varchar(512) NOT NULL COMMENT 'encrypted password',
-  `salt` varchar(512) NOT NULL COMMENT 'salt for the password - used for validation comparison',
   `phone` varchar(15) NOT NULL COMMENT 'phone number of the admin',
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date the account was created'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -225,23 +234,24 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_category`, `subject_name`, `subject_level`, `subject_description`) VALUES
-(1, 'sciences', 'Mathematics', 'primary', ''),
+(1, 'sciences', 'Mathematics', 'high_school', ''),
 (2, 'languages', 'English', 'primary', ''),
-(3, 'languages', 'Kiswahili', 'primary', ''),
-(4, 'languages', 'French', 'primary', ''),
-(5, 'sciences', 'Physics', 'primary', ''),
-(6, 'sciences', 'Biology', 'primary', ''),
-(7, 'humanities', 'Religion', 'primary', ''),
-(8, 'languages', 'Literature', 'primary', ''),
-(9, 'humanities', 'Geography', 'primary', ''),
-(10, 'humanities', 'Sociology', 'primary', ''),
-(11, 'extras', 'Travel and tourism', 'primary', ''),
-(12, 'humanities', 'History', 'primary', ''),
-(13, 'extras', 'Art and Design', 'primary', ''),
-(14, 'extras', 'ICT', 'primary', ''),
-(15, 'extras', 'Physical Education', 'primary', ''),
-(16, 'extras', 'Music', 'primary', ''),
-(17, 'extras', 'Business studies', 'primary', '');
+(3, 'languages', 'Kiswahili', 'high_school', ''),
+(4, 'languages', 'French', 'high_school', ''),
+(5, 'sciences', 'Physics', 'high_school', ''),
+(6, 'sciences', 'Biology', 'high_school', ''),
+(7, 'sciences', 'Chemistry', 'high_school', ''),
+(8, 'humanities', 'Religion', 'high_school', ''),
+(9, 'languages', 'Literature', 'high_school', ''),
+(10, 'humanities', 'Geography', 'primary', ''),
+(11, 'humanities', 'Sociology', 'primary', ''),
+(12, 'extras', 'Travel and tourism', 'primary', ''),
+(13, 'humanities', 'History', 'high_school', ''),
+(14, 'extras', 'Art and Design', 'high_school', ''),
+(15, 'extras', 'ICT', 'high_school', ''),
+(16, 'extras', 'Physical Education', 'high_school', ''),
+(17, 'extras', 'Music', 'high_school', ''),
+(18, 'extras', 'Business studies', 'high_school', '');
 
 -- --------------------------------------------------------
 
@@ -401,7 +411,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT for table `access_levels`
 --
 ALTER TABLE `access_levels`
-  MODIFY `access_level_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `access_level_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `accounts`
 --
@@ -456,7 +466,7 @@ ALTER TABLE `streams`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `subject_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `sub_topics`
 --
