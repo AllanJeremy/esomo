@@ -28,7 +28,7 @@ a:hover
 body
 {
 	/*font-family:MyFont;*/
-	background:url(../media/bg1.jpg);
+	/*background:url(../media/bg1.jpg);*/
 }
 #homeBody
 {
@@ -256,4 +256,9 @@ td a
 	background-color:black;
 	color:red;
 	padding:5px;
+}
+
+ol
+{
+	list-style-type: none;
 }
