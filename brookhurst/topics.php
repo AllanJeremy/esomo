@@ -189,16 +189,16 @@ EOD;
 			$infoPanelTabs
 			<div class="tab-content well">
 
-				<div class="tab-pane active" id="tContentsWrapper">
+				<div class="tab-pane active overflow" id="tContentsWrapper">
 					$topicContent
 				</div>
-				<div class="tab-pane" id="articlesWrapper">
+				<div class="tab-pane overflow" id="articlesWrapper">
 					$articleContent
 				</div>
-				<div class="tab-pane" id="booksWrapper">
+				<div class="tab-pane overflow" id="booksWrapper">
 					$bookContent
 				</div>
-				<div class="tab-pane" id="videosWrapper">
+				<div class="tab-pane overflow" id="videosWrapper">
 					$videoContent	
 				</div>
 			</div>
@@ -225,15 +225,30 @@ EOD;
 			$curTopicId = $this->getCurrentTopicId();
 
 			require('eSomoDbConnect.php');#only require the dp if the url is valid
-			
-			//content header appears above the content output
-			$contentHeader = "<h3 class='center_text'> [CONTENT]". $this->getTopicName($curTopicId) ." </h3>";
-			$contentOutput = $contentHeader . "<ol>";
-			
+
 			$contentQuery = "SELECT sub_topic_name FROM sub_topics WHERE topic_id=$curTopicId";
-			if($fetchContentQuery = $dbCon->query($contentQuery))
+			$contentHeader = "";
+			$contentOutput = "";#initialize the content output
+
+			if($contentResult = $dbCon->query($contentQuery))
 			{
-				foreach($fetchContentQuery as $contentItem)
+				#if no content has been posted for the topic - show the default message
+				if (mysqli_num_rows($contentResult)==0)
+				{
+					$title = "No topic content available";
+					$message = "The topic content has not yet been added. Please check back again later";
+
+					return $this->noContentMessage($title,$message);
+				}
+				else {
+					# content header appears above the content output
+					$contentHeader = "<h3 class='center_text'> [CONTENT]". $this->getTopicName($curTopicId) ." </h3>";	
+				}
+
+
+				$contentOutput = $contentHeader . "<ol>";
+				
+				foreach($contentResult as $contentItem)
 				{
 					$contentOutput .=  "\n<li><p>" . $contentItem['sub_topic_name'] . "</p></li>";
 				}
@@ -257,7 +272,7 @@ EOD;
 
 			if ($articleResult = $dbCon->query($articleQuery))
 			{
-				$articlesContent = "<div class='container'>";
+				$articlesContent = "<div>";
 
 				//if no books have been posted yet
 				if(mysqli_num_rows($articleResult)==0)
@@ -323,7 +338,7 @@ EOD;
 
 			if ($bookResult = $dbCon->query($bookQuery))
 			{
-				$booksContent = "<div class='container'>";
+				$booksContent = "<div>";
 
 				//if no books have been posted yet
 				if(mysqli_num_rows($bookResult)==0)
@@ -391,7 +406,7 @@ EOD;
 
 			if ($videoResult = $dbCon->query($videoQuery))
 			{
-				$videosContent = "<div class='container'>";
+				$videosContent = "<div>";
 
 			   //if no books have been posted yet
 				if(mysqli_num_rows($videoResult)==0)
@@ -534,7 +549,7 @@ EOD;
 	//shows a message when there is no content for  a particular section
 	private function noContentMessage($title,$message)
 	{
-		return "<div class='panel panel-info col-xs-8'>
+		return "<div class='panel panel-info col-xs-12 col-sm-10 col-sm-offset-1'>
 		<div class='panel-header' style='background-color:transparent'>
 			<h4 class='center_text'>$title</h4>
 		</div>

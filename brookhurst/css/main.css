@@ -258,7 +258,14 @@ td a
 	padding:5px;
 }
 
+/*Remove the styling of the ol*/
 ol
 {
 	list-style-type: none;
+}
+
+/*For wrappers that have overflowing content*/
+.overflow
+{
+	overflow: auto;
 }
