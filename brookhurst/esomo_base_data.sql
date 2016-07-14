@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2016 at 10:16 PM
+-- Generation Time: Jul 14, 2016 at 09:19 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -148,7 +148,9 @@ CREATE TABLE `esomo_articles` (
   `article_id` int(255) UNSIGNED NOT NULL COMMENT 'unique id for the article',
   `article_path` varchar(512) NOT NULL COMMENT 'path the article file',
   `article_title` varchar(256) NOT NULL COMMENT 'the title of the article',
-  `topic_id` int(255) UNSIGNED NOT NULL COMMENT 'topic id representing the topic the article belongs to'
+  `topic_id` int(255) UNSIGNED NOT NULL COMMENT 'topic id representing the topic the article belongs to',
+  `thumbnail_path` varchar(512) NOT NULL COMMENT 'Path to the thumbnail',
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -161,7 +163,9 @@ CREATE TABLE `esomo_books` (
   `book_id` int(255) UNSIGNED NOT NULL,
   `book_path` varchar(512) NOT NULL,
   `book_title` varchar(256) NOT NULL,
-  `topic_id` int(255) UNSIGNED NOT NULL
+  `topic_id` int(255) UNSIGNED NOT NULL,
+  `thumbnail_path` varchar(512) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -174,7 +178,9 @@ CREATE TABLE `esomo_videos` (
   `video_id` int(255) UNSIGNED NOT NULL,
   `video_path` varchar(512) NOT NULL,
   `video_title` varchar(256) NOT NULL,
-  `topic_id` int(255) UNSIGNED NOT NULL
+  `topic_id` int(255) UNSIGNED NOT NULL,
+  `thumbnail_path` varchar(512) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -188,7 +194,9 @@ CREATE TABLE `schedules` (
   `task_title` varchar(256) NOT NULL,
   `task_description` text NOT NULL,
   `task_date` datetime NOT NULL,
-  `teacher_id` int(255) UNSIGNED NOT NULL COMMENT 'the id of the teacher scheduling the task'
+  `teacher_id` int(255) UNSIGNED NOT NULL COMMENT 'the id of the teacher scheduling the task',
+  `stream_id` int(255) UNSIGNED NOT NULL,
+  `class_id` int(255) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -362,7 +370,9 @@ ALTER TABLE `esomo_videos`
 ALTER TABLE `schedules`
   ADD PRIMARY KEY (`task_id`),
   ADD UNIQUE KEY `task_id` (`task_id`),
-  ADD KEY `teacher_id` (`teacher_id`);
+  ADD KEY `teacher_id` (`teacher_id`),
+  ADD KEY `stream_id` (`stream_id`),
+  ADD KEY `class_id` (`class_id`);
 
 --
 -- Indexes for table `streams`
@@ -529,6 +539,8 @@ ALTER TABLE `esomo_videos`
 -- Constraints for table `schedules`
 --
 ALTER TABLE `schedules`
+  ADD CONSTRAINT `fk_schedule_class` FOREIGN KEY (`class_id`) REFERENCES `class_selection` (`class_id`),
+  ADD CONSTRAINT `fk_schedule_stream` FOREIGN KEY (`stream_id`) REFERENCES `streams` (`stream_id`),
   ADD CONSTRAINT `fk_schedule_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `admin_accounts` (`admin_acc_id`);
 
 --
