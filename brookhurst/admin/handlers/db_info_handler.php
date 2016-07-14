@@ -75,7 +75,7 @@ function getAvailableSchedules($teacher_id)
 
 function getClassName($class_id)
 {
-	{
+	
 	require("../esomoDbConnect.php");
 	$q = "SELECT class_name FROM class_selection WHERE class_id=$class_id";
 
@@ -100,7 +100,7 @@ function getClassName($class_id)
 
 function getStreamName($stream_id)
 {
-	{
+	
 	require("../esomoDbConnect.php");
 	$q = "SELECT stream_name FROM streams WHERE stream_id=$stream_id";
 
@@ -122,4 +122,5 @@ function getStreamName($stream_id)
 		return false;
 	}
 }
+
 }#end of class

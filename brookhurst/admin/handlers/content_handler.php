@@ -374,6 +374,8 @@ class ContentHandler
 		{
 			$curClassName ='';
 			$curStreamName ='';
+
+			#generate a table with the details
 			foreach($schedules as $schedule)
 			{   
 				$curClassName = ($dbInfo->getClassName($schedule['class_id']))['class_name'];

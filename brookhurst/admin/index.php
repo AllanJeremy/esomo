@@ -20,7 +20,7 @@
 
         require_once('handlers/content_handler.php');
         $contentHandler = new ContentHandler();
-
+$curUsername = $_SESSION['s_admin_username'];
 $indexContent = <<<EOD
       
        <div class='container-fluid'>
@@ -51,13 +51,13 @@ $indexContent = <<<EOD
 
 
             <li>
-              <a href='?admin_action=admin_logout'>Logout</a>
+              <a href='?admin_action=admin_logout'>Logout ($curUsername)</a>
             </li>
 
           </ul>
        </div>
 EOD;
-  
+unset($curUsername);#cleanup - variable has served its purpose  
   
   //logout functionality
   $admin_action = @$_GET['admin_action'];
