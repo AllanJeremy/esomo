@@ -91,7 +91,6 @@ class Navigation
             <li $learnClass><a href='$learnPath'>
             	LEARN</a>
             </li>  
-
             <li $assignmentClass><a href='$assignmentPath'>ASSIGNMENTS
             	</a>
             </li> 
