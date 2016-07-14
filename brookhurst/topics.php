@@ -189,16 +189,16 @@ EOD;
 			$infoPanelTabs
 			<div class="tab-content well">
 
-				<div class="tab-pane active" id="tContentsWrapper">
+				<div class="tab-pane active overflow" id="tContentsWrapper">
 					$topicContent
 				</div>
-				<div class="tab-pane" id="articlesWrapper">
+				<div class="tab-pane overflow" id="articlesWrapper">
 					$articleContent
 				</div>
-				<div class="tab-pane" id="booksWrapper">
+				<div class="tab-pane overflow" id="booksWrapper">
 					$bookContent
 				</div>
-				<div class="tab-pane" id="videosWrapper">
+				<div class="tab-pane overflow" id="videosWrapper">
 					$videoContent	
 				</div>
 			</div>
@@ -225,15 +225,30 @@ EOD;
 			$curTopicId = $this->getCurrentTopicId();
 
 			require('eSomoDbConnect.php');#only require the dp if the url is valid
-			
-			//content header appears above the content output
-			$contentHeader = "<h3 class='center_text'> [CONTENT]". $this->getTopicName($curTopicId) ." </h3>";
-			$contentOutput = $contentHeader . "<ol>";
-			
+
 			$contentQuery = "SELECT sub_topic_name FROM sub_topics WHERE topic_id=$curTopicId";
-			if($fetchContentQuery = $dbCon->query($contentQuery))
+			$contentHeader = "";
+			$contentOutput = "";#initialize the content output
+
+			if($contentResult = $dbCon->query($contentQuery))
 			{
-				foreach($fetchContentQuery as $contentItem)
+				#if no content has been posted for the topic - show the default message
+				if (mysqli_num_rows($contentResult)==0)
+				{
+					$title = "No topic content available";
+					$message = "The topic content has not yet been added. Please check back again later";
+
+					return $this->noContentMessage($title,$message);
+				}
+				else {
+					# content header appears above the content output
+					$contentHeader = "<h3 class='center_text'> [CONTENT]". $this->getTopicName($curTopicId) ." </h3>";	
+				}
+
+
+				$contentOutput = $contentHeader . "<ol>";
+				
+				foreach($contentResult as $contentItem)
 				{
 					$contentOutput .=  "\n<li><p>" . $contentItem['sub_topic_name'] . "</p></li>";
 				}
@@ -257,26 +272,40 @@ EOD;
 
 			if ($articleResult = $dbCon->query($articleQuery))
 			{
-				$articlesContent = "<div class='container'>";
+				$articlesContent = "<div>";
+
+				//if no books have been posted yet
+				if(mysqli_num_rows($articleResult)==0)
+				{
+					$title ="No articles available";
+					$message = "No articles have been posted for this topic as yet. Please check back again later.";
+					$articlesContent .= $this->noContentMessage($title,$message);
+				}
+
 				foreach ($articleResult as $result) {
 					$tmp_articleName = $result['article_title'];#article title
 					$tmp_articlePath = $result['article_path'];#article path
 					$tmp_articleId = $result['article_id'];#article id
 
 					//path to the article document handler
-					$pathExtension = "/esomo/article.php?a=$tmp_articleId";
+					$pathExtension = "#";
 
 					#generate article section using the information above
-					$articleSnippet = "
-					<div class='panel panel-success col-xs-10 col-sm-10 col-md-10 col-lg-10'>
-					<div class='panel-heading'><h4>$tmp_articleName</h4></div>
-					<div class='panel-body'>
-						<p>Path  : $tmp_articlePath</p>
-						<a class='btn btn-warning float_right' target='_blank' href=$pathExtension>Click to view Article</a>
-					</div>
-					</div>\n";
 
-					$articlesContent .= $articleSnippet;
+					if($tmp_articlePath!='' && $tmp_articlePath!==null)
+					{
+						$pathExtension = $tmp_articlePath;	
+						$articleSnippet = "<h5> $tmp_articleName
+					<a class='btn btn-default' href='$pathExtension' download='$tmp_articleName'>Download</a> </h5>\n";
+					}
+					else
+					{
+						$articleSnippet = "<h5> $tmp_articleName
+					<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+					}
+					
+					
+					$articlesContent .= $articleSnippet;#customizable snippet.
 				}
 				$articlesContent .= "</div>";
 
@@ -309,26 +338,43 @@ EOD;
 
 			if ($bookResult = $dbCon->query($bookQuery))
 			{
-				$booksContent = "<div class='container'>";
+				$booksContent = "<div>";
+
+				//if no books have been posted yet
+				if(mysqli_num_rows($bookResult)==0)
+				{
+					$title ="No books available";
+					$message = "No books have been posted for this topic as yet. Please check back again later.";
+					$booksContent .= $this->noContentMessage($title,$message);
+				}
+
 				foreach ($bookResult as $result) {
 					$tmp_bookName = $result['book_title'];#article title
 					$tmp_bookPath = $result['book_path'];#article path
 					$tmp_bookId = $result['book_id'];#article id
 
 					//path to the article document handler
-					$pathExtension = "/esomo/book.php?a=$tmp_bookId";
+					$pathExtension = "#";
 
-					#generate book section using the information above
-					$bookSnippet = "
-					<div class='panel panel-success col-xs-10 col-sm-10 col-md-10 col-lg-10'>
-					<div class='panel-heading'><h4>$tmp_bookName</h4></div>
-					<div class='panel-body'>
-						<p>Path  : $tmp_bookPath</p>
-						<a class='btn btn-warning float_right' target='_blank' href=$pathExtension>Click to view Article</a>
-					</div>
-					</div>\n";
+					#generate article section using the information above
 
-					$booksContent .= $bookSnippet;
+					if($tmp_bookPath!='' && $tmp_bookPath!==null)
+					{
+						$pathExtension = $tmp_bookPath;
+						#snippet that controls how content is viewd
+						$bookSnippet = "<h5> $tmp_bookName
+						<a class='btn btn-default' href='$pathExtension' download='$tmp_bookName'>Download</a> </h5>\n";
+				    }
+					else
+					{
+						#snippet that controls how content is viewd
+						$bookSnippet = "<h5> $tmp_bookName
+						<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+					}
+
+
+					
+					$booksContent .= $bookSnippet;#Customizable snippet - how each item is viewed
 				}
 				$booksContent .= "</div>";
 
@@ -360,7 +406,16 @@ EOD;
 
 			if ($videoResult = $dbCon->query($videoQuery))
 			{
-				$videosContent = "<div class='container'>";
+				$videosContent = "<div>";
+
+			   //if no books have been posted yet
+				if(mysqli_num_rows($videoResult)==0)
+				{
+					$title ="No videos available";
+					$message = "No videos have been posted for this topic as yet. Please check back again later.";
+					$videosContent .= $this->noContentMessage($title,$message);
+				}
+
 				foreach ($videoResult as $result) {
 					$tmp_videoName = $result['video_title'];#article title
 					$tmp_videoPath = $result['video_path'];#article path
@@ -370,16 +425,23 @@ EOD;
 					$pathExtension = "/esomo/book.php?a=$tmp_videoId";
 
 					#generate book section using the information above
-					$videoSnippet = "
-					<div class='panel panel-success col-xs-10 col-sm-10 col-md-10 col-lg-10'>
-					<div class='panel-heading'><h4>$tmp_videoName</h4></div>
-					<div class='panel-body'>
-						<p>Path  : $tmp_videoPath</p>
-						<a class='btn btn-warning float_right' target='_blank' href=$pathExtension>Click to view video</a>
-					</div>
-					</div>\n";#snippet customizable
+					#generate article section using the information above
 
-					$videosContent .= $videoSnippet;
+					if($tmp_videoPath!='' && $tmp_videoPath!==null)
+					{
+						$pathExtension = $tmp_videoPath;
+						$videoSnippet = "<h5> $tmp_videoName
+						<a class='btn btn-default' href='$pathExtension' download='$tmp_videoName'>Download</a> </h5>\n";
+					}
+					else
+					{
+						$videoSnippet = "<h5> $tmp_videoName
+						<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+					}
+
+
+					
+					$videosContent .= $videoSnippet;#snippet customizable
 				}
 				$videosContent .= "</div>";
 
@@ -484,6 +546,18 @@ EOD;
 		$this->startTopicIndex = $index;
 	}
 
+	//shows a message when there is no content for  a particular section
+	private function noContentMessage($title,$message)
+	{
+		return "<div class='panel panel-info col-xs-12 col-sm-10 col-sm-offset-1'>
+		<div class='panel-header' style='background-color:transparent'>
+			<h4 class='center_text'>$title</h4>
+		</div>
+		<div class='panel-body'>
+		<p>$message</p>
+		</div>
+		</div>";
+	}
 	//Getter for start topic index
 	public function getStartTopicIndex()
 	{

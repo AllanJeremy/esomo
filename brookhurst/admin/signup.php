@@ -136,14 +136,13 @@
             $passConfirm = $_POST['admin_passConfirmInput'];
             $phone_number = $_POST['admin_phoneInput'];
 
-            $salt = random_bytes(SALT_LENGTH);//generate a random salt
-            $password = $passEncrypt->encryptPass($password,$salt); //encrypt the password
+            $password = $passEncrypt->encryptPass($password); //encrypt the password
 
-            $query = "INSERT INTO admin_accounts(f_name,l_name,email,username,phone,password,salt) VALUES (?,?,?,?,?,?,?) ";
+            $query = "INSERT INTO admin_accounts(f_name,l_name,email,username,phone,password) VALUES (?,?,?,?,?,?) ";
 
             if($stmt= $dbCon->prepare($query))
             {
-              $stmt->bind_param('ssssiss',$tmp_first_name,$tmp_last_name,$tmp_email,$tmp_username,$tmp_phone,$tmp_password,$tmp_salt);
+              $stmt->bind_param('ssssis',$tmp_first_name,$tmp_last_name,$tmp_email,$tmp_username,$tmp_phone,$tmp_password);
               
               $tmp_first_name=$fName;
               $tmp_last_name=$lName;
@@ -151,11 +150,15 @@
               $tmp_username=$userName;
               $tmp_phone=$phone_number;
               $tmp_password=$password;
-              $tmp_salt =$salt; 
 
+               
               if($stmt->execute())//if the statement successfully ran
               {
                 $GLOBALS['handler']->displaySignupSuccess();
+              }
+              else
+              {
+                echo "Error signing you up -> " . $dbCon->error;
               }
 
 

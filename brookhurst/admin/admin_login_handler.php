@@ -120,14 +120,9 @@
 			{
 				$tmp_salt = $admin['salt'];
 				$tmp_pass = $admin['password'];
-				$tmp_salt = $admin['salt'];
 				$tmp_accessId = $admin['access_level_id'];
-
-				$passInput = $passEncrypt->encryptPass($passInput,$tmp_salt);//encrypt the current password
-										#initSessionVariables
-
 				
-				if ($passInput === $tmp_pass)#if the password is correct 
+				if (password_verify($passInput,$tmp_pass))#if the password is correct 
 				{
 					$accessInfo = getAccessInfo($tmp_accessId);
 

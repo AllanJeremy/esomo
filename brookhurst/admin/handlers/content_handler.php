@@ -287,12 +287,122 @@ class ContentHandler
 	//returns the schedule management content
 	function getSchedule() 
 	{
+		require_once('db_info_handler.php');
+		$dbInfo = new DbInfo();
+		#variables for accessing information from the database
+		$streams = $dbInfo->getAvailableStreams();
+		$grades = $dbInfo->getAvailableClasses();
+		$schedules = $dbInfo->getAvailableSchedules($_SESSION['s_admin_id']);#get schedules for the currently logged user
+
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_schedule'>";#open div
 
 		#content here
-		$content .= "<h2>Schedule</h2>";
-		$content .= "<p>This module is still under construction, please check again later.</p>";
-		#close div
+		//$content .= "<h3 class='center_text'>Schedules</h3>";
+		
+		
+		$content .= "<ul class='nav nav-tabs nav-justified'>";
+		$content .= "<li class='active'><a data-toggle='tab' href='#createSchedule'>CREATE SCHEDULE</a></li>";
+		$content .= "<li><a data-toggle='tab' href='#manageSchedule'>MANAGE SCHEDULES</a></li>";
+		$content .= "</ul>";
+
+		#tab content
+		$content .= "<div class='tab-content'>";
+		#create tab
+		$content .= "<div class='tab-pane fade in active' id='createSchedule'>";
+		#form for creating schedule
+		$content .= "<form class ='form top_spacing bottom_spacing' action='submitSchedule.php'>";
+		
+		$content .= "<div class='form-group'>
+		<label class='control-label hidden-xs' for='schTitle'> Title *</label>
+		<input type='text' id='schTitle' name='schTitleInput' required='yes' class='form-control' placeholder='Schedule Title'></input>
+		</div>";
+		
+		$content .= "<div class='form-group'>
+		<label class='control-label hidden-xs' for='schDescr'> Description (Optional)</label>
+		<textarea col='3' type='text' id='schDescr' name='schDescrInput' required='yes' class='form-control'  placeholder='Schedule Description'></textarea>
+		</div>";
+
+		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='schGrade'> Grade/Class *</label>
+			<select id='schGrade' name='schGradeInput' required='yes' class='form-control'>";
+
+		#getting the grades
+		foreach($grades as $grade)
+		{
+			$content .= ("<option value='".$grade['class_id']."'>".$grade['class_name']."</option>");
+		}
+
+		$content .= "</select></div>";
+
+		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='schStream'>Stream *</label>
+			<select id='schStream' name='schStreamInput' required='yes' class='form-control'>";
+			
+		#getting the grades
+		foreach($streams as $stream)
+		{
+			$content .= ("<option value='".$stream['stream_id']."'>".$stream['stream_name']."</option>");
+		}
+
+		$content .= "</select></div>";
+			
+		#date and time	
+		$content .= "
+		<div class='form-group'>
+			<label for='sch_date' class='control-label'>Date *</label>
+			<input type='date' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+		</div>
+		<div class='form-group'>
+			<label for='sch_date' class='control-label'>Time * </label>
+			<input type='time' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+		</div>";
+
+		$content .= "<button type='submit' class='btn btn-primary col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bottom_spacing top_spacing'>ADD SCHEDULE</button>";
+		$content .= "</form>";
+		$content .= "</div>";#close tab pane
+
+		#manage schedules tab
+		$content .= "<div id='manageSchedule' class='tab-pane fade in'>";
+		$content .= "<h4 class='center_text'>Current Schedules</h4>";
+		$content .= "<table class='table'>";
+		$content .="<tr><th>Title</th><th>Date</th><th>Class</th><th>Stream</th><th>Remove</th></tr>";
+
+		#if there are currently no schedules
+		if($schedules === 0)
+		{
+			$content .="<tr><td colspan='5'><h5>No Schedules here yet. When you add  a schedule it will appear here.</h5></td></tr>";
+		}
+		else#if there are schedules
+		{
+			$curClassName ='';
+			$curStreamName ='';
+
+			#generate a table with the details
+			foreach($schedules as $schedule)
+			{   
+				$curClassName = ($dbInfo->getClassName($schedule['class_id']))['class_name'];
+				$curStreamName = ($dbInfo->getStreamName($schedule['stream_id']))['stream_name'];
+
+				$content .= "<tr>";
+				$content .= "<td>".$schedule['task_title']."</td>";
+				$content .= "<td>".$schedule['task_date']."</td>";
+				$content .= "<td>".$curClassName."</td>";
+				$content .= "<td>".$curStreamName."</td>";
+				$content .= "<td><a class='btn btn-warning'>Remove</a></td>";
+				$content .= "</tr>";
+			}
+			
+			#cleanup
+			unset($curClassName);
+			unset($curStreamName);
+		}
+		unset($schedule);#clean up after foreach
+
+		$content .= "</table>";#close table
+		$content .= "</div>";#close manage tab
+
+		#close tab content 
+		$content .= "</div>";
+
+		#close wrapper div
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content

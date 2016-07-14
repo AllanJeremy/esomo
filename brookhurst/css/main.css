@@ -28,7 +28,7 @@ a:hover
 body
 {
 	/*font-family:MyFont;*/
-	background:url(../media/bg1.jpg);
+	/*background:url(../media/bg1.jpg);*/
 }
 #homeBody
 {
@@ -256,4 +256,16 @@ td a
 	background-color:black;
 	color:red;
 	padding:5px;
+}
+
+/*Remove the styling of the ol*/
+ol
+{
+	list-style-type: none;
+}
+
+/*For wrappers that have overflowing content*/
+.overflow
+{
+	overflow: auto;
 }

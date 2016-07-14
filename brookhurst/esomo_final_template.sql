@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2016 at 10:37 PM
+-- Generation Time: Jul 12, 2016 at 10:25 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -46,8 +46,7 @@ CREATE TABLE `accounts` (
   `phone` varchar(12) NOT NULL,
   `username` varchar(100) NOT NULL,
   `student_id` int(255) UNSIGNED NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `salt` varchar(50) NOT NULL
+  `password` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -64,7 +63,6 @@ CREATE TABLE `admin_accounts` (
   `access_level_id` int(255) UNSIGNED NOT NULL COMMENT 'id representing the access level of the admin',
   `email` varchar(256) NOT NULL COMMENT 'email address of the admin',
   `password` varchar(512) NOT NULL COMMENT 'encrypted password',
-  `salt` varchar(512) NOT NULL COMMENT 'salt for the password - used for validation comparison',
   `phone` varchar(15) NOT NULL COMMENT 'phone number of the admin',
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date the account was created'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

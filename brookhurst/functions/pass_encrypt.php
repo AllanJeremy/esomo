@@ -6,9 +6,9 @@ if(!class_exists('PasswordEncrypt'))
 	class PasswordEncrypt
 	{   
 	  //returns encrypted password
-	  function encryptPass($password,$saltInput)
+	  function encryptPass($password)
 	  {
-	    return crypt($password,$saltInput);
+	    return password_hash($password,PASSWORD_DEFAULT);
 	  }
 	}
 }
