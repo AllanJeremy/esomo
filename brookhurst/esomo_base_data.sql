@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2016 at 09:19 PM
+-- Generation Time: Jul 15, 2016 at 07:46 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -71,7 +71,7 @@ CREATE TABLE `admin_accounts` (
   `f_name` varchar(128) NOT NULL COMMENT 'first name',
   `l_name` varchar(128) NOT NULL COMMENT 'last name',
   `username` varchar(128) NOT NULL COMMENT 'username',
-  `access_level_id` int(255) UNSIGNED NOT NULL COMMENT 'id representing the access level of the admin',
+  `access_level_id` int(255) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'id representing the access level of the admin',
   `email` varchar(256) NOT NULL COMMENT 'email address of the admin',
   `password` varchar(512) NOT NULL COMMENT 'encrypted password',
   `phone` varchar(15) NOT NULL COMMENT 'phone number of the admin',
