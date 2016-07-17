@@ -268,7 +268,7 @@ EOD;
 		if ($curTopicId!=0)//if we have a valid topicId
 		{	
 			require('eSomoDbConnect.php');
-			$articleQuery = "SELECT article_id,article_title,article_path FROM esomo_articles WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
+			$articleQuery = "SELECT * FROM esomo_articles WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
 
 			if ($articleResult = $dbCon->query($articleQuery))
 			{
@@ -288,6 +288,7 @@ EOD;
 					$tmp_articleName = $result['article_title'];#article title
 					$tmp_articlePath = $result['article_path'];#article path
 					$tmp_articleId = $result['article_id'];#article id
+					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
 					$pathExtension = "#";
@@ -297,12 +298,12 @@ EOD;
 					if($tmp_articlePath!='' && $tmp_articlePath!==null)
 					{
 						$pathExtension = $tmp_articlePath;	
-						$articleSnippet = "<tr><td> $tmp_articleName</td>
+						$articleSnippet = "<tr><td>$tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
 					<td><a class='btn btn-default' href='$pathExtension' download='$tmp_articleName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
-						$articleSnippet = "<tr><td>  $tmp_articleName
+						$articleSnippet = "<tr><td>  $tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
 					<td> <a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
 					}
 					
@@ -338,7 +339,7 @@ EOD;
 		if ($curTopicId!=0)//if we have a valid topicId
 		{	
 			require('eSomoDbConnect.php');
-			$bookQuery = "SELECT book_id,book_title,book_path FROM esomo_books WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
+			$bookQuery = "SELECT * FROM esomo_books WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
 
 			if ($bookResult = $dbCon->query($bookQuery))
 			{
@@ -359,6 +360,7 @@ EOD;
 					$tmp_bookName = $result['book_title'];#article title
 					$tmp_bookPath = $result['book_path'];#article path
 					$tmp_bookId = $result['book_id'];#article id
+					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
 					$pathExtension = "#";
@@ -369,13 +371,13 @@ EOD;
 					{
 						$pathExtension = $tmp_bookPath;
 						#snippet that controls how content is viewd
-						$bookSnippet = "<tr><td> $tmp_bookName </td>
+						$bookSnippet = "<tr><td> $tmp_bookName  <i class='float_right'>- Added $tmp_dateAdded</i></td>
 						<td><a class='btn btn-default' href='$pathExtension' download='$tmp_bookName'>Download</a></td></tr>\n";
 				    }
 					else
 					{
 						#snippet that controls how content is viewd
-						$bookSnippet = "<tr><td> $tmp_bookName</td>
+						$bookSnippet = "<tr><td> $tmp_bookName <i class='float_right'>- Added $tmp_dateAdded</i></td>
 						<td><a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
 					}
 
@@ -411,7 +413,7 @@ EOD;
 		if ($curTopicId!=0)//if we have a valid topicId
 		{	
 			require('eSomoDbConnect.php');
-			$videoQuery = "SELECT video_id,video_title,video_path FROM esomo_videos WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
+			$videoQuery = "SELECT * FROM esomo_videos WHERE topic_id = $curTopicId";#to add restriction to display only content for the account type logged
 
 			if ($videoResult = $dbCon->query($videoQuery))
 			{
@@ -431,6 +433,7 @@ EOD;
 					$tmp_videoName = $result['video_title'];#article title
 					$tmp_videoPath = $result['video_path'];#article path
 					$tmp_videoId = $result['video_id'];#article id
+					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
 					$pathExtension = "/esomo/book.php?a=$tmp_videoId";
@@ -441,13 +444,13 @@ EOD;
 					if($tmp_videoPath!='' && $tmp_videoPath!==null)
 					{
 						$pathExtension = $tmp_videoPath;
-						$videoSnippet = "<tr><td> $tmp_videoName</td>
+						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
 						<td> <a class='btn btn-default' href='$pathExtension' download='$tmp_videoName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
-						$videoSnippet = "<tr><td> $tmp_videoName</td>
-						<a class='btn btn-default' href='$pathExtension'>Download</a> </td></tr>\n";
+						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						<td> <a class='btn btn-default' href='$pathExtension'>Download</a> </td></tr>\n";
 					}
 					}#end of for loop	
 					$videosContent .= $videoSnippet;#snippet customizable
@@ -469,7 +472,7 @@ EOD;
 				$errHandler = new CustomErrorHandler();
 				$errHandler->displayInvalidTopicPage();
 			}
-		}
+		
 	}
 	
 		//returns the current name of a subject - or 0 if the name could not be retrieved
