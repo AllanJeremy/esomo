@@ -23,9 +23,11 @@
       <?php
         
         require_once('functions/session_functions.php');
+        
         $sessionHandler = new SessionFunctions();
         $errorMessage = "<div class='container'> <div class='panel panel-info col-sm-12'> <div class='panel-header'> <h2>Restricted access content</h2>  </div><div class='panel-body'> <p>You need to be logged in to access tests. Login and try again</p></div></div></div>";
         
+
         #content of the page
         require("esomoDbConnect.php");#connection to the database
       
@@ -41,6 +43,9 @@
           #if there are tests available
           if (mysqli_num_rows($tests)>0)
           {
+            require_once('functions/dbInfo.php');
+            $dbInfo = new DbInfo();
+
             $content .= "<table class='table'><tr><th colspan='4'> <h3 class='center_text'>Some tests to test yourself</h3></tr>";
             $content .= "<tr><th class='center_text'>Subject</th>
             <th class='center_text'>Class</th>
@@ -50,8 +55,10 @@
             #loop through the tests found
             foreach($tests as $result)
             {
-              $tmp_subject = $result['subject_id'];
-              $tmp_class = $result['class_id'];
+              #dbInfo function for getting attribute name
+              #$dbInfo->getAttributeName($column,$tableName,$idName,$attrId)
+              $tmp_subject = $dbInfo->getAttributeName('subject_name','subjects','subject_id',$result['subject_id']);
+              $tmp_class = $dbInfo->getAttributeName('class_name','class_selection','class_id',$result['class_id']);
               $tmp_title = $result['test_title'];
               $tmp_path = $result['test_path'];
               $content .= "<tr>
@@ -59,17 +66,18 @@
               <td>$tmp_class</td>
               <td>$tmp_title</td>";
 
+              $content .= "<td>";
               #if the path is empty then don't download anything - else download item in the path specified (tmp_path)
               if ($tmp_path !=='' && $tmp_path!==null)
               {
-                $content .= "<td><a class='btn btn-default' href='$tmp_path' download='$tmp_title'>DOWNLOAD</a></td>";
+                $content .= "<a class='btn btn-default center_text col-xs-12' href='$tmp_path' download='$tmp_title'>DOWNLOAD</a>";
               }
               else 
               {
-               $content .= "<td><a class='btn btn-default' href='#'>DOWNLOAD</a></td>";
+               $content .= "<a class='btn btn-default col-xs-12' href='#'>DOWNLOAD</a>";
               }
 
-              $content .= "</tr>";
+              $content .= "</td></tr>";
 
             }
             

@@ -19,4 +19,25 @@ class DbInfo{
 			unset($result);
 		}
 	}
+
+	function getAttributeName($column,$tableName,$idName,$attrId)
+	{
+		require('esomoDbConnect.php');
+		$q = "SELECT $column FROM $tableName WHERE $idName=$attrId";
+		if($result = mysqli_query($dbCon,$q))
+		{
+			if(mysqli_num_rows($result)>0)
+			{
+				foreach($result as $r)
+				{
+					return @$r[$column];
+				}
+			}
+			else {#if there are no records
+				return 0;
+			}
+		} else {
+			return null;#failed to  run the query
+		}
+	}
 }
