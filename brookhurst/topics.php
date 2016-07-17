@@ -415,6 +415,10 @@ EOD;
 					$message = "No videos have been posted for this topic as yet. Please check back again later.";
 					$videosContent .= $this->noContentMessage($title,$message);
 				}
+				else
+				{
+					$videosContent.="<table class='table'>";
+				
 
 				foreach ($videoResult as $result) {
 					$tmp_videoName = $result['video_title'];#article title
@@ -438,8 +442,8 @@ EOD;
 						$videoSnippet = "<h5> $tmp_videoName
 						<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
 					}
-
-
+					}//end of for loop	
+				}
 					
 					$videosContent .= $videoSnippet;#snippet customizable
 				}

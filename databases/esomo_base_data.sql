@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2016 at 07:46 PM
+-- Generation Time: Jul 17, 2016 at 11:28 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -77,6 +77,20 @@ CREATE TABLE `admin_accounts` (
   `phone` varchar(15) NOT NULL COMMENT 'phone number of the admin',
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date the account was created'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_recovery`
+--
+
+CREATE TABLE `admin_recovery` (
+  `recover_id` int(255) UNSIGNED NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `temp_password` varchar(256) NOT NULL,
+  `acc_email` varchar(256) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date the recovery item was created'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table used to recover passwords';
 
 -- --------------------------------------------------------
 
@@ -186,6 +200,20 @@ CREATE TABLE `esomo_videos` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `recovery`
+--
+
+CREATE TABLE `recovery` (
+  `recover_id` int(255) UNSIGNED NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `temp_password` varchar(256) NOT NULL,
+  `acc_email` varchar(256) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date the recovery item was created'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table used to recover passwords';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `schedules`
 --
 
@@ -277,6 +305,21 @@ CREATE TABLE `sub_topics` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tests`
+--
+
+CREATE TABLE `tests` (
+  `test_id` int(255) UNSIGNED NOT NULL,
+  `test_title` varchar(256) NOT NULL,
+  `test_description` text NOT NULL,
+  `test_path` varchar(512) NOT NULL,
+  `subject_id` int(255) UNSIGNED NOT NULL,
+  `class_id` int(255) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table used to store the tests';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `topics`
 --
 
@@ -305,7 +348,8 @@ ALTER TABLE `access_levels`
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`acc_id`),
   ADD UNIQUE KEY `acc_id` (`acc_id`),
-  ADD KEY `student_id` (`student_id`);
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `admin_accounts`
@@ -313,7 +357,15 @@ ALTER TABLE `accounts`
 ALTER TABLE `admin_accounts`
   ADD PRIMARY KEY (`admin_acc_id`),
   ADD UNIQUE KEY `admin_acc_id` (`admin_acc_id`),
-  ADD KEY `access_level_id` (`access_level_id`);
+  ADD KEY `access_level_id` (`access_level_id`),
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `admin_recovery`
+--
+ALTER TABLE `admin_recovery`
+  ADD PRIMARY KEY (`recover_id`),
+  ADD KEY `acc_email` (`acc_email`);
 
 --
 -- Indexes for table `assignments`
@@ -365,6 +417,13 @@ ALTER TABLE `esomo_videos`
   ADD KEY `topic_id` (`topic_id`);
 
 --
+-- Indexes for table `recovery`
+--
+ALTER TABLE `recovery`
+  ADD PRIMARY KEY (`recover_id`),
+  ADD KEY `acc_email` (`acc_email`);
+
+--
 -- Indexes for table `schedules`
 --
 ALTER TABLE `schedules`
@@ -405,6 +464,14 @@ ALTER TABLE `sub_topics`
   ADD KEY `topic_id` (`topic_id`);
 
 --
+-- Indexes for table `tests`
+--
+ALTER TABLE `tests`
+  ADD PRIMARY KEY (`test_id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `class_id` (`class_id`);
+
+--
 -- Indexes for table `topics`
 --
 ALTER TABLE `topics`
@@ -432,6 +499,11 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `admin_accounts`
   MODIFY `admin_acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id of the admin account';
+--
+-- AUTO_INCREMENT for table `admin_recovery`
+--
+ALTER TABLE `admin_recovery`
+  MODIFY `recover_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `assignments`
 --
@@ -462,6 +534,11 @@ ALTER TABLE `esomo_books`
 --
 ALTER TABLE `esomo_videos`
   MODIFY `video_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `recovery`
+--
+ALTER TABLE `recovery`
+  MODIFY `recover_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `schedules`
 --
@@ -504,6 +581,12 @@ ALTER TABLE `admin_accounts`
   ADD CONSTRAINT `fk_admin_access_level` FOREIGN KEY (`access_level_id`) REFERENCES `access_levels` (`access_level_id`);
 
 --
+-- Constraints for table `admin_recovery`
+--
+ALTER TABLE `admin_recovery`
+  ADD CONSTRAINT `fk_admin_recover` FOREIGN KEY (`acc_email`) REFERENCES `admin_accounts` (`email`);
+
+--
 -- Constraints for table `assignments`
 --
 ALTER TABLE `assignments`
@@ -536,6 +619,12 @@ ALTER TABLE `esomo_videos`
   ADD CONSTRAINT `fk_videos_topics` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`);
 
 --
+-- Constraints for table `recovery`
+--
+ALTER TABLE `recovery`
+  ADD CONSTRAINT `fk_recover_accounts` FOREIGN KEY (`acc_email`) REFERENCES `accounts` (`email`);
+
+--
 -- Constraints for table `schedules`
 --
 ALTER TABLE `schedules`
@@ -555,6 +644,13 @@ ALTER TABLE `students`
 --
 ALTER TABLE `sub_topics`
   ADD CONSTRAINT `fk_subtopic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`);
+
+--
+-- Constraints for table `tests`
+--
+ALTER TABLE `tests`
+  ADD CONSTRAINT `fk_tests_classes` FOREIGN KEY (`class_id`) REFERENCES `class_selection` (`class_id`),
+  ADD CONSTRAINT `fk_tests_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
 -- Constraints for table `topics`
