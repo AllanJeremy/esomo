@@ -281,7 +281,9 @@ EOD;
 					$message = "No articles have been posted for this topic as yet. Please check back again later.";
 					$articlesContent .= $this->noContentMessage($title,$message);
 				}
-
+				else
+				{
+				$articlesContent .= "<table class='table'>";
 				foreach ($articleResult as $result) {
 					$tmp_articleName = $result['article_title'];#article title
 					$tmp_articlePath = $result['article_path'];#article path
@@ -295,17 +297,19 @@ EOD;
 					if($tmp_articlePath!='' && $tmp_articlePath!==null)
 					{
 						$pathExtension = $tmp_articlePath;	
-						$articleSnippet = "<h5> $tmp_articleName
-					<a class='btn btn-default' href='$pathExtension' download='$tmp_articleName'>Download</a> </h5>\n";
+						$articleSnippet = "<tr><td> $tmp_articleName</td>
+					<td><a class='btn btn-default' href='$pathExtension' download='$tmp_articleName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
-						$articleSnippet = "<h5> $tmp_articleName
-					<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+						$articleSnippet = "<tr><td>  $tmp_articleName
+					<td> <a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
 					}
 					
 					
 					$articlesContent .= $articleSnippet;#customizable snippet.
+					$articlesContent .= "</table>";
+				}
 				}
 				$articlesContent .= "</div>";
 
@@ -347,7 +351,10 @@ EOD;
 					$message = "No books have been posted for this topic as yet. Please check back again later.";
 					$booksContent .= $this->noContentMessage($title,$message);
 				}
+				else
+				{
 
+				$booksContent .= "<table class='table'>";
 				foreach ($bookResult as $result) {
 					$tmp_bookName = $result['book_title'];#article title
 					$tmp_bookPath = $result['book_path'];#article path
@@ -362,19 +369,21 @@ EOD;
 					{
 						$pathExtension = $tmp_bookPath;
 						#snippet that controls how content is viewd
-						$bookSnippet = "<h5> $tmp_bookName
-						<a class='btn btn-default' href='$pathExtension' download='$tmp_bookName'>Download</a> </h5>\n";
+						$bookSnippet = "<tr><td> $tmp_bookName </td>
+						<td><a class='btn btn-default' href='$pathExtension' download='$tmp_bookName'>Download</a></td></tr>\n";
 				    }
 					else
 					{
 						#snippet that controls how content is viewd
-						$bookSnippet = "<h5> $tmp_bookName
-						<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+						$bookSnippet = "<tr><td> $tmp_bookName</td>
+						<td><a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
 					}
 
 
 					
 					$booksContent .= $bookSnippet;#Customizable snippet - how each item is viewed
+					$booksContent .= "</table>";
+					}#end of foreach
 				}
 				$booksContent .= "</div>";
 
@@ -417,9 +426,7 @@ EOD;
 				}
 				else
 				{
-					$videosContent.="<table class='table'>";
-				
-
+				$videosContent .= "<table class='table'>";
 				foreach ($videoResult as $result) {
 					$tmp_videoName = $result['video_title'];#article title
 					$tmp_videoPath = $result['video_path'];#article path
@@ -434,19 +441,20 @@ EOD;
 					if($tmp_videoPath!='' && $tmp_videoPath!==null)
 					{
 						$pathExtension = $tmp_videoPath;
-						$videoSnippet = "<h5> $tmp_videoName
-						<a class='btn btn-default' href='$pathExtension' download='$tmp_videoName'>Download</a> </h5>\n";
+						$videoSnippet = "<tr><td> $tmp_videoName</td>
+						<td> <a class='btn btn-default' href='$pathExtension' download='$tmp_videoName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
-						$videoSnippet = "<h5> $tmp_videoName
-						<a class='btn btn-default' href='$pathExtension'>Download</a> </h5>\n";
+						$videoSnippet = "<tr><td> $tmp_videoName</td>
+						<a class='btn btn-default' href='$pathExtension'>Download</a> </td></tr>\n";
 					}
-					}//end of for loop	
-				}
-					
+					}#end of for loop	
 					$videosContent .= $videoSnippet;#snippet customizable
+					$videosContent .= "</table>";						
 				}
+
+			}#end of query if
 				$videosContent .= "</div>";
 
 				unset($tmp_videoName);
