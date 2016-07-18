@@ -441,10 +441,23 @@ class ContentHandler
 	{		
 
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_profile'>";#open div
-
+		
+		$curFirstName = $_SESSION['s_admin_fName'];
+		$curLastName = $_SESSION['s_admin_lName'];
+		$curUsername = $_SESSION['s_admin_username'];
+		//$curEmail = $_SESSION[''];
+		$curAccessTitle = $_SESSION['s_admin_accessTitle'];
 		#content here
 		$content .= "<h2>Profile</h2>";
-		$content .= "<p>This module is still under construction, please check again later.</p>";
+		// $content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<div class='container'><table class='table'>";
+		$content .= "<tr><td><b>First Name : </b></td><td>$curFirstName</td></tr>";
+		$content .= "<tr><td><b>Last Name : </b></td><td>$curLastName</td></tr>";
+		$content .= "<tr><td><b>Username : </b></td><td>$curUsername</td></tr>";
+		$content .= "<tr><td><b>Account Type : </b></td><td>$curAccessTitle</td></tr>";
+
+		$content .= "</table></div>";
+
 		#close div
 		$content.="</div>";
 		
