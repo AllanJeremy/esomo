@@ -117,18 +117,18 @@
               {
                 $dl_link = $curItem_path;
                 $dl_title = $tableItem['ass_title'];
-                $assContent .= "<td><a href='$dl_link' class='btn btn-info center_text' download='$dl_title'>Download</a></td>"#DownloadButton
+                $assContent .= "<td><a href='$dl_link' class='btn btn-info col-xs-12' download='$dl_title'>Download</a></td>"#DownloadButton
               ."</tr>";
               }
               else#if there is no file path, disable download feature
               {
-                $assContent .= "<td><a href='javascript:void(0)' class='btn btn-info center_text'>Download</a></td>"#DownloadButton
+                $assContent .= "<td><a href='javascript:void(0)' class='btn btn-info col-xs-12'>Download</a></td>"#DownloadButton
               ."</tr>";
               }
               
             }
 
-
+            
 
             #end of content generation
 

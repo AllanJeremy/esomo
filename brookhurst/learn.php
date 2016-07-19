@@ -43,7 +43,7 @@
           {
             require_once('esomoDbConnect.php');//includes an opening to the database
             
-            echo "<div class='jumbotron container'>";
+            echo "<div class='container'>";
             echo" <h2 style='text-align:center;'>Learning material to get you started as the best student.</h2>";
 
             $scienceSubs =$languageSubs= $humanitySubs= $extraSubs = "";
@@ -96,7 +96,7 @@
       //Loops through subjects and print the subject mini-panel
       function loopSubjects($subjectQueryResult,$subjectGroupTitle)
       {
-        echo "<div style='clear:both;background-color:rgba(0,0,0,0.9);height:100%;margin-bottom:'><h2 style='color:white;text-align:center;'>$subjectGroupTitle</h2>";
+        echo "<div style='clear:both;background-color:rgba(0,0,0,0.5);height:100%;margin-bottom:'><h2 style='color:white;text-align:center;'>$subjectGroupTitle</h2>";
 
         foreach ($subjectQueryResult as $subject) {
           $tmp_sName = $subject['subject_name'];#temporary variable
@@ -124,13 +124,7 @@
        $subContClassesRef = &$GLOBALS['subContainerClasses'];//reference to the subject container classes
        
        $subjectContainer = <<<EOD
-        <div class="$subContClassesRef" style="margin-top:1em;">
-          <div class="panel-heading"><h3>$subjectName</h3></div>
-          <div class="panel-body">
-          <a href="learn.php?subId=$subjectId" class="btn btn-primary col-xs-offset-5 col-sm-offset-4 col-lg-offset-0">View Content</a>
-          </div>
-        </div>
-
+          <a href="learn.php?subId=$subjectId" class="btn btn-primary col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-3 col-lg-2 subjectButton">$subjectName</a>
 EOD;
       return $subjectContainer;//Returns a container that contains a subject
       }
