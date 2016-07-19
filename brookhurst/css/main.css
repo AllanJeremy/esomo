@@ -28,7 +28,6 @@ a:hover
 body
 {
 	/*font-family:MyFont;*/
-	/*background:url(../media/bg1.jpg);*/
 }
 #homeBody
 {
@@ -268,4 +267,10 @@ ol
 .overflow
 {
 	overflow: auto;
+}
+
+.subjectButton
+{
+	margin-bottom:1.5%;
+	margin-top:1.5%;
 }
