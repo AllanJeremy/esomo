@@ -12,7 +12,7 @@
     <body id="homeBody">
       <?php 
         include_once('navigation.php');
-        $indexNav = new Navigation('#','learn.php','tests.php','account/signup.php','account/forgot.php','assignment.php');
+        $indexNav = new Navigation('#','learn.php','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
         $indexNav->loginHandlerPath = 'account/loginHandler.php';
         $indexNav->setIndexActive();
       ?>

@@ -12,7 +12,7 @@
     <body>
      <?php 
         include_once('navigation.php');
-        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php');
+        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
         $learnNav->loginHandlerPath = 'account/loginHandler.php';
         $learnNav->setLearnActive();
       ?>

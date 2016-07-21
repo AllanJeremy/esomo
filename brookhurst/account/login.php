@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-    <title>Admin login</title>
+    <title>Student login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link  rel="stylesheet" type="text/css" href="../css/theme.min.css"/>
@@ -21,7 +21,7 @@
 <?php
 #load the navigation menu
     include_once('../navigation.php');
-    $signupNav = new Navigation('../index.php','../learn.php','../tests.php','signup.php','forgot.php','../assignment.php');
+    $signupNav = new Navigation('../index.php','../learn.php','../tests.php','signup.php','forgot.php','../assignment.php','account.php');
     $signupNav->updateNav();//updates the nav without setting anything as active
 ?>
 
@@ -29,7 +29,7 @@
 	$pageContent = "<div class='panel panel-primary col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2' id='pageContent'>
 		
 		<div class='panel-header'>
-			<h4 class='hidden-xs center_text'>Login to your admin account</h4>
+			<h4 class='hidden-xs center_text'>Login to your student account</h4>
 			<h4 class='visible-xs center_text'>Login</h4>
 		</div> 
 

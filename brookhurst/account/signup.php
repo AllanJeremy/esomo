@@ -12,7 +12,7 @@
     <body>
      <?php 
         include_once('../navigation.php');
-        $signupNav = new Navigation('../index.php','../learn.php','../tests.php','#','forgot.php','../assignment.php');
+        $signupNav = new Navigation('../index.php','../learn.php','../tests.php','#','forgot.php','../assignment.php','account.php');
         $signupNav->updateNav();//updates the nav without setting anything as active
       ?> 
 
