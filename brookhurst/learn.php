@@ -6,13 +6,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
        <link  rel="stylesheet" type="text/css" href="css/main.css"/>
+       <link  rel="stylesheet" type="text/css" href="css/color.css"/>
     </head>
     
     <body>
      <?php 
         include_once('navigation.php');
-        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php');
+        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
         $learnNav->loginHandlerPath = 'account/loginHandler.php';
         $learnNav->setLearnActive();
       ?>
@@ -42,9 +44,9 @@
           if($sessionHandler->sessionActive())
           {
             require_once('esomoDbConnect.php');//includes an opening to the database
+            echo "<h2 style='padding:2rem;' class='grey-text'>Learning material to get you started as the best student.</h2>";
+            echo "<div class='far-grey'>";
             
-            echo "<div class='container'>";
-            echo" <h2 style='text-align:center;'>Learning material to get you started as the best student.</h2>";
 
             $scienceSubs =$languageSubs= $humanitySubs= $extraSubs = "";
             $subContainerClasses = 'panel panel-default col-xs-12 col-sm-5 col-sm-offset-1 col-md- col-md-offset-1 col-lg-2 col-lg-offset-1';//classes for the subject container classes
@@ -91,13 +93,30 @@
            echo $errorMessage;
           }
          }//end of else
-
-      //FUNCTION DEFINITIONS
-      //Loops through subjects and print the subject mini-panel
+        
+    function seoUrl($string) {
+        //Lower case everything
+        $string = strtolower($string);
+        //Make alphanumeric (removes all other characters)
+        $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+        //Clean up multiple dashes or whitespaces
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //Convert whitespaces and underscore to dash
+        $string = preg_replace("/[\s_]/", "-", $string);
+        return $string;
+    }  
+        
       function loopSubjects($subjectQueryResult,$subjectGroupTitle)
       {
-        echo "<div style='clear:both;background-color:rgba(0,0,0,0.5);height:100%;margin-bottom:'><h2 style='color:white;text-align:center;'>$subjectGroupTitle</h2>";
-
+          //Making the title of the group title be a css class to apply different color backgrounds for different groups.
+          $string = $subjectGroupTitle;
+          $subjectType = seoUrl($string);
+          
+          
+          echo "<div class='row padd-top-3-half ".$subjectType."'>";
+        echo "<div class='col-sm-3 subject-title white-text'><h3>$subjectGroupTitle</h3></div>";
+          echo "<div class='col-sm-9'>
+        <div class='col-sx-12 subjectCont'>";
         foreach ($subjectQueryResult as $subject) {
           $tmp_sName = $subject['subject_name'];#temporary variable
           $tmp_sDescr = $subject['subject_description'];#temporary variable
@@ -105,8 +124,11 @@
           $tmp_sId = $subject['subject_id'];#temporary variable
           
           
+            
           echo createSubjectContainer($tmp_sName,$tmp_sId);
+            
          }
+          echo "</div></div>";
         //cleaning up after use - unsetting variables used in the foreach
         unset($subject);
         unset($tmp_sName);
@@ -114,7 +136,8 @@
         unset($tmp_sCategory);
        
 
-        echo "</div><br><br>";//close the wrapper div and ad a break line
+        echo "</div>";
+        
         
       }
 
@@ -124,7 +147,11 @@
        $subContClassesRef = &$GLOBALS['subContainerClasses'];//reference to the subject container classes
        
        $subjectContainer = <<<EOD
-          <a href="learn.php?subId=$subjectId" class="btn btn-primary col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-3 col-lg-2 subjectButton">$subjectName</a>
+        
+        <div class="subject">
+          <a href="learn.php?subId=$subjectId" class="btn btn-primary white black-text">$subjectName</a>
+          </div>
+          
 EOD;
       return $subjectContainer;//Returns a container that contains a subject
       }
@@ -136,5 +163,7 @@ EOD;
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+    
+    </script>
 </html>

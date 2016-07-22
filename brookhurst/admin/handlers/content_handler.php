@@ -1,5 +1,6 @@
 <?php
 #THIS FILE HANDLES CONTENT DISPLAYED IN INDEX.PHP
+
 class ContentHandler
 {	
 
@@ -11,13 +12,14 @@ class ContentHandler
 	#minimum and maximum for the due date
 	private $minDueDate;
 	private $maxDueDate;
-
+	private $chosenSubjectLevelCon;
+    
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
 	function __construct()
 	{	
 
-		#date formatting
+		//$this->chosenSubjectLevelCon = $push;
 		$curYr = date('Y');
 		$curMonth = date('m');
 		$curDay = date('d');
@@ -37,10 +39,21 @@ class ContentHandler
 	}
 
 	//returns the content management content
-	function getContent()
+	function getContent($chosenSubjectLevel = '')
 	{	
+        
 		$content ="<div class='tab-pane fade in active panel panel-primary col-xs-12' id='nav_content'>";#open div
-
+        global $pushArray;
+        global $subjectLevel;
+        if(!empty($pushArray)){
+            foreach($pushArray as $push) {
+                //use $msg
+                //echo "inside yes\n";
+                echo 'push    ' . $push['class_id'] . '   shows inside the right function\n';
+            }
+        }
+        //$push = $contentHandler->getSubjectClasses($subjectLevel);
+        //echo 'push    ' . $push . '   shows inside the right function';
 		#content here
 		$content .= "<h3>Manage Content</h3>";
 		$content .= "<form class='form-horizontal' method='POST'>";#create form
@@ -65,10 +78,19 @@ class ContentHandler
 		}
 		
 		#generate subject class dropdown
-		$curSubLevel = "'high_school'";#should be updated dynamically
-
-		$classes = $this->getSubjectClasses($curSubLevel);
-		$content .= $this->genSubjectClassDropdown($classes);
+        //if(empty($push)) {
+        //    $curSubLevel = $chosenSubjectLevel;
+        //    echo "push empty";
+        //} else {
+            
+        //    $curSubLevel = '"high_school"';
+        //}
+        
+		#should be updated dynamically
+        //$chosenSubject = $_GET['chosenSubjectLevel'];
+        global $subjectLevel;
+		$classes = $this->getSubjectClasses($subjectLevel);
+		$content .= $this->genSubjectClassDropdown($subjectLevel);
 		
 		#generate topic dropdown
 		$curSubId = '1';
@@ -108,7 +130,7 @@ class ContentHandler
 		$dropdown .= "<label class='control-label' for='subjectDropdown'>Subject </label>";
 
 		#subject dropdown
-		$dropdown .= "<select class='form-control' id='subjectDropdown' name='subDropdown' onchange='subjectChanged()'>";#create a selection box
+		$dropdown .= "<select class='form-control' id='subjectDropdown' name='subDropdown' onchange='subjectChange(this.value)'>";#create a selection box
 		
 		//create individual options
 		foreach ($subjects as $subject)
@@ -117,8 +139,11 @@ class ContentHandler
 			$tmp_subName = @$subject['subject_name'];
 			$tmp_subLevel = @$subject['subject_level'];
 
-			$subInfoJson = '\'{"curSubId":"'.$tmp_subId.'", "curSubLevel":"'.$tmp_subLevel.'"}\'';
-
+			//$subInfoJson = '\'{"curSubId":"'.$tmp_subId.'", "curSubLevel":"'.$tmp_subLevel.'"}\'';
+            
+            
+            $arr = array('curSubId' => $tmp_subId, 'curSubLevel' => $tmp_subLevel);
+            $subInfoJson = json_encode($arr);
 			$dropdown .= ("<option value=$subInfoJson>".$tmp_subName." [".$tmp_subLevel."] </option>");
 		}
 		#close select 
@@ -135,25 +160,18 @@ class ContentHandler
 	}#end of generateSubjectDropdown
 	
 	//generates the subject class selection dropdown and returns the dropdown
-	private function genSubjectClassDropdown($classes) //param subject - mysqli::result
+    function genSubjectClassDropdown($subjectLevel) //param subject - mysqli::result
 	{
 		$dropdown = '<br>';
 		#lable for the dropdown
 		$dropdown .= "<label class='control-label' for='subjectDropdown'>Grade </label>";
-
+        
 		#subject dropdown
-		$dropdown .= "<select class='form-control' id='gradeDropdown' onchange='gradesChanged()'>";#create a selection box
-		
-		foreach ($classes as $class)
-		{
-			$tmp_classId = $class['class_id'];
-			$tmp_className = @$class['class_name'];
-
-			$dropdown .= ("<option value=$tmp_classId>".$tmp_className."</option>");
-		}
-
+		$dropdown .= "<select class='form-control' id='gradeDropdown' onchange='gradeChange(this.value)'>";#create a selection box
+        
+        $dropdown .= ("<option value=''></option>");
 		#unset the loop variables
-		unset($subject);
+		unset($subjectLevel);
 		unset($tmp_topicId);
 		unset($tmp_topicName);
 
@@ -441,23 +459,10 @@ class ContentHandler
 	{		
 
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_profile'>";#open div
-		
-		$curFirstName = $_SESSION['s_admin_fName'];
-		$curLastName = $_SESSION['s_admin_lName'];
-		$curUsername = $_SESSION['s_admin_username'];
-		//$curEmail = $_SESSION[''];
-		$curAccessTitle = $_SESSION['s_admin_accessTitle'];
+
 		#content here
 		$content .= "<h2>Profile</h2>";
-		// $content .= "<p>This module is still under construction, please check again later.</p>";
-		$content .= "<div class='container'><table class='table'>";
-		$content .= "<tr><td><b>First Name : </b></td><td>$curFirstName</td></tr>";
-		$content .= "<tr><td><b>Last Name : </b></td><td>$curLastName</td></tr>";
-		$content .= "<tr><td><b>Username : </b></td><td>$curUsername</td></tr>";
-		$content .= "<tr><td><b>Account Type : </b></td><td>$curAccessTitle</td></tr>";
-
-		$content .= "</table></div>";
-
+		$content .= "<p>This module is still under construction, please check again later.</p>";
 		#close div
 		$content.="</div>";
 		
@@ -540,8 +545,9 @@ class ContentHandler
 	public function getSubjects()
 	{
 		$q = "SELECT subject_id,subject_name,subject_level FROM subjects";
-
-		require('../esomoDbConnect.php');
+        set_include_path(dirname(__FILE__)."/../../");
+        require 'esomoDbConnect.php';
+		//require('../esomoDbConnect.php');
 		if($result = mysqli_query($dbCon, $q))
 		{
 			return $result;
@@ -556,12 +562,21 @@ class ContentHandler
 	//returns the classes available for the current subject level
 	public function getSubjectClasses($subjectLevel)
 	{
-		$q = "SELECT class_id,class_name FROM class_selection WHERE class_level=$subjectLevel";
-
-		require('../esomoDbConnect.php');
+		$q = "SELECT class_id,class_name FROM class_selection WHERE class_level='" . $subjectLevel . "'";
+        set_include_path(dirname(__FILE__)."/../../");
+        require 'esomoDbConnect.php';
+		//require('../esomoDbConnect.php');
+        
 		if($result = mysqli_query($dbCon, $q))
 		{
-			return $result;
+            $rows = '';
+            while ($row = $result->fetch_assoc()) {
+                //echo $row['classtype']."<br>";
+                
+                $rows[] = $row;
+                //echo $row['class_name'];
+            }
+			return $rows;
 		}
 		else
 		{
@@ -569,12 +584,15 @@ class ContentHandler
 			return null;
 		}
 	}
+    
+    
 	//returns the topics
 	public function getTopics($subjectId,$classId)
 	{
 		$q = "SELECT topic_id,topic_name FROM topics WHERE subject_id=$subjectId AND class_id=$classId";
-
-		require('../esomoDbConnect.php');
+        set_include_path(dirname(__FILE__)."/../../");
+        require 'esomoDbConnect.php';
+		//require('../esomoDbConnect.php');
 		if($result = mysqli_query($dbCon, $q))
 		{
 			return $result;

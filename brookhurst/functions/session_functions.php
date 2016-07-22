@@ -125,6 +125,18 @@ class SessionFunctions
 		}
 	}
 
+	function redirectNotLoggedUser($pageContent,$redirectPath)
+	{
+		if ($this->sessionActive())#echo content only if not logged in
+		{
+			echo $pageContent;
+		}
+		else
+		{
+			session_write_close();
+			header('Location:'.$redirectPath);
+		}
+	}
 	//redirect a logged admin
 	function redirectLoggedAdmin($pageContent,$redirectPath)
 	{
