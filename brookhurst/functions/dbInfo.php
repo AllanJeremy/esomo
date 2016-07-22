@@ -3,9 +3,10 @@
 
 //contains information on the  database that might be of use	
 class DbInfo{
-	function __construct()
+	public $dbPath;# so that the database can be accessed from any file
+	function __construct($dbPath)
 	{
-
+		$this->dbPath = $dbPath;
 	}
 	function getSubjectCount(){
 		require_once('esomoDbConnect.php');
@@ -20,9 +21,10 @@ class DbInfo{
 		}
 	}
 
+	#column(column whose data we want), tableName(table we want to access the column from), idName (name of the identifier whose id we are using' , attrId(the id of the attribute)
 	function getAttributeName($column,$tableName,$idName,$attrId)
 	{
-		require('esomoDbConnect.php');
+		require("$this->dbPath");
 		$q = "SELECT $column FROM $tableName WHERE $idName=$attrId";
 		if($result = mysqli_query($dbCon,$q))
 		{
