@@ -5,10 +5,8 @@
         <title>Esomo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-       <!--<link  rel="stylesheet" type="text/css" href="css/theme.css"/>-->
-       <!--<link  rel="stylesheet" type="text/css" href="css/bootstrap-theme.css"/>
-       <link  rel="stylesheet" type="text/css" href="css/bootstrap.css"/>-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+       <!--<link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>-->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
        <link  rel="stylesheet" type="text/css" href="css/main.css"/>
        <link  rel="stylesheet" type="text/css" href="css/color.css"/>
     </head>

@@ -21,7 +21,7 @@
 <?php
 #load the navigation menu
     include_once('../navigation.php');
-    $signupNav = new Navigation('../index.php','../learn.php','../tests.php','signup.php','forgot.php','../assignment.php','account.php');
+    $signupNav = new Navigation('../index.php','../learn.php','../tests.php','signup.php','forgot.php','../assignment.php','#');
     $signupNav->updateNav();//updates the nav without setting anything as active
 ?>
 
@@ -38,7 +38,7 @@
             
             <h4>Change Username</h4>
            <div class='form-group>
-            <input type='text' placeholder='Username'></input><button class='btn btn-default'>CHANGE</button>
+            <input type='button' class='btn btn-default'>My Button</input>
            </div>
 
            <h4>Change Password</h4>
@@ -54,7 +54,7 @@
 	</div>
 </div>";
 
-  $sessionHandler->redirectNotLoggedUser($pageContent,'../learn.php');
+  $sessionHandler->redirectNotLoggedUser($pageContent,'login.php');
 ?>
 
 </body>
