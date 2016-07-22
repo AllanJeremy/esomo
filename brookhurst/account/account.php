@@ -44,7 +44,7 @@
 	$pageContent = "<div class='panel panel-primary col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2' id='pageContent'>
 		
 		<div class='panel-header'>
-			<h4 class='hidden-xs center_text'>Your Account</h4>
+      <br><h3 class='hidden-xs center_text'>ACCOUNT SETTINGS</h3>
 			<h4 class='visible-xs center_text'>Profile</h4>
 		</div> 
     
