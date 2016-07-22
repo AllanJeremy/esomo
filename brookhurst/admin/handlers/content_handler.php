@@ -226,7 +226,7 @@ class ContentHandler
 	function getAss()
 	{	
 	    require_once('db_info_handler.php');
-		$dbInfo = new DbInfo();
+		$dbInfo = new DbInfo('esomoDbConnect.php');
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
@@ -306,7 +306,7 @@ class ContentHandler
 	function getSchedule() 
 	{
 		require_once('db_info_handler.php');
-		$dbInfo = new DbInfo();
+		$dbInfo = new DbInfo('esomoDbConnect.php');
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();

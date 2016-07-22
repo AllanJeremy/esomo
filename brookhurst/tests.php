@@ -44,7 +44,7 @@
           if (mysqli_num_rows($tests)>0)
           {
             require_once('functions/dbInfo.php');
-            $dbInfo = new DbInfo();
+            $dbInfo = new DbInfo('esomoDbConnect.php');
 
             $content .= "<table class='table'><tr><th colspan='4'> <h3 class='center_text'>Some tests to test yourself</h3></tr>";
             $content .= "<tr><th class='center_text'>Subject</th>
