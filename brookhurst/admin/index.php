@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 
+<?php 
+session_start();  
+        require('../esomoDbConnect.php'); 
+    include('../functions/session_functions.php');
+        $sessionHandler = new SessionFunctions();
+
+        #logout of student account
+        //$sessionHandler->logoutNoRedirect();
+
+        
+?>
+
 <html lang="en">
     <head>
         <title>Admin</title>
@@ -11,14 +23,8 @@
     
     <body id="homeBody">
       <?php 
-        session_start();  
-         include('../functions/session_functions.php');
-        $sessionHandler = new SessionFunctions();
-
-        #logout of student account
-        //$sessionHandler->logoutNoRedirect();
-
         require_once('handlers/content_handler.php');
+        require_once('handlers/dynamic_content.php');
         $contentHandler = new ContentHandler();
 $curUsername = $_SESSION['s_admin_username'];
 $indexContent = <<<EOD
@@ -96,7 +102,7 @@ unset($curUsername);#cleanup - variable has served its purpose
 
 ?>
     <div class='tab-content container-fluid col-sm-8 col-sm-offset-1' id='pageContent'>
-
+<div id="test"></div>
       <?php 
 
         //echo the divs that will be toggled by the pill navigation
@@ -110,8 +116,7 @@ unset($curUsername);#cleanup - variable has served its purpose
         // echo $contentHandler->getTopicContent();
       ?>
     </div>
-
-   </div>
+    
    <!--footer. Will add once I figure a way of having a sticky footer.-->
       
   </body>

@@ -10,7 +10,7 @@ class Navigation
 	public $forgotPassPath;
 	public $testsPath;
 	public $assignmentPath;
-	public $accountPath;
+	
 	public $loginHandlerPath;
 
 	//
@@ -20,7 +20,7 @@ class Navigation
 	protected $assignmentClass;
 	
 	
-	function __construct($pathIndex,$pathLearn,$pathTests,$pathSignup,$pathForgotPass,$assignmentPath,$accountPath)
+	function __construct($pathIndex,$pathLearn,$pathTests,$pathSignup,$pathForgotPass,$assignmentPath)
 	{	
 	
 		$this->loginHandlerPath = 'loginHandler.php';//By default the login handler path is in the default location
@@ -33,7 +33,6 @@ class Navigation
 		$this->signupPath = $pathSignup;
 		$this->forgotPassPath = $pathForgotPass;
 		$this->assignmentPath = $assignmentPath;
-		$this->accountPath = $accountPath;
 	}
 
 
@@ -76,9 +75,9 @@ class Navigation
 		{define('ACTIVE_NAV_CLASS','class=\'active\'');}
 
 		$navPart = "
-		<nav class='navbar navbar-default'>
+		<nav class='navbar navbar-default navbar-static-top white'>
           <div class='container-fluid'>
-                <div class='navbar-head'>
+                <div class='navbar-header'>
                     <a class='navbar-brand' href='#'>Logo</a>
                 </div>
             
@@ -92,6 +91,7 @@ class Navigation
             <li $learnClass><a href='$learnPath'>
             	LEARN</a>
             </li>  
+
             <li $assignmentClass><a href='$assignmentPath'>ASSIGNMENTS
             	</a>
             </li> 
@@ -114,11 +114,11 @@ class Navigation
 
 		$signupPart = "
 
-              <div class='myNavInputs'>
-                <button class='btn btn-primary' data-toggle='modal' data-target='#loginModal'>Login</button>
+              <ul class='navbar-right nav navbar-nav myNavInputs'>
+                <button class='btn btn-primary navbar-btn' data-toggle='modal' data-target='#loginModal'>Login</button>
                 <a href=$signupPath class='btn btn-success'>Sign Up</a>
                 
-              </div>
+              </ul>
                
               <div id='loginModal' class='modal fade' role='dialog'>
               
@@ -163,11 +163,10 @@ class Navigation
 	function genLogoutPart()
 	{//if we are here, it means we are logged in
 		$logoutPart = '
-		<div class="myNavInputs">
-		<a href="'.$this->accountPath.'" class="btn"><span class="glyphicon glyphicon-user"></span> Account</a>
+		<ul class="navbar-right navbar-btn navbar-nav myNavInputs">
 		<a href="?action=logout" class="btn btn-success"><span class="glyphicon glyphicon-off"></span>  Logout</a>
 
-		</div>
+		</ul>
 		';	
 		$this->checkLogout();
 		echo $logoutPart;
@@ -176,7 +175,7 @@ class Navigation
 	//closes the navigation and div wrapper tags
 	function closeNav()
 	{
-		echo "</div> \n </nav>";
+		echo "</div> \n </div> \n </nav>";
 	}
 
 	//check if the user has logged out - use only when the user is logged in
