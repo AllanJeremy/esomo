@@ -82,6 +82,8 @@ li.active:hover
 .myNavInputs
 {
 	margin-right: 16px;
+    margin-bottom: 9px;
+    margin-top: 9px;
 }
 
 #loginButton
