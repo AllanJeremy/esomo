@@ -5,8 +5,8 @@
         <title>Learn</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--<link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>-->
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
        <link  rel="stylesheet" type="text/css" href="css/main.css"/>
        <link  rel="stylesheet" type="text/css" href="css/color.css"/>
     </head>
@@ -14,7 +14,7 @@
     <body>
      <?php 
         include_once('navigation.php');
-        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php');
+        $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
         $learnNav->loginHandlerPath = 'account/loginHandler.php';
         $learnNav->setLearnActive();
       ?>

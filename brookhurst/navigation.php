@@ -10,6 +10,7 @@ class Navigation
 	public $forgotPassPath;
 	public $testsPath;
 	public $assignmentPath;
+	public $accountPath;
 	
 	public $loginHandlerPath;
 
@@ -20,7 +21,7 @@ class Navigation
 	protected $assignmentClass;
 	
 	
-	function __construct($pathIndex,$pathLearn,$pathTests,$pathSignup,$pathForgotPass,$assignmentPath)
+	function __construct($pathIndex,$pathLearn,$pathTests,$pathSignup,$pathForgotPass,$assignmentPath,$accPath)
 	{	
 	
 		$this->loginHandlerPath = 'loginHandler.php';//By default the login handler path is in the default location
@@ -33,6 +34,8 @@ class Navigation
 		$this->signupPath = $pathSignup;
 		$this->forgotPassPath = $pathForgotPass;
 		$this->assignmentPath = $assignmentPath;
+
+		$this->accountPath = $accPath;
 	}
 
 
@@ -75,7 +78,7 @@ class Navigation
 		{define('ACTIVE_NAV_CLASS','class=\'active\'');}
 
 		$navPart = "
-		<nav class='navbar navbar-default navbar-static-top white'>
+		<nav class='navbar navbar-default navbar-static-top'>
           <div class='container-fluid'>
                 <div class='navbar-header'>
                     <a class='navbar-brand' href='#'>Logo</a>
@@ -164,6 +167,7 @@ class Navigation
 	{//if we are here, it means we are logged in
 		$logoutPart = '
 		<ul class="navbar-right navbar-btn navbar-nav myNavInputs">
+		<a href="'.$this->accountPath.'" class="btn btn-default"><span class="glyphicon glyphicon-user"></span> Account</a>
 		<a href="?action=logout" class="btn btn-success"><span class="glyphicon glyphicon-off"></span>  Logout</a>
 
 		</ul>

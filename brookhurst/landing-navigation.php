@@ -141,6 +141,7 @@ class Navigation
 	{//if we are here, it means we are logged in
 		$logoutPart = '
 		<ul class="navbar-right navbar-btn navbar-nav myNavInputs">
+		<a href="account/account.php" class="btn btn-default"><span class="glyphicon glyphicon-user"></span> Account</a>
 		<a href="?action=logout" class="btn btn-success"><span class="glyphicon glyphicon-off"></span>  Logout</a>
 
 		</ul>
@@ -158,7 +159,7 @@ class Navigation
 	//check if the user has logged out - use only when the user is logged in
 	private function checkLogout()
 	{
-		$actionVar = @($_GET['action']);#stores the current action - @ to suppress errors
+		$actionVar = @htmlspecialchars($_GET['action']);#stores the current action - @ to suppress errors
 
 		//if the user has requested to logout
 		if (isset($actionVar))
