@@ -38,7 +38,7 @@
             
             <h4>Change Username</h4>
            <div class='form-group>
-            <input type='text' placeholder='Username'></input><button class='btn btn-default'>CHANGE</button>
+            <input type='button' class='btn btn-default'>My Button</input>
            </div>
 
            <h4>Change Password</h4>
