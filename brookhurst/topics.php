@@ -26,7 +26,7 @@ class TopicHolder{
 
 		$pageTitle =$backButton . $subjectSelection . "<h3 style='text-align:center;margin-bottom:1em'> Grade ". ( @htmlspecialchars($_GET['fId']) ) . " - " . $subjectName . "</h3>";
 
-		echo "<div class='well' style='overflow:auto'>";//open wrapper well div
+		echo "<div class='well clearfix'>";//open wrapper well div
 		echo $pageTitle;
 		$this->createSearchPanel();
 		$this->createTopicPanel();//create the topic panel - sets the $topicCount variable
@@ -189,16 +189,16 @@ EOD;
 			$infoPanelTabs
 			<div class="tab-content well">
 
-				<div class="tab-pane active overflow" id="tContentsWrapper">
+				<div class="tab-pane active clearfix" id="tContentsWrapper">
 					$topicContent
 				</div>
-				<div class="tab-pane overflow" id="articlesWrapper">
+				<div class="tab-pane clearfix" id="articlesWrapper">
 					$articleContent
 				</div>
-				<div class="tab-pane overflow" id="booksWrapper">
+				<div class="tab-pane clearfix" id="booksWrapper">
 					$bookContent
 				</div>
-				<div class="tab-pane overflow" id="videosWrapper">
+				<div class="tab-pane clearfix" id="videosWrapper">
 					$videoContent	
 				</div>
 			</div>
