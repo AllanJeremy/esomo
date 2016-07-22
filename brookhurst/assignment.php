@@ -13,7 +13,7 @@
 
     <?php
         include_once('navigation.php');
-        $assNav = new Navigation('index.php','learn.php','tests.php','account/signup.php','account/forgot.php','#');
+        $assNav = new Navigation('index.php','learn.php','tests.php','account/signup.php','account/forgot.php','#','account/account.php');
         $assNav->loginHandlerPath = 'account/loginHandler.php';
         $assNav->setAssignmentActive();
     ?>

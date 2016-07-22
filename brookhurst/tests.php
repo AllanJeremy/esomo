@@ -13,7 +13,7 @@
     <!--Navbar-->
      <?php 
         include_once('navigation.php');
-        $testsNav = new Navigation('index.php','learn.php','#','account/signup.php','account/forgot.php','assignment.php');
+        $testsNav = new Navigation('index.php','learn.php','#','account/signup.php','account/forgot.php','assignment.php','account/account.php');
         $testsNav->loginHandlerPath = 'account/loginHandler.php';
         $testsNav->setTestsActive();
       ?>
