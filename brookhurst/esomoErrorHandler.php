@@ -92,6 +92,11 @@ class CustomErrorHandler
 		return preg_match('/[^a-zA-Z]+/', $variable, $matches);
 	}
 
+	function containsNonAlphanumeric($variable)
+	{
+			return preg_match('/[^a-zA-Z0-9]+/', $variable, $matches);
+	}
+
 	//draws a success panel
 	function displaySignupSuccess()
 	{
@@ -136,7 +141,7 @@ EOD;
 			$_POST['admin_usernameInput']	 = htmlspecialchars($_POST['admin_usernameInput']);
 
 			//if it contains special characters - consider allowing numbers to be appended for username
-			if($this->containsSpecialChars($_POST['admin_usernameInput']))
+			if($this->containsNonAlphanumeric($_POST['admin_usernameInput']))
 			{
 				$error .= '<br><p>Username contains special characters. This field only allows for alphanumeric characters(A-Z 0-9).</p>';
 			}
@@ -243,7 +248,7 @@ EOD;
 			$_POST['usernameInput']	 = htmlspecialchars($_POST['usernameInput']);
 
 			//if it contains special characters - consider allowing numbers to be appended for username
-			if($this->containsSpecialChars($_POST['usernameInput']))
+			if($this->containsNonAlphanumeric($_POST['usernameInput']))
 			{
 				$error .= '<br><p>Username contains special characters. This field only allows for alphanumeric characters(A-Z 0-9).</p>';
 			}
