@@ -2,6 +2,7 @@
 	
 	//session_start();
 	$std_username='';
+	$acc_id='';
 	$std_id='';
 	$std_fName='';
 	$std_lName='';
@@ -13,7 +14,9 @@
 	{
 			$_SESSION['std_username']=$GLOBALS['std_username']; #username - student username [used in profile]
 
-			$_SESSION['std_id']=$GLOBALS['std_id']; #student_id - student id [used in profile]
+			$_SESSION['acc_id']=$GLOBALS['acc_id']; #account id [used in profile]
+			
+			$_SESSION['std_id']=$GLOBALS['acc_id']; #student id - student id [used in profile]
 			
 			$_SESSION['std_fName']=$GLOBALS['std_fName']; #std_fName - student first name [used in profile]
 			
@@ -109,7 +112,8 @@
 						
 						//set all the global variables that will be used by session
 						$GLOBALS['std_username'] = $item['username'];
-						$GLOBALS['std_id'] = $tmp_stud_id;
+						$GLOBALS['acc_id'] = $item['acc_id'];
+						$GLOBALS['std_id'] = $student['student_id'];
 						$GLOBALS['std_fName'] = $item['first_name'];
 						$GLOBALS['std_lName'] = $item['last_name'];
 						$GLOBALS['std_stream_id'] = $student['stream_id'];
