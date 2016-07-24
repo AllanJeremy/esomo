@@ -14,6 +14,14 @@ class ContentHandler
 	private $maxDueDate;
 	private $chosenSubjectLevelCon;
     
+	#class variables to keep page persistent
+	public $contentClass;
+	public $assignmentClass;
+	public $profileClass;
+	public $scheduleClass;
+	public $statClass;
+
+	#assignment content types accepted for files
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
 	function __construct()
@@ -28,6 +36,7 @@ class ContentHandler
 		$this->minDueDate = $currDate;
 		$this->maxDueDate = ('"2030-12-12"');
 
+		$this->contentClass = 'active';
 		#accepted assignment content types
 		$this->ass_contentTypes = '\'.zip .pdf .docx .xls\'';
 
@@ -37,16 +46,7 @@ class ContentHandler
 		$this->accessLevel = $_SESSION['s_admin_accessLevel'];
 		$this->errorMessage = "You do not have sufficient rights to view this content";
 
-		#checking if a record has been deleted 
-		// $schRemoveId = htmlspecialchars($_GET['rm']);
-		// if ($schRemoveId!==null)
-		// {
-		// 	unset($_GET['rm']);
-		// }
-		// else
-		// {
-		// 	echo "Remove id not set";
-		// }
+		#persistence functions
 	}
 
 	//returns the content management content
