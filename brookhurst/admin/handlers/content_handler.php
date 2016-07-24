@@ -36,6 +36,17 @@ class ContentHandler
 
 		$this->accessLevel = $_SESSION['s_admin_accessLevel'];
 		$this->errorMessage = "You do not have sufficient rights to view this content";
+
+		#checking if a record has been deleted 
+		// $schRemoveId = htmlspecialchars($_GET['rm']);
+		// if ($schRemoveId!==null)
+		// {
+		// 	unset($_GET['rm']);
+		// }
+		// else
+		// {
+		// 	echo "Remove id not set";
+		// }
 	}
 
 	//returns the content management content
@@ -328,7 +339,7 @@ class ContentHandler
 		#create tab
 		$content .= "<div class='tab-pane fade in active' id='createSchedule'>";
 		#form for creating schedule
-		$content .= "<form class ='form top_spacing bottom_spacing' action='submitSchedule.php'>";
+		$content .= "<form class ='form top_spacing bottom_spacing' method='post' action='handlers/submitSchedule.php'>";
 		
 		$content .= "<div class='form-group'>
 		<label class='control-label hidden-xs' for='schTitle'> Title *</label>
@@ -370,7 +381,7 @@ class ContentHandler
 		</div>
 		<div class='form-group'>
 			<label for='sch_date' class='control-label'>Time * </label>
-			<input type='time' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+			<input type='time' required='yes' class='form-control' name='sch_timeInput' id='sch_date'></input>
 		</div>";
 
 		$content .= "<button type='submit' class='btn btn-primary col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bottom_spacing top_spacing'>ADD SCHEDULE</button>";
@@ -404,7 +415,7 @@ class ContentHandler
 				$content .= "<td>".$schedule['task_date']."</td>";
 				$content .= "<td>".$curClassName."</td>";
 				$content .= "<td>".$curStreamName."</td>";
-				$content .= "<td><a class='btn btn-warning'>Remove</a></td>";
+				$content .= "<td><a class='btn btn-warning' href='?rm=".($schedule['task_id'])."'>Remove</a></td>";
 				$content .= "</tr>";
 			}
 			
