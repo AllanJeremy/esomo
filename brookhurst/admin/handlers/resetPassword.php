@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     $result = $stmt->get_result();
                     $rowCount = mysqli_num_rows($result);
-                    if ($rowCount=1)
+                    if ($rowCount==1)
                     {
                         foreach ($result as $item) {
                             

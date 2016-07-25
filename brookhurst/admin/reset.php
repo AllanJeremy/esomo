@@ -28,15 +28,15 @@ if(isset($_GET['action']))
             $result = $stmt->get_result();
             
             $rowCount = mysqli_num_rows($result);
-            if ($rowCount=1)
+            if ($rowCount==1)
             {
                 foreach ($result as $item) {
 
                     //student information variables from database
-                    $tmp_recover_id = $item['recover_id'];
-                    $tmp_acc_email = $item['acc_email'];
-                    $tmp_date_created = $item['date_created'];
-                    $tmp_password = $item['temp_password'];
+                    $tmp_recover_id = @$item['recover_id'];
+                    $tmp_acc_email = @$item['acc_email'];
+                    $tmp_date_created = @$item['date_created'];
+                    $tmp_password = @$item['temp_password'];
                 }
                 //$emailheader = md5(1290*3+$tmp_acc_email);
                 //$emailheader = password_hash($tmp_acc_email);
@@ -84,7 +84,7 @@ if(isset($_GET['action']))
                 
                 
             } else {
-                echo "<h4>error in the link provided.<br>probably link expired</h4>";
+                echo "<h4>Error in the link provided.<br>Probably link expired</h4>";
             }
         
         }
