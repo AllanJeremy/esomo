@@ -98,12 +98,12 @@
             foreach($result as $tableItem)
             {
               #temporary file path
-              $curItem_path = $tableItem['ass_file_path'];
+              $curItem_path = @$tableItem['ass_file_path'];
               
               $dl_link = '#';#Download link
               $dl_title = '';#Download title
 
-                           #add content generation here
+              #add content generation here
               $assContent .= "<tr>
                <td>".$tableItem['ass_title']."</td>"#Assignment title
               ."<td>".getTeacherName($tableItem['teacher_id'])."</td>"#Assignment sender
@@ -176,7 +176,7 @@
           }
           else//record does not exist in database
           {
-            return "invalid tr_id: tr not found";
+            return "Couldn't retrieve teacher name";
           }
         }else
         {

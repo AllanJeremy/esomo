@@ -14,6 +14,14 @@ class ContentHandler
 	private $maxDueDate;
 	private $chosenSubjectLevelCon;
     
+	#class variables to keep page persistent
+	public $contentClass;
+	public $assignmentClass;
+	public $profileClass;
+	public $scheduleClass;
+	public $statClass;
+
+	#assignment content types accepted for files
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
 	function __construct()
@@ -28,6 +36,7 @@ class ContentHandler
 		$this->minDueDate = $currDate;
 		$this->maxDueDate = ('"2030-12-12"');
 
+		$this->contentClass = 'active';
 		#accepted assignment content types
 		$this->ass_contentTypes = '\'.zip .pdf .docx .xls\'';
 
@@ -36,6 +45,8 @@ class ContentHandler
 
 		$this->accessLevel = $_SESSION['s_admin_accessLevel'];
 		$this->errorMessage = "You do not have sufficient rights to view this content";
+
+		#persistence functions
 	}
 
 	//returns the content management content
@@ -226,7 +237,7 @@ class ContentHandler
 	function getAss()
 	{	
 	    require_once('db_info_handler.php');
-		$dbInfo = new DbInfo();
+		$dbInfo = new DbInfo('esomoDbConnect.php');
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
@@ -306,7 +317,7 @@ class ContentHandler
 	function getSchedule() 
 	{
 		require_once('db_info_handler.php');
-		$dbInfo = new DbInfo();
+		$dbInfo = new DbInfo('esomoDbConnect.php');
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
@@ -328,7 +339,7 @@ class ContentHandler
 		#create tab
 		$content .= "<div class='tab-pane fade in active' id='createSchedule'>";
 		#form for creating schedule
-		$content .= "<form class ='form top_spacing bottom_spacing' action='submitSchedule.php'>";
+		$content .= "<form class ='form top_spacing bottom_spacing' method='post' action='handlers/submitSchedule.php'>";
 		
 		$content .= "<div class='form-group'>
 		<label class='control-label hidden-xs' for='schTitle'> Title *</label>
@@ -370,7 +381,7 @@ class ContentHandler
 		</div>
 		<div class='form-group'>
 			<label for='sch_date' class='control-label'>Time * </label>
-			<input type='time' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+			<input type='time' required='yes' class='form-control' name='sch_timeInput' id='sch_date'></input>
 		</div>";
 
 		$content .= "<button type='submit' class='btn btn-primary col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bottom_spacing top_spacing'>ADD SCHEDULE</button>";
@@ -404,7 +415,7 @@ class ContentHandler
 				$content .= "<td>".$schedule['task_date']."</td>";
 				$content .= "<td>".$curClassName."</td>";
 				$content .= "<td>".$curStreamName."</td>";
-				$content .= "<td><a class='btn btn-warning'>Remove</a></td>";
+				$content .= "<td><a class='btn btn-warning' href='?rm=".($schedule['task_id'])."'>Remove</a></td>";
 				$content .= "</tr>";
 			}
 			
@@ -461,8 +472,26 @@ class ContentHandler
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_profile'>";#open div
 
 		#content here
-		$content .= "<h2>Profile</h2>";
-		$content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<h3 class='center_text'>Profile</h3>";
+		// $content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<div class='panel-primary container-fluid clearfix'>
+			<form class='form' action='handlers/changePassword.php' method='POST'>
+				<h6 class='center_text'><b>Username : </b> " . ($_SESSION['s_admin_username']) . "</h6>
+
+				<label class='control-label hidden-xs col-sm-2' for='adm_curPass'>Current Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
+				
+				<label class='control-label hidden-xs col-sm-2' for='adm_newPass'>New Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
+				
+				<label class='control-label hidden-xs col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+
+				<button type='submit' class='btn btn-info col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
+				<br><br>
+			</form>
+		</div>";
+		
 		#close div
 		$content.="</div>";
 		

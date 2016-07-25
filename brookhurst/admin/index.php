@@ -35,7 +35,7 @@ $indexContent = <<<EOD
           <h3>Admin Panel</h3>
           <ul class='nav nav-pills nav-stacked' id='nav_parent'>
             
-            <li class='active'>
+            <li class='$contentHandler->contentClass'>
               <a  data-toggle= 'pill' href='#nav_content'>Content</a>
               </li>
             <li>
