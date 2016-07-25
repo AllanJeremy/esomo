@@ -23,19 +23,8 @@
         
         <?php
          
-        $curSubId = @($_GET['subId']); 
-        
 
-        //$dbCon database connection variable in learnDbController
-        if ($curSubId!== null)
-        {
-          include("formSelection.php");
-          $formSelection = new FormSelection();
-          $formSelection->generateFormPage($curSubId);
-        }
 
-        else
-        {
 
           require_once('functions/session_functions.php');
           $sessionHandler = new SessionFunctions();
@@ -43,6 +32,15 @@
 
           if($sessionHandler->sessionActive())
           {
+
+           $curSubId = @($_GET['subId']); 
+            //$dbCon database connection variable in learnDbController
+            if ($curSubId!== null)
+            {
+              include("formSelection.php");
+              $formSelection = new FormSelection();
+              $formSelection->generateFormPage($curSubId);
+            }
             require_once('esomoDbConnect.php');//includes an opening to the database
             echo "<h2 style='padding:2rem;' class='grey-text'>Learning material to get you started as the best student.</h2>";
             echo "<div class='far-grey'>";
@@ -92,7 +90,6 @@
           {
            echo $errorMessage;
           }
-         }//end of else
         
     function seoUrl($string) {
         //Lower case everything
