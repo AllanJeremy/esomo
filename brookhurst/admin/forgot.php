@@ -11,18 +11,13 @@
     </head>
     
     <body>
-<!--Navbar-->
-     <?php 
-        include_once('../navigation.php');
-        $signupNav = new Navigation('../index.php','../learn.php','../tests.php','signup.php','#','../assignment.php','account.php');
-        $signupNav->updateNav();//updates the nav without setting anything as active
-      ?>
 
       <?php 
       //Include the session functions file once
-      
+      include_once('../functions/session_functions.php');
       
       $content = <<<EOD
+        <br>
         <div class="container well">
           <h3>Recover your password here</h3>
           <br>
