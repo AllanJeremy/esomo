@@ -157,7 +157,6 @@
             $passEncrypt = new PasswordEncrypt();
             
             $password = $passEncrypt->encryptPass($password); //encrypt the password
-
             $query = "INSERT INTO accounts(first_name,last_name,email,username,student_id,password) VALUES (?,?,?,?,?,?) ";
 
             if($stmt= $dbCon->prepare($query))
@@ -188,6 +187,7 @@
           }
 
         ?>
+              </div></div></div>
     </body>
    <script src="../js/jquery.min.js"></script>
    <script src="../js/bootstrap.min.js"></script>
