@@ -86,7 +86,7 @@
           if (mysqli_num_rows($result)>0)#works well
           {
             $assContent = "";
-            $assContent .= "<div class='container-fluid well table-responsive'><table class='table'>";#create new table
+            $assContent .= "<div class='container-fluid well table-responsive'><table class='table table-striped'>";#create new table
             $assContent .=  "<tr><th class='center_text'>Title</th>
               <th class='center_text'>Sent by</th>
               <th class='center_text'>Date sent</th>
