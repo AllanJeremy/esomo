@@ -33,7 +33,7 @@ $indexContent = <<<EOD
 
         <div class='col-sm-3'>
           <h3>Admin Panel</h3>
-          <ul class='nav nav-pills nav-stacked' id='nav_parent'>
+          <ul class='nav nav-pills nav-stacked' id='nav_parent' data-spy="affix" data-offset-top="205">
             
             <li class='$contentHandler->contentClass'>
               <a  data-toggle= 'pill' href='#nav_content'>Content</a>
