@@ -171,6 +171,8 @@ class SessionFunctions
 		$acc_result = mysqli_query($dbCon,$acc_query);
 		$std_result = mysqli_query($dbCon,$std_query);
 		
+	if(mysqli_num_rows($acc_result)>0)
+	{
 		foreach($acc_result as $account)
 		{
 			@$_SESSION['std_username'] = $account['username'];
@@ -179,11 +181,16 @@ class SessionFunctions
 			@$_SESSION['std_fName'] = $account['first_name'];
 			@$_SESSION['std_lName'] = $account['last_name'];
 		}
-		
+	}
+
+	if(mysqli_num_rows($std_result)>0)
+	{		
 		foreach($std_result as $student)
 		{
 			@$_SESSION['std_stream_id'] = $student['stream_id'];
 			@$_SESSION['std_class_id'] = $student['class_id'];
 		}
+	}
+	
 	}
 }

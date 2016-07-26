@@ -43,8 +43,8 @@
   $currentUsername = $_SESSION['std_username'];
   $currentFirstName = $_SESSION['std_fName'];
   $currentLastName = $_SESSION['std_lName'];
-  $currentClass = $dbInfo->getAttributeName('class_name','class_selection','class_id',$_SESSION['std_class_id']);
-  $currentStream = $dbInfo->getAttributeName('stream_name','streams','stream_id',$_SESSION['std_stream_id']);
+  $currentClass = $dbInfo->getClassName($_SESSION['std_class_id']);
+  $currentStream = $dbInfo->getStreamName($_SESSION['std_stream_id']);
 
  
 

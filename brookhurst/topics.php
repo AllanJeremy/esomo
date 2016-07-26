@@ -283,7 +283,7 @@ EOD;
 				}
 				else
 				{
-				$articlesContent .= "<table class='table'>";
+				$articlesContent .= "<table class='table table-hover'>";
 				foreach ($articleResult as $result) {
 					$tmp_articleName = $result['article_title'];#article title
 					$tmp_articlePath = $result['article_path'];#article path
@@ -355,7 +355,7 @@ EOD;
 				else
 				{
 
-				$booksContent .= "<table class='table'>";
+				$booksContent .= "<table class='table table-hover'>";
 				foreach ($bookResult as $result) {
 					$tmp_bookName = $result['book_title'];#article title
 					$tmp_bookPath = $result['book_path'];#article path
@@ -428,7 +428,7 @@ EOD;
 				}
 				else
 				{
-				$videosContent .= "<table class='table'>";
+				$videosContent .= "<table class='table table-hover'>";
 				foreach ($videoResult as $result) {
 					$tmp_videoName = $result['video_title'];#article title
 					$tmp_videoPath = $result['video_path'];#article path
