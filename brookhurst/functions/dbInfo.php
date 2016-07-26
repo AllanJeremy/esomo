@@ -42,4 +42,23 @@ class DbInfo{
 			return null;#failed to  run the query
 		}
 	}
+
+	#get the name of  a class
+	function getClassName($classId)
+	{
+		return($this->getAttributeName('class_name','class_selection','class_id',$classId));
+	}
+
+	#get the name of a stream
+	function getStreamName($streamId)
+	{
+		return($this->getAttributeName('stream_name','streams','stream_id',$streamId));		
+	}
+	
+	#get the name of a stream
+	function getSubjectName($subjectId)
+	{
+		return($this->getAttributeName('subject_name','subjects','subject_id',$subjectId));		
+	}
+	
 }

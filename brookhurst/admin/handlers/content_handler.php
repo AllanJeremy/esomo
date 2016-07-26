@@ -14,6 +14,14 @@ class ContentHandler
 	private $maxDueDate;
 	private $chosenSubjectLevelCon;
     
+	#class variables to keep page persistent
+	public $contentClass;
+	public $assignmentClass;
+	public $profileClass;
+	public $scheduleClass;
+	public $statClass;
+
+	#assignment content types accepted for files
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
 	function __construct()
@@ -28,6 +36,7 @@ class ContentHandler
 		$this->minDueDate = $currDate;
 		$this->maxDueDate = ('"2030-12-12"');
 
+		$this->contentClass = 'active';
 		#accepted assignment content types
 		$this->ass_contentTypes = '\'.zip .pdf .docx .xls\'';
 
@@ -36,6 +45,8 @@ class ContentHandler
 
 		$this->accessLevel = $_SESSION['s_admin_accessLevel'];
 		$this->errorMessage = "You do not have sufficient rights to view this content";
+
+		#persistence functions
 	}
 
 	//returns the content management content
@@ -306,7 +317,7 @@ class ContentHandler
 	function getSchedule() 
 	{
 		require_once('db_info_handler.php');
-		$dbInfo = new DbInfo('esomoDbConnect.php');
+		$dbInfo = new DbInfo();
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
@@ -328,7 +339,7 @@ class ContentHandler
 		#create tab
 		$content .= "<div class='tab-pane fade in active' id='createSchedule'>";
 		#form for creating schedule
-		$content .= "<form class ='form top_spacing bottom_spacing' action='submitSchedule.php'>";
+		$content .= "<form class ='form top_spacing bottom_spacing' method='post' action='handlers/submitSchedule.php'>";
 		
 		$content .= "<div class='form-group'>
 		<label class='control-label hidden-xs' for='schTitle'> Title *</label>
@@ -370,7 +381,7 @@ class ContentHandler
 		</div>
 		<div class='form-group'>
 			<label for='sch_date' class='control-label'>Time * </label>
-			<input type='time' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+			<input type='time' required='yes' class='form-control' name='sch_timeInput' id='sch_date'></input>
 		</div>";
 
 		$content .= "<button type='submit' class='btn btn-primary col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bottom_spacing top_spacing'>ADD SCHEDULE</button>";
@@ -380,7 +391,7 @@ class ContentHandler
 		#manage schedules tab
 		$content .= "<div id='manageSchedule' class='tab-pane fade in'>";
 		$content .= "<h4 class='center_text'>Current Schedules</h4>";
-		$content .= "<table class='table'>";
+		$content .= "<table class='table table-striped'>";
 		$content .="<tr><th>Title</th><th>Date</th><th>Class</th><th>Stream</th><th>Remove</th></tr>";
 
 		#if there are currently no schedules
@@ -396,15 +407,15 @@ class ContentHandler
 			#generate a table with the details
 			foreach($schedules as $schedule)
 			{   
-				$curClassName = ($dbInfo->getClassName($schedule['class_id']))['class_name'];
-				$curStreamName = ($dbInfo->getStreamName($schedule['stream_id']))['stream_name'];
+				$curClassName = ($dbInfo->getClassName($schedule['class_id']));
+				$curStreamName = ($dbInfo->getStreamName($schedule['stream_id']));
 
 				$content .= "<tr>";
 				$content .= "<td>".$schedule['task_title']."</td>";
 				$content .= "<td>".$schedule['task_date']."</td>";
 				$content .= "<td>".$curClassName."</td>";
 				$content .= "<td>".$curStreamName."</td>";
-				$content .= "<td><a class='btn btn-warning'>Remove</a></td>";
+				$content .= "<td><a class='btn btn-warning' href='?rm=".($schedule['task_id'])."'>Remove</a></td>";
 				$content .= "</tr>";
 			}
 			
@@ -436,11 +447,111 @@ class ContentHandler
 	//returns the statistics management content
 	function getStats()
 	{
+		#getting information from the database
+	    require_once('db_info_handler.php');
+		$dbInfo = new DbInfo();
+		$schedules = $dbInfo->getAllSchedules();
+		$assignments = $dbInfo->getAllAss();
+
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_stats'>";#open div
 
 		#content here
-		$content .= "<h2>Statistics</h2>";
-		$content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<h3>Statistics</h3>";
+		//$content .= "<p>This module is still under construction, please check again later.</p>";
+
+		$content .= "<ul class='nav nav-tabs nav-justified'>
+			<li class='active'><a data-toggle='tab' href='#stats_schedules'>SCHEDULES</a></li>
+			<li><a data-toggle='tab' href='#stats_ass'>ASSIGNMENTS</a></li>
+		</ul>";
+
+		$content .= "<div class='tab-content'>";
+
+		#schedules tab pane
+		$content .= "<div class='tab-pane active clearfix' id='stats_schedules'>";
+
+		#search
+		$content .= "<div class='container-fluid clearfix'>";
+		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2' id='stat_schedule_search'>Search</button><br><br>";
+		$content .= "</div>";
+		#end of search
+
+		#if there are schedules in the database
+		if($schedules !== 0 && $schedules!==false)
+		{	$content .= "<table class='table table-striped'>
+			<tr>
+				<th>Teacher</th>
+				<th>Schedule Name</th>
+				<th>Date</th>
+				<th>Class</th>
+				<th>Stream</th>
+			</tr>";
+			foreach($schedules as $schedule )
+			{
+				$content .= "<tr>
+				<td>".$dbInfo->getTeacherName($schedule['teacher_id'])."</td>
+				<td>".$schedule['task_title']."</td>
+				<td>".$schedule['task_date']."</td>
+				<td>".$dbInfo->getClassName($schedule['class_id'])."</td>
+				<td>".$dbInfo->getStreamName($schedule['stream_id'])."</td>
+			</tr>";
+			}
+			unset($schedule);#cleanup after foreach
+		
+			$content .= "</table>";
+		}
+		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
+		{
+			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+		}
+
+		$content .= "</div>";#close assignments tab pane
+
+		#assignments tab panel
+		$content .= "<div class='table-responsive tab-pane clearfix' id='stats_ass'>";
+
+		#search
+		$content .= "<div class='container-fluid clearfix'>";
+		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2' id='stat_ass_search'>Search</button><br><br>";
+		$content .= "</div>";
+		#end of search
+
+		#if there are schedules in the database
+		if($assignments !== 0 && $assignments!==false)
+		{	$content .= "<table class='table table-striped'>
+			<tr>
+				<th>Teacher</th>
+				<th>Title</th>
+				<th>Class</th>
+				<th>Stream</th>
+				<th>Sent Date</th>
+				<th>Due Date</th>
+			</tr>";
+			foreach($assignments as $ass )
+			{
+				$content .= "<tr>
+				<td>".$dbInfo->getTeacherName($ass['teacher_id'])."</td>
+				<td>".$ass['ass_title']."</td>
+				<td>".$dbInfo->getClassName($ass['class_id'])."</td>
+				<td>".$dbInfo->getStreamName($ass['stream_id'])."</td>
+				<td>".$ass['sent_date']."</td>
+				<td>".$ass['due_date']."</td>
+			</tr>";
+			}
+			unset($schedule);#cleanup after foreach
+		
+			$content .= "</table>";
+		}
+		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
+		{
+			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+		}
+
+		$content .= "</div>";#close assignments tab pane
+
+		$content .= "</div>";#close tab content
+
 		#close div
 		$content.="</div>";
 		
@@ -461,8 +572,26 @@ class ContentHandler
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_profile'>";#open div
 
 		#content here
-		$content .= "<h2>Profile</h2>";
-		$content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<h3 class='center_text'>Profile</h3>";
+		// $content .= "<p>This module is still under construction, please check again later.</p>";
+		$content .= "<div class='panel-primary container-fluid clearfix'>
+			<form class='form' action='handlers/changePassword.php' method='POST'>
+				<h6 class='center_text'><b>Username : </b> " . ($_SESSION['s_admin_username']) . "</h6>
+
+				<label class='control-label hidden-xs col-sm-2' for='adm_curPass'>Current Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
+				
+				<label class='control-label hidden-xs col-sm-2' for='adm_newPass'>New Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
+				
+				<label class='control-label hidden-xs col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+
+				<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
+				<br><br>
+			</form>
+		</div>";
+		
 		#close div
 		$content.="</div>";
 		
@@ -620,5 +749,12 @@ class ContentHandler
 		#changed to be handled by bootstrap
 		#cannot have it as multiple lines because js will read incorrectly
 		return "<div class='well'><h3>Restricted access</h3><p>$errorInput</p></div>";
+	}
+
+	#displays a message when there is no content - convenience function
+	private function noContentMessage($message)
+	{
+		return "<div class='container-fluid panel-primary'>
+		<div class='panel-body'><h5>$message</h5></div></div>";
 	}
 }

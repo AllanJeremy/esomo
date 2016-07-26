@@ -37,6 +37,9 @@ COLOR SCHEME
 .far-grey {
     background-color: #f1f1f1;
 }
+.grey-text {
+    color: #777777 !Important;
+}
 
 .languages {
     background-color: #a9a6cf;
@@ -49,4 +52,8 @@ COLOR SCHEME
 }
 .extra-subjects {
     background-color: #aa9392;
+}
+
+.action-color, .green {
+    background-color: #2c8c4c;
 }

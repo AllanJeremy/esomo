@@ -138,7 +138,6 @@
 ?>
 
 <?php
-
   #connection to the database
   require('../esomoDbConnect.php');
 
@@ -244,10 +243,7 @@
       echo "Failed to prepare the username change query ";#debug
     }
   }
-  
-#if the user is logged in
- if($sessionHandler->sessionActive())
-{
+
   //WHEN A FORM IS SUBMITTED ON THIS PAGE
   if($_SERVER['REQUEST_METHOD']=='POST')
   {
@@ -278,7 +274,7 @@
       }
     }
   }
-}# end of if 
+  
 ?>
 </body>
 

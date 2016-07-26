@@ -47,7 +47,10 @@
 
                	<div class='md_text_size form_footer col-xs-12'>
                	<button class='btn btn-primary col-xs-8 col-xs-offset-2 col-sm-6 col-sm-3 col-md-4 col-md-offset-4' type='submit'>Login</button>
-               	<p class='float_right top_offset'>New admin? <a href='signup.php'>Signup</a></p>
+                <div class='top_offset float_right'>
+               	<p class=''>New admin? <a href='signup.php'>Signup</a></p>
+                <a class='' href='forgot.php'> Forgot password?</a> <br/><br/>
+                </div>
                	</div>
 			</form>
 
@@ -84,5 +87,4 @@
 <script src="../js/bootstrap.min.js"></script>
 
 
-</script>
 </html>

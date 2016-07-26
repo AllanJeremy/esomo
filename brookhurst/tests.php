@@ -46,7 +46,7 @@
             require_once('functions/dbInfo.php');
             $dbInfo = new DbInfo('esomoDbConnect.php');
 
-            $content .= "<table class='table'><tr><th colspan='4'> <h3 class='center_text'>Some tests to test yourself</h3></tr>";
+            $content .= "<table class='table table-striped'><tr><th colspan='4'> <h3 class='center_text'>Some tests to test yourself</h3></tr>";
             $content .= "<tr><th class='center_text'>Subject</th>
             <th class='center_text'>Class</th>
             <th class='center_text'>Title</th>
@@ -55,10 +55,8 @@
             #loop through the tests found
             foreach($tests as $result)
             {
-              #dbInfo function for getting attribute name
-              #$dbInfo->getAttributeName($column,$tableName,$idName,$attrId)
-              $tmp_subject = $dbInfo->getAttributeName('subject_name','subjects','subject_id',$result['subject_id']);
-              $tmp_class = $dbInfo->getAttributeName('class_name','class_selection','class_id',$result['class_id']);
+              $tmp_subject = $dbInfo->getSubjectName($result['subject_id']);
+              $tmp_class = $dbInfo->getClassName($result['class_id']);
               $tmp_title = $result['test_title'];
               $tmp_path = $result['test_path'];
               $content .= "<tr>
