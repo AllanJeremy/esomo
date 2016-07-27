@@ -21,6 +21,20 @@ class ContentHandler
 	public $scheduleClass;
 	public $statClass;
 
+	#different access level constants
+	const NONE_ACCOUNT = 1;
+	const CONTENT_CREATOR = 2;
+	const TEACHER = 3;
+	const PRINCIPAL= 4; 
+	const SUPER_USER = 5;
+
+	#constants controlling access level
+	const CONTENT_ACCESS_LEVEL = self::CONTENT_CREATOR;
+	const ASSIGNMENTS_ACCESS_LEVEL = self::TEACHER;
+	const PROFILE_ACCESS_LEVEL = self::NONE_ACCOUNT;
+	const SCHEDULE_ACCESS_LEVEL = self::TEACHER;
+	const STATS_ACCESS_LEVEL = self::PRINCIPAL;
+	
 	#assignment content types accepted for files
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
@@ -41,10 +55,10 @@ class ContentHandler
 		$this->ass_contentTypes = '\'.zip .pdf .docx .xls\'';
 
 		#access level stuff
-		$this->levelRequired = 1;#by default the level required is 2
+		$this->levelRequired = 2;#by default the level required is 2
 
 		$this->accessLevel = $_SESSION['s_admin_accessLevel'];
-		$this->errorMessage = "You do not have sufficient rights to view this content";
+		$this->errorMessage = "'You do not have sufficient rights to view this content'";
 
 		#persistence functions
 	}
@@ -87,15 +101,6 @@ class ContentHandler
 		{
 			$content.="<h5>Could not generate the subject dropdown and subsequent dropdowns in admin_content</h5>";
 		}
-		
-		#generate subject class dropdown
-        //if(empty($push)) {
-        //    $curSubLevel = $chosenSubjectLevel;
-        //    echo "push empty";
-        //} else {
-            
-        //    $curSubLevel = '"high_school"';
-        //}
         
 		#should be updated dynamically
         //$chosenSubject = $_GET['chosenSubjectLevel'];
@@ -122,11 +127,11 @@ class ContentHandler
 		$content .= "<div style='margin-top:2.5%;' class='panel-footer'><h5 id='cont_feedback'></h5> </div>";
 		$content.="</div>";
 		
-		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		#the minimum level admin should be to view this content [Content tab]
+		$this->levelRequired = self::CONTENT_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_content','active');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -304,11 +309,11 @@ class ContentHandler
 		$content.="</div>";
 
 		
-		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		#the minimum level admin should be to view this content [Assignments tab]
+		$this->levelRequired = self::ASSIGNMENTS_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_ass','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -434,11 +439,11 @@ class ContentHandler
 		#close wrapper div
 		$content.="</div>";
 		
-		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		#the minimum level admin should be to view this content [Schedules tab]
+		$this->levelRequired = self::SCHEDULE_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_schedule','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -556,10 +561,10 @@ class ContentHandler
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		$this->levelRequired = self::STATS_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_stats','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -596,10 +601,10 @@ class ContentHandler
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		$this->levelRequired = self::PROFILE_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_profile','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -616,10 +621,10 @@ class ContentHandler
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		$this->levelRequired = self::SUPER_USER;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_subjects','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -636,10 +641,10 @@ class ContentHandler
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		$this->levelRequired = self::SUPER_USER;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);#$this->errorMessage can be swapped with custom error message
+		$error = $this->getErrorContent($this->errorMessage,'nav_topics','');#$this->errorMessage can be swapped with custom error message
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -660,10 +665,10 @@ class ContentHandler
 		$content.="</div>";
 		
 		#the minimum level admin should be to view this content
-		$this->levelRequired=1;
+		$this->levelRequired = self::NONE_ACCOUNT;
 		
 		#error to be shown if access level is not valid
-		$error = $this->getErrorContent($this->errorMessage);
+		$error = $this->getErrorContent($this->errorMessage,'nav_logout','');
 
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
@@ -744,11 +749,11 @@ class ContentHandler
 			return $errorInput;
 		}
 	}
-	private function getErrorContent($errorInput)
+	private function getErrorContent($errorInput,$id,$extraClass)#id is the id of the tab pane
 	{	
 		#changed to be handled by bootstrap
 		#cannot have it as multiple lines because js will read incorrectly
-		return "<div class='well'><h3>Restricted access</h3><p>$errorInput</p></div>";
+		return "<div class='$extraClass well tab-pane fade in panel panel-primary col-xs-12' id='$id'><h3>Restricted access</h3><p>$errorInput</p></div>";
 	}
 
 	#displays a message when there is no content - convenience function
