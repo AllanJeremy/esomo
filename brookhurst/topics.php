@@ -283,34 +283,34 @@ EOD;
 				}
 				else
 				{
-				$articlesContent .= "<table class='table table-hover'>";
-				foreach ($articleResult as $result) {
-					$tmp_articleName = $result['article_title'];#article title
-					$tmp_articlePath = $result['article_path'];#article path
-					$tmp_articleId = $result['article_id'];#article id
-					$tmp_dateAdded = $result['date_added'];
+					$articlesContent .= "<table class='table table-hover'>";
+					foreach ($articleResult as $result) {
+						$tmp_articleName = $result['article_title'];#article title
+						$tmp_articlePath = $result['article_path'];#article path
+						$tmp_articleId = $result['article_id'];#article id
+						$tmp_dateAdded = $result['date_added'];
 
-					//path to the article document handler
-					$pathExtension = "#";
+						//path to the article document handler
+						$pathExtension = "#";
 
-					#generate article section using the information above
+						#generate article section using the information above
 
-					if($tmp_articlePath!='' && $tmp_articlePath!==null)
-					{
-						$pathExtension = $tmp_articlePath;	
-						$articleSnippet = "<tr><td>$tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
-					<td><a class='btn btn-default' href='$pathExtension' download='$tmp_articleName'>Download</a> </td></tr>\n";
-					}
-					else
-					{
-						$articleSnippet = "<tr><td>  $tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
-					<td> <a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
-					}
-					
-					
-					$articlesContent .= $articleSnippet;#customizable snippet.
+						if($tmp_articlePath!='' && $tmp_articlePath!==null)
+						{
+							$pathExtension = $tmp_articlePath;	
+							$articleSnippet = "<tr><td>$tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						<td><a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_articleName'>Download</a> </td></tr>\n";
+						}
+						else
+						{
+							$articleSnippet = "<tr><td>  $tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						<td> <a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a></td></tr>\n";
+						}
+						
+						
+						$articlesContent .= $articleSnippet;#customizable snippet.	
+					}#end of foreach
 					$articlesContent .= "</table>";
-				}
 				}
 				$articlesContent .= "</div>";
 
@@ -372,20 +372,20 @@ EOD;
 						$pathExtension = $tmp_bookPath;
 						#snippet that controls how content is viewd
 						$bookSnippet = "<tr><td> $tmp_bookName  <i class='float_right'>- Added $tmp_dateAdded</i></td>
-						<td><a class='btn btn-default' href='$pathExtension' download='$tmp_bookName'>Download</a></td></tr>\n";
+						<td><a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_bookName'>Download</a></td></tr>\n";
 				    }
 					else
 					{
 						#snippet that controls how content is viewd
 						$bookSnippet = "<tr><td> $tmp_bookName <i class='float_right'>- Added $tmp_dateAdded</i></td>
-						<td><a class='btn btn-default' href='$pathExtension'>Download</a></td></tr>\n";
+						<td><a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a></td></tr>\n";
 					}
 
 
 					
 					$booksContent .= $bookSnippet;#Customizable snippet - how each item is viewed
-					$booksContent .= "</table>";
 					}#end of foreach
+					$booksContent .= "</table>";
 				}
 				$booksContent .= "</div>";
 
@@ -445,18 +445,18 @@ EOD;
 					{
 						$pathExtension = $tmp_videoPath;
 						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
-						<td> <a class='btn btn-default' href='$pathExtension' download='$tmp_videoName'>Download</a> </td></tr>\n";
+						<td> <a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_videoName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
 						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
-						<td> <a class='btn btn-default' href='$pathExtension'>Download</a> </td></tr>\n";
+						<td> <a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a> </td></tr>\n";
 					}
 					}#end of for loop	
 					$videosContent .= $videoSnippet;#snippet customizable
-					$videosContent .= "</table>";						
+										
 				}
-
+				$videosContent .= "</table>";	
 			}#end of query if
 				$videosContent .= "</div>";
 
