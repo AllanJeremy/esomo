@@ -1,3 +1,15 @@
+<html lang="en">
+    <head>
+        <title>Submit Assin</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       <link  rel="stylesheet" type="text/css" href="css/main.css"/>
+       <link  rel="stylesheet" type="text/css" href="css/color.css"/>
+    </head>
+    
+    <body id="homeBody">
+
 <?php
 session_start();
 $q = "INSERT INTO assignments (ass_title,ass_description,class_id,stream_id,teacher_id,due_date,ass_file_path) VALUES(?,?,?,?,?,?,?)";
@@ -55,3 +67,5 @@ function assInfoValid()
 		return true;
 	}
 }
+
+?>
