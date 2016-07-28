@@ -12,6 +12,7 @@
 
 
 <body>
+
 <?php
   session_start();
   //create  a session function handler
@@ -27,11 +28,10 @@
     else
     {
         $sessionHandler->updateSessionVars('../esomoDbConnect.php');
-        
-        
     }
   
 ?>
+
 <?php
 #load the navigation menu
     include_once('../navigation.php');
@@ -57,8 +57,6 @@
   $currentLastName = $_SESSION['std_lName'];
   $currentClass = $dbInfo->getClassName($_SESSION['std_class_id']);
   $currentStream = $dbInfo->getStreamName($_SESSION['std_stream_id']);
-
- 
 
   #content of the page
 	$pageContent = "<div class='panel panel-primary col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2' id='pageContent'>
@@ -146,7 +144,7 @@
   </div>
 </div>";
     echo $pageContent;
-  
+
 ?>
 
 <?php

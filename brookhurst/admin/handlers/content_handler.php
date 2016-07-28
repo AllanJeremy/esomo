@@ -205,21 +205,23 @@ class ContentHandler
 		#subject dropdown
 		$dropdown .= "<select class='form-control' id='topicDropdown'>";#create a selection box
 		
-		foreach ($topics as $topic)
+		if($topics!==0)
 		{
-			$tmp_topicId=@$topic['topic_id'];
-			$tmp_topicName = @$topic['topic_name'];
+			foreach ($topics as $topic)
+			{
+				$tmp_topicId=@$topic['topic_id'];
+				$tmp_topicName = @$topic['topic_name'];
 
-			$dropdown .= ("<option value=$tmp_topicId>".$tmp_topicName."</option>");
-		}
+				$dropdown .= ("<option value=$tmp_topicId>".$tmp_topicName."</option>");
+			}
 
-		#unset the loop variables
-		unset($subject);
-		unset($tmp_topicId);
-		unset($tmp_topicName);
-
-		#close select 
-		$dropdown.="</select>";
+			#unset the loop variables
+			unset($subject);
+			unset($tmp_topicId);
+			unset($tmp_topicName);
+			}
+			#close select 
+			$dropdown.="</select>";
 
 		return $dropdown;
 	}#end of generateTopicDropdown
@@ -735,9 +737,16 @@ class ContentHandler
                 $rows[] = $row;
                 //echo $row['class_name'];
             }
-            return $rows;
-            
-			
+			#If there are rows in the table return the rows
+			if(mysqli_num_rows($result)>0)
+            {
+				return $rows;
+			}
+			else#otherwise return 0
+			{
+				return 0;
+			}   
+	
 		}
 		else
 		{
