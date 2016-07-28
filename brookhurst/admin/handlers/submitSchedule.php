@@ -14,10 +14,10 @@
 session_start();#start the session so that we can use session variables
 require('../../esomoDbConnect.php');#access to the database
 
-$schTitle = htmlspecialchars($_POST['schTitleInput']);
-$schDescr = htmlspecialchars($_POST['schDescrInput']);
-$schGrade = htmlspecialchars($_POST['schGradeInput']);
-$schStream = htmlspecialchars($_POST['schStreamInput']);
+$schTitle = @htmlspecialchars($_POST['schTitleInput']);
+$schDescr = @htmlspecialchars($_POST['schDescrInput']);
+$schGrade = @htmlspecialchars($_POST['schGradeInput']);
+$schStream = @htmlspecialchars($_POST['schStreamInput']);
 $schDateInput = $_POST['sch_dateInput'];
 $schTimeInput = $_POST['sch_timeInput'];
 

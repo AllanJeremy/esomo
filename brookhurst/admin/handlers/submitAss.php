@@ -39,12 +39,12 @@ if(assInfoValid())
 		
 		
 		$stmt->bind_param('ssiiiss',$title,$descr,$class_id,$stream_id,$teacher_id,$due_date,$fileUpload->storage_path);
-		$title = htmlspecialchars($_POST['assTitleInput']);
-		$descr = htmlspecialchars($_POST['assDescrInput']);
-		$class_id = htmlspecialchars($_POST['assGradeInput']);
-		$stream_id = htmlspecialchars($_POST['assStreamInput']);
-		$teacher_id = htmlspecialchars($_SESSION['s_admin_id']);#set the teacher id to the current logged teacher id
-		$due_date = htmlspecialchars($_POST['assDueDateInput']);
+		$title = @htmlspecialchars($_POST['assTitleInput']);
+		$descr = @htmlspecialchars($_POST['assDescrInput']);
+		$class_id = @htmlspecialchars($_POST['assGradeInput']);
+		$stream_id = @htmlspecialchars($_POST['assStreamInput']);
+		$teacher_id = @htmlspecialchars($_SESSION['s_admin_id']);#set the teacher id to the current logged teacher id
+		$due_date = @htmlspecialchars($_POST['assDueDateInput']);
 		$stmt->execute();#execute the query and insert the values into the database
 		
 

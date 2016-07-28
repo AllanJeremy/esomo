@@ -34,7 +34,7 @@ else {
 #topicDropdown - topic dropdown
 #subjectDropdown - subject dropwdown
 #contTypeDropdown - content type dropdown
-$adm_contTitleInput = htmlspecialchars(@$_POST['adm_contTitleInput']);
+$adm_contTitleInput = @htmlspecialchars(@$_POST['adm_contTitleInput']);
 
 switch($_POST['contTypeDropdown'])
 {
