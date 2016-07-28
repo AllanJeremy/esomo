@@ -80,7 +80,7 @@ class ContentHandler
         //echo 'push    ' . $push . '   shows inside the right function';
 		#content here
 		$content .= "<h3>Manage Content</h3>";
-		$content .= "<form class='form-horizontal' method='POST'>";#create form
+		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php'>";#create form
 
 		$content .= "<label for='contTabTitle'>Content Title</label>";
 		$content .= "<input class='form-control' required='yes' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput'></input><br>";
