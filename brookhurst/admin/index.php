@@ -42,8 +42,8 @@ $indexContent = <<<EOD
               </li>
             <li>
               <a  data-toggle= 'pill' href='#nav_ass'>Assignments</a>
-              </li>
- 
+            </li>
+
             <!-- To consider moving profile to main navigation -->
             <li>
               <a  data-toggle= 'pill' href='#nav_profile'>Profile</a>

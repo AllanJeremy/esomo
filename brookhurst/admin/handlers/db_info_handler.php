@@ -179,5 +179,27 @@ function getSpecificAss($teacherId)
 		}
 	}
 
+#gets and returns all assignments
+function getAllSubjects()
+{
+	require("../esomoDbConnect.php");
+	$q = "SELECT * FROM subjects";
+
+	if($result = mysqli_query($dbCon,$q))
+	{	
+		if(mysqli_num_rows($result)>0)
+		{
+			return $result;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
 
 }#end of class

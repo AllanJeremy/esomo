@@ -37,6 +37,7 @@ class ContentHandler
 	
 	#assignment content types accepted for files
 	private $ass_contentTypes;
+	private $content_acceptedTypes;
 
 	//constructor - when a new content handler is created
 	function __construct()
@@ -53,7 +54,9 @@ class ContentHandler
 
 		$this->contentClass = 'active';
 		#accepted assignment content types
-		$this->ass_contentTypes = '\'.zip .pdf .docx .xls\'';
+		$this->ass_contentTypes = '\'.zip, .pdf, .docx, .xls, .rtf, audio/*, image/*, video/* \'';
+		
+		$this->content_acceptedTypes = '\'.zip, .pdf, .docx, .xls, .rtf, audio/*, image/*, video/* \'';
 
 		#access level stuff
 		$this->levelRequired = 2;#by default the level required is 2
@@ -87,7 +90,9 @@ class ContentHandler
 		$content .= "<input class='form-control' required='yes' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput'></input><br>";
 		
 		$content .= "<label for='contTabPath'>Content Path</label>";
-		$content .= "<input class='form-control' required='yes' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput'></input><br>";
+		
+		#content file input
+		$content .= "<input class='form-control' required='yes' accept='$this->content_acceptedTypes' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput'></input><br>";
 		
 		#generates the subject dropdown
 		if($this->getSubjects()!==null)//meaning we have a valid list of subjects
@@ -235,6 +240,7 @@ class ContentHandler
 		$dropdown .= "<option value='article'>Article</option>";
 		$dropdown .= "<option value='book'>Book</option>";
 		$dropdown .= "<option value='video'>Video</option>";
+		$dropdown .= "<option value='test'>Test</option>";
 		$dropdown .= "</select>";
 
 		return $dropdown;
@@ -444,7 +450,8 @@ class ContentHandler
 		#manage schedules tab
 		$content .= "<div id='manageSchedule' class='tab-pane fade in'>";
 		$content .= "<h4 class='center_text'>Current Schedules</h4>";
-		$content .= "<table class='table table-striped'>";
+		$content .= "<div>
+						<table class='table table-striped'>";
 		$content .="<tr><th>Title</th><th>Date</th><th>Class</th><th>Stream</th><th>Remove</th></tr>";
 
 		#if there are currently no schedules
@@ -478,7 +485,8 @@ class ContentHandler
 		}
 		unset($schedule);#clean up after foreach
 
-		$content .= "</table>";#close table
+		$content .= "</table>
+		</div>";#close table
 		$content .= "</div>";#close manage tab
 
 		#close tab content 

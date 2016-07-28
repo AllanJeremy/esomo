@@ -50,6 +50,8 @@ switch($_POST['contTypeDropdown'])
     addVideo($fileUpload->storage_path);
     break;
 
+    case 'test':
+    addTest($fileUpload->storage_path);
     default:
 }
 
@@ -69,12 +71,12 @@ function addArticle($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            //echo "<br>Added article to database";
+            echo "<p>Added article to database</p>";
             #redirect user
         }
         else #query failed to run, display error message
         {
-            echo "failed to execute the query to add article<br>";
+            echo "<p>Failed to execute the query to add article</p>";
         }
     }
     else #failed to prepare the query
@@ -96,12 +98,12 @@ function addBook($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            //echo "<br>Added book to database";
+            echo "<p>Added book to database</p>";
             #redirect user
         }
         else #query failed to run, display error message
         {
-            echo "failed to execute the query to add book<br>";
+            echo "<p>Failed to execute the query to add book</p>";
         }
     }
     else #failed to prepare the query
@@ -123,17 +125,44 @@ function addVideo($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            //echo "<br>Added video to database";
+            echo "<p>Added video to database</p>";
             #redirect user
         }
         else #query failed to run, display error message
         {
-            echo "failed to execute the query to add video<br>";
+            echo "<p>Failed to execute the query to add video</p>";
         }
     }
     else #failed to prepare the query
      {
         echo "<p>Error preparing query to add video</p>";
+    }
+}
+
+
+#add a video to the database
+function addTest($storagePath)
+{
+    $q = "INSERT INTO tests(test_title,test_path,subject_id,class_id) VALUES(?,?,?,?)";
+
+    if($stmt = $GLOBALS['dbCon']->prepare($q))
+    {
+        $stmt->bind_param('ssii',$GLOBALS['adm_contTitleInput'],$storagePath,$_POST['subDropdown'],$_POST['gradeDropdown']);
+
+        #Check if the query executed successfully
+        if($stmt->execute())
+        {
+            echo "<p>Added test to database</p>";
+            #redirect user
+        }
+        else #query failed to run, display error message
+        {
+            echo "<p>Failed to execute the query to add test<br>".$GLOBALS['dbCon']->error."</p>";
+        }
+    }
+    else #failed to prepare the query
+     {
+        echo "<p>Error preparing query to add test</p>";
     }
 }
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2016 at 11:28 PM
+-- Generation Time: Jul 28, 2016 at 07:23 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -81,20 +81,6 @@ CREATE TABLE `admin_accounts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin_recovery`
---
-
-CREATE TABLE `admin_recovery` (
-  `recover_id` int(255) UNSIGNED NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `temp_password` varchar(256) NOT NULL,
-  `acc_email` varchar(256) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date the recovery item was created'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table used to recover passwords';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `assignments`
 --
 
@@ -105,21 +91,9 @@ CREATE TABLE `assignments` (
   `teacher_id` int(255) UNSIGNED NOT NULL COMMENT 'The id of the teacher who sent the assignment',
   `class_id` int(255) UNSIGNED NOT NULL COMMENT 'class it was sent to',
   `stream_id` int(255) UNSIGNED NOT NULL COMMENT 'stream it was sent to',
-  `sent_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date the assignment was sent'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ass_content`
---
-
-CREATE TABLE `ass_content` (
-  `content_id` int(255) UNSIGNED NOT NULL,
-  `content_title` varchar(256) NOT NULL,
-  `content_description` text NOT NULL,
-  `content_path` varchar(512) NOT NULL,
-  `ass_id` int(255) UNSIGNED NOT NULL COMMENT 'the assignment to which the content belongs'
+  `sent_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date the assignment was sent',
+  `due_date` datetime NOT NULL COMMENT 'Date the assignment is due',
+  `ass_file_path` varchar(512) NOT NULL COMMENT 'File path for assignment'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -348,6 +322,7 @@ ALTER TABLE `access_levels`
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`acc_id`),
   ADD UNIQUE KEY `acc_id` (`acc_id`),
+  ADD UNIQUE KEY `student_id_2` (`student_id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `email` (`email`);
 
@@ -361,13 +336,6 @@ ALTER TABLE `admin_accounts`
   ADD KEY `email` (`email`);
 
 --
--- Indexes for table `admin_recovery`
---
-ALTER TABLE `admin_recovery`
-  ADD PRIMARY KEY (`recover_id`),
-  ADD KEY `acc_email` (`acc_email`);
-
---
 -- Indexes for table `assignments`
 --
 ALTER TABLE `assignments`
@@ -376,14 +344,6 @@ ALTER TABLE `assignments`
   ADD KEY `class_id` (`class_id`),
   ADD KEY `teacher_id` (`teacher_id`),
   ADD KEY `stream_id` (`stream_id`);
-
---
--- Indexes for table `ass_content`
---
-ALTER TABLE `ass_content`
-  ADD PRIMARY KEY (`content_id`),
-  ADD UNIQUE KEY `content_id` (`content_id`),
-  ADD KEY `ass_id` (`ass_id`);
 
 --
 -- Indexes for table `class_selection`
@@ -493,27 +453,17 @@ ALTER TABLE `access_levels`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `admin_acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id of the admin account';
---
--- AUTO_INCREMENT for table `admin_recovery`
---
-ALTER TABLE `admin_recovery`
-  MODIFY `recover_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id of the admin account', AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `ass_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ass_content`
---
-ALTER TABLE `ass_content`
-  MODIFY `content_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ass_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `class_selection`
 --
@@ -523,17 +473,17 @@ ALTER TABLE `class_selection`
 -- AUTO_INCREMENT for table `esomo_articles`
 --
 ALTER TABLE `esomo_articles`
-  MODIFY `article_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'unique id for the article';
+  MODIFY `article_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'unique id for the article', AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `esomo_books`
 --
 ALTER TABLE `esomo_books`
-  MODIFY `book_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `book_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `esomo_videos`
 --
 ALTER TABLE `esomo_videos`
-  MODIFY `video_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `video_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `recovery`
 --
@@ -543,12 +493,17 @@ ALTER TABLE `recovery`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `task_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `task_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `streams`
 --
 ALTER TABLE `streams`
-  MODIFY `stream_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `stream_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
@@ -560,10 +515,15 @@ ALTER TABLE `subjects`
 ALTER TABLE `sub_topics`
   MODIFY `sub_topic_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `tests`
+--
+ALTER TABLE `tests`
+  MODIFY `test_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `topic_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `topic_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
@@ -581,24 +541,12 @@ ALTER TABLE `admin_accounts`
   ADD CONSTRAINT `fk_admin_access_level` FOREIGN KEY (`access_level_id`) REFERENCES `access_levels` (`access_level_id`);
 
 --
--- Constraints for table `admin_recovery`
---
-ALTER TABLE `admin_recovery`
-  ADD CONSTRAINT `fk_admin_recover` FOREIGN KEY (`acc_email`) REFERENCES `admin_accounts` (`email`);
-
---
 -- Constraints for table `assignments`
 --
 ALTER TABLE `assignments`
   ADD CONSTRAINT `fk_ass_class` FOREIGN KEY (`class_id`) REFERENCES `class_selection` (`class_id`),
   ADD CONSTRAINT `fk_ass_stream` FOREIGN KEY (`stream_id`) REFERENCES `streams` (`stream_id`),
   ADD CONSTRAINT `fk_ass_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `admin_accounts` (`admin_acc_id`);
-
---
--- Constraints for table `ass_content`
---
-ALTER TABLE `ass_content`
-  ADD CONSTRAINT `fk_ass_content` FOREIGN KEY (`ass_id`) REFERENCES `assignments` (`ass_id`);
 
 --
 -- Constraints for table `esomo_articles`
@@ -617,12 +565,6 @@ ALTER TABLE `esomo_books`
 --
 ALTER TABLE `esomo_videos`
   ADD CONSTRAINT `fk_videos_topics` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`);
-
---
--- Constraints for table `recovery`
---
-ALTER TABLE `recovery`
-  ADD CONSTRAINT `fk_recover_accounts` FOREIGN KEY (`acc_email`) REFERENCES `accounts` (`email`);
 
 --
 -- Constraints for table `schedules`
@@ -644,13 +586,6 @@ ALTER TABLE `students`
 --
 ALTER TABLE `sub_topics`
   ADD CONSTRAINT `fk_subtopic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`);
-
---
--- Constraints for table `tests`
---
-ALTER TABLE `tests`
-  ADD CONSTRAINT `fk_tests_classes` FOREIGN KEY (`class_id`) REFERENCES `class_selection` (`class_id`),
-  ADD CONSTRAINT `fk_tests_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
 -- Constraints for table `topics`
