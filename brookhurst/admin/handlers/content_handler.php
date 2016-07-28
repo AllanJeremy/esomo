@@ -333,13 +333,13 @@ class ContentHandler
 			</tr>";
 			foreach($assignments as $ass )
 			{
-				$content .= "<tr>
+				$content .= "<tr id='".$ass['ass_id']"'>
 				<td>".@$ass['ass_title']."</td>
 				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
 				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
 				<td>".@$ass['sent_date']."</td>
 				<td>".@$ass['due_date']."</td>
-				<td><a class='btn btn-warning' href='#'>Remove</a></td>
+				<td><button class='btn btn-warning remove_ass'>Remove</button></td>
 			</tr>";
 			}
 			unset($ass);#cleanup after foreach
@@ -463,12 +463,12 @@ class ContentHandler
 				$curClassName = ($dbInfo->getClassName($schedule['class_id']));
 				$curStreamName = ($dbInfo->getStreamName($schedule['stream_id']));
 
-				$content .= "<tr>";
+				$content .= "<tr id='".$schedule['task_id']."'>";
 				$content .= "<td>".$schedule['task_title']."</td>";
 				$content .= "<td>".$schedule['task_date']."</td>";
 				$content .= "<td>".$curClassName."</td>";
 				$content .= "<td>".$curStreamName."</td>";
-				$content .= "<td><a class='btn btn-warning' href='?rm=".($schedule['task_id'])."'>Remove</a></td>";
+				$content .= "<td><button class='btn btn-warning remove_schedule'>Remove</button></td>";
 				$content .= "</tr>";
 			}
 			
@@ -834,4 +834,37 @@ class ContentHandler
 		return "<div class='container-fluid panel-primary'>
 		<div class='panel-body'><h5>$message</h5></div></div>";
 	}
+
+	#function to delete assignment - to use in manage assignment section
+	function deleteAssignment($ass_id)
+	{
+		require('../../esomoDbConnect.php');
+		$q = "DELETE FROM assignments WHERE ass_id=?";
+		if($stmt = $dbCon->prepare($q))
+		{
+			$stmt->bind_param('i',$ass_id);
+			$stmt->execute();
+		}
+		else
+		{
+			echo "<p>Error: Could not delete the assignment from the database.</p>";
+		}
+	}
+
+	#function to delete schedule - to use in manage schedule section
+	function deleteSchedule($task_id)
+	{
+		require('../../esomoDbConnect.php');
+		$q = "DELETE FROM schedules WHERE task_id=?";
+		if($stmt = $dbCon->prepare($q))
+		{
+			$stmt->bind_param('i',$task_id);
+			$stmt->execute();
+		}
+		else
+		{
+			echo "<p>Error: Could not delete the assignment from the database.</p>";
+		}
+	}
+
 }
