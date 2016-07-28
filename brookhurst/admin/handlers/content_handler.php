@@ -34,8 +34,10 @@ class ContentHandler
 	const PROFILE_ACCESS_LEVEL = self::NONE_ACCOUNT;
 	const SCHEDULE_ACCESS_LEVEL = self::TEACHER;
 	const STATS_ACCESS_LEVEL = self::PRINCIPAL;
+	
 	#assignment content types accepted for files
 	private $ass_contentTypes;
+
 	//constructor - when a new content handler is created
 	function __construct()
 	{	
@@ -246,12 +248,22 @@ class ContentHandler
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
-
-		#assignment content - escape every newline with \ for js usage
+		$assignments = $dbInfo->getSpecificAss($_SESSION['s_admin_id']);
+		#assignment content
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_ass'>";#open div
 
 		#content here
-		$content .= "<h2>Assignments</h2>";
+		$content .= "<h4 class='center_text'>Assignments</h4>";
+
+		#tab content for assignments
+		$content .= "<ul class='nav nav-tabs nav-justified'>
+			<li class='active'><a data-toggle='tab' href='#ass_send'>SEND</a></li>
+			<li><a data-toggle='tab' href='#ass_manage'>MANAGE</a></li>
+		";
+		$content .= "<div class='tab-content container-fluid'>";
+
+		#send tab [assignments]
+		$content .= "<div class='tab-pane active' id='ass_send'><br>";
 		$content .= "<form method='post' action='handlers/submitAss.php' class='form'>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assTitle'>Assignment Title *</label>
@@ -304,7 +316,44 @@ class ContentHandler
 		}
 
 		$content .= "</form>";
+		$content .= "</div>";#close the tab pane div
 
+		#manage assignments tab
+		$content .= "<div class='tab-pane' id='ass_manage'>";
+		
+		#if there are assignments in the database
+		if($assignments !== 0 && $assignments!==false)
+		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
+			<tr>
+				<th>Title</th>
+				<th>Class</th>
+				<th>Stream</th>
+				<th>Sent Date</th>
+				<th>Due Date</th>
+				<th>Remove</th>
+			</tr>";
+			foreach($assignments as $ass )
+			{
+				$content .= "<tr>
+				<td>".@$ass['ass_title']."</td>
+				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
+				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
+				<td>".@$ass['sent_date']."</td>
+				<td>".@$ass['due_date']."</td>
+				<td><a class='btn btn-warning' href='#'>Remove</a></td>
+			</tr>";
+			}
+			unset($ass);#cleanup after foreach
+		
+			$content .= "</table></div>";
+		}
+		else if($assignments==0)#query ran successfully but there were 0 schedules in the database
+		{
+			$content .= $this->noContentMessage('<b>There are currently no assignments</b>.<br> Once teachers send assignments, the assignments will appear here');
+		}		
+		$content .= "</div>";
+
+		$content .= "</div>";#close the tab-content div
 		#close div
 		$content.="</div>";
         
@@ -462,7 +511,6 @@ class ContentHandler
 
 		#content here
 		$content .= "<h3>Statistics</h3>";
-		//$content .= "<p>This module is still under construction, please check again later.</p>";
 
 		$content .= "<ul class='nav nav-tabs nav-justified'>
 			<li class='active'><a data-toggle='tab' href='#stats_schedules'>SCHEDULES</a></li>
@@ -474,12 +522,13 @@ class ContentHandler
 		#schedules tab pane
 		$content .= "<div class='tab-pane active clearfix' id='stats_schedules'>";
 
-		#search
+		#search schedules
 		$content .= "<div class='container-fluid clearfix'>";
 		$content .= "<br><input class='col-xs-9 admin-search-btn'id='ScheduleStatsInput' type='search' placeholder='Search Filter'>";#search box
 		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_schedule_search' onclick='statisticsSearch()'>Search</button><br><br>";
 		
-		$content .= "<div class='row clearfix' id='scheduleStat'><div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+		$content .= "<div class='row clearfix' id='scheduleStat'>
+		<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
         $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
         $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byClass'> By class</label></div></div>";
         $content .= "</div>";
@@ -511,7 +560,7 @@ class ContentHandler
 		}
 		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
 		{
-			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+			$content .= $this->noContentMessage('<b>There are currently no schedules.</b><br> Once teachers make schedules, the schedules will appear here');
 		}
 
 		$content .= "</div>";#close assignments tab pane
@@ -519,7 +568,7 @@ class ContentHandler
 		#assignments tab panel
 		$content .= "<div class='table-responsive tab-pane clearfix' id='stats_ass'>";
 
-		#search
+		#search assignments
 		$content .= "<div class='container-fluid clearfix'>";
 		$content .= "<br><input class='col-xs-9 admin-search-btn' id='AssStatsInput' type='search' placeholder='Search Filter'>";#search box
 		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_ass_search' onclick='statisticsSearch()'>Search</button><br><br>";
@@ -529,7 +578,7 @@ class ContentHandler
         $content .= "</div>";
 		#end of search
 
-		#if there are schedules in the database
+		#if there are assignments in the database
 		if($assignments !== 0 && $assignments!==false)
 		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
 			<tr>
@@ -551,13 +600,13 @@ class ContentHandler
 				<td>".@$ass['due_date']."</td>
 			</tr>";
 			}
-			unset($schedule);#cleanup after foreach
+			unset($ass);#cleanup after foreach
 		
 			$content .= "</table></div>";
 		}
-		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
+		else if($assignments==0)#query ran successfully but there were 0 schedules in the database
 		{
-			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+			$content .= $this->noContentMessage('<b>There are currently no assignments</b>.<br> Once teachers send assignments, the assignments will appear here');
 		}
 
 		$content .= "</div>";#close assignments tab pane
