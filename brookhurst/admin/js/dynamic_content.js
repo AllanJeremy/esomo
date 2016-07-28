@@ -286,6 +286,7 @@ function textAlike(keyWordNi, array) {
     
     attr = $('td.highlight-text').length;
     if( attr === 0) {
+        $('div').remove('.empty-data-error');//remove the existing divs with error messages
         $('<div class="empty-data-error">Nothing found</div>').prependTo($('.table.in').parent());
     }
 }
