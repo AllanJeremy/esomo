@@ -54,9 +54,9 @@ class ContentHandler
 
 		$this->contentClass = 'active';
 		#accepted assignment content types
-		$this->ass_contentTypes = '\'.zip, .pdf, .docx, .xls, .rtf, audio/*, image/*, video/* \'';
+		$this->ass_contentTypes = "\'.zip .pdf .docx .xls .rtf audio/* image/* video/* \'";
 		
-		$this->content_acceptedTypes = '\'.zip, .pdf, .docx, .xls, .rtf, audio/*, image/*, video/* \'';
+		$this->content_acceptedTypes = "\'.zip .pdf .docx .xls .rtf audio/* image/* video/* \'";
 
 		#access level stuff
 		$this->levelRequired = 2;#by default the level required is 2

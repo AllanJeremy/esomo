@@ -3,8 +3,8 @@
 class FileUpload
 {
     #CONSTANTS STORING THE UPLOAD PATHS - WHERE FILES WILL BE UPLOADED TO
-    const CONTENT_UPLOAD_PATH = '../../test_uploads/content/';
-    const ASSIGNMENT_UPLOAD_PATH = '../../test_uploads/ass_content/';
+    const CONTENT_UPLOAD_PATH = '../../uploads/content/';
+    const ASSIGNMENT_UPLOAD_PATH = '../../uploads/ass_content/';
     const MAX_CONTENT_SIZE = 209715200;
     const MAX_ASS_SIZE = 52428800;
     
@@ -38,26 +38,34 @@ class FileUpload
                 try
                 {
                     $this->storage_path = ($uploadPath.$storage_name);#generate a storage path
-                    
-                 if($size<=$maxSize)
-                 {  #Try uploading the file
-                    if(move_uploaded_file($tmp_path,$this->storage_path))
+
+                 try
+                 {
+                    if($size<=$maxSize)
+                    {  #Try uploading the file
+                        if(move_uploaded_file($tmp_path,$this->storage_path))
+                        {
+                            #truncates the storage path so that we only get the relative path for effective storage in database
+                            $this->storage_path = substr($this->storage_path,6);#only use if using the same host as file handler
+                            // echo "<p>File uploaded successfully to : <b>".$this->storage_path."</b></p>";
+                            return true;
+                        }
+                        else#if the upload fails throw an exception
+                        { 
+                            return false;
+                            throw new Exception("<p style='color:red'>There was an error uploading your file</p>",552470); 
+                        }
+                    } 
+                    else
                     {
-                        #truncates the storage path so that we only get the relative path for effective storage in database
-                        $this->storage_path = substr($this->storage_path,6);#only use if using the same host as file handler
-                        // echo "<p>File uploaded successfully to : <b>".$this->storage_path."</b></p>";
-                        return true;
-                    }
-                    else#if the upload fails throw an exception
-                    { 
-                        return false;
-                        throw new Exception("<p style='color:red'>There was an error uploading your file</p>",552470); 
+                        throw new Exception("<div class='container'><p>The file you tried to upload exceeds the maximum size of ". number_format($maxSize) ."bytes</p></div>", 725);
+                        ;
                     }
                  } 
-                 else
+                 catch(Exception $e)
                  {
-                     echo "<p>The file you tried to upload exceeds the maximum size of $maxSize bytes";
-                 }
+                     echo $e;
+                 }  
                 }
                 catch(Exception $e)
                 {

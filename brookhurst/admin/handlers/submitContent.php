@@ -36,7 +36,7 @@ else {
 #contTypeDropdown - content type dropdown
 $adm_contTitleInput = @htmlspecialchars(@$_POST['adm_contTitleInput']);
 
-switch($_POST['contTypeDropdown'])
+switch(@$_POST['contTypeDropdown'])
 {
     case 'article':
     addArticle($fileUpload->storage_path);
