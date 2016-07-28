@@ -17,8 +17,10 @@ session_start();
         <title>Admin</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       <link  rel="stylesheet" type="text/css" href="css/color.css"/>
        <link  rel="stylesheet" type="text/css" href="css/main.css"/>
+        <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       
     </head>
     
     <body id="homeBody">
@@ -29,6 +31,7 @@ session_start();
 $curUsername = $_SESSION['s_admin_username'];
 $indexContent = <<<EOD
       
+       <div class='container-fluid'>
 
         <div class='col-sm-3'>
           <h3>Admin Panel</h3>
@@ -121,7 +124,8 @@ unset($curUsername);#cleanup - variable has served its purpose
   </body>
    
    <script src="../js/jquery.min.js"></script>
-   <script src="../js/bootstrap.min.js"></script>  
+   <script src="../js/bootstrap.min.js"></script>
+   
    <script src="js/dynamic_content.js"> </script>
 
 </html>
