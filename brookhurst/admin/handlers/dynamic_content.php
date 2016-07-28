@@ -4,14 +4,18 @@
 
 if(isset($_POST['chosenSubjectLevel']) && !empty($_POST['chosenSubjectLevel'])) {
     subjectChange();
-} elseif(isset($_POST['chosenGrade']) && !empty($_POST['chosenGrade'])) {
+} 
+elseif(isset($_POST['chosenGrade']) && !empty($_POST['chosenGrade'])) {
     gradeChange();
-} elseif(isset($_POST['scheduleTrId']) && !empty($_POST['scheduleTrId'])) {
+} 
+elseif(isset($_POST['scheduleTrId']) && !empty($_POST['scheduleTrId'])) {
     removeScheduleRow();
-} elseif(isset($_POST['assignmentTrId']) && !empty($_POST['assignmentTrId'])) {
+} 
+elseif(isset($_POST['assignmentTrId']) && !empty($_POST['assignmentTrId'])) {
     removeAssignmentRow();
-} else {
-    echo 'forbidden';
+} 
+else {
+    //echo 'forbidden';
 }
 
 function removeScheduleRow() {
@@ -24,7 +28,7 @@ function removeScheduleRow() {
         require_once("content_handler.php");
         $handler = new ContentHandler();
 
-        $tr = $handler->deleteAssignment($task_id);
+        $tr = $handler->deleteSchedule($task_id);
 
         echo $tr;
 

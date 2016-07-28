@@ -384,7 +384,7 @@ $(window).ready(function () {
         td = tr.attr('id');
         
         deleteSchedule(tr,td);
-        //console.log(id);
+        console.log("Schedule_id : "+td);
         
         
     });
@@ -396,7 +396,7 @@ $(window).ready(function () {
         td = tr.attr('id');
         
         deleteAssignment(tr,td);
-        //console.log(id);
+        console.log("Ass_id : "+td);
         
         
     });
