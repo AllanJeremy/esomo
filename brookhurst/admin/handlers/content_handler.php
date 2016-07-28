@@ -82,13 +82,13 @@ class ContentHandler
         //echo 'push    ' . $push . '   shows inside the right function';
 		#content here
 		$content .= "<h3>Manage Content</h3>";
-		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php'>";#create form
+		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php' enctype='multipart/form-data'>";#create form
 
 		$content .= "<label for='contTabTitle'>Content Title</label>";
 		$content .= "<input class='form-control' required='yes' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput'></input><br>";
 		
 		$content .= "<label for='contTabPath'>Content Path</label>";
-		$content .= "<input class='form-control' required='yes' type='url' placeholder='Content Path' id='contTabPath' name='adm_contPathInput'></input><br>";
+		$content .= "<input class='form-control' required='yes' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput'></input><br>";
 		
 		#generates the subject dropdown
 		if($this->getSubjects()!==null)//meaning we have a valid list of subjects
@@ -264,7 +264,7 @@ class ContentHandler
 
 		#send tab [assignments]
 		$content .= "<div class='tab-pane active' id='ass_send'><br>";
-		$content .= "<form method='post' action='handlers/submitAss.php' class='form'>";
+		$content .= "<form method='post' action='handlers/submitAss.php' class='form' enctype='multipart/form-data'>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assTitle'>Assignment Title *</label>
 		<input class='form-control' type='text' name='assTitleInput' required='yes' id='assTitle' placeholder='Assignment Title *'/> </div>";
@@ -305,7 +305,7 @@ class ContentHandler
 		$content .= "<button type='submit' class='btn btn-primary adminSubmitBtn'>Send Assignment</button>";#create a submit button
 		
 		//show error message at the bottom of the page
-		switch (htmlspecialchars(@$_GET['nassfail'])) {
+		switch (htmlspecialchars(@$_GET['assfail'])) {
 			case 1:
 				$content .= "<br><div class='panel-warning'><div class='panel-body'><h6>Error. Ensure you fill in all required information before trying to send an assignment</h6></div></div>";
 				break;
