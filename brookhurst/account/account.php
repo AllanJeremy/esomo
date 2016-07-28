@@ -12,14 +12,26 @@
 
 
 <body>
+
 <?php
   session_start();
   //create  a session function handler
   require_once('../functions/session_functions.php');
   $sessionHandler = new SessionFunctions();
-
-  $sessionHandler->updateSessionVars('../esomoDbConnect.php');
+    
+    if (!$sessionHandler->sessionActive())#echo content only if not logged in
+    {
+        session_write_close();
+        $sessionHandler->redirectNotLoggedUser($pageContent,'login.php');
+        //header('Location:'.$redirectPath);
+    }
+    else
+    {
+        $sessionHandler->updateSessionVars('../esomoDbConnect.php');
+    }
+  
 ?>
+
 <?php
 #load the navigation menu
     include_once('../navigation.php');
@@ -45,8 +57,6 @@
   $currentLastName = $_SESSION['std_lName'];
   $currentClass = $dbInfo->getClassName($_SESSION['std_class_id']);
   $currentStream = $dbInfo->getStreamName($_SESSION['std_stream_id']);
-
- 
 
   #content of the page
 	$pageContent = "<div class='panel panel-primary col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2' id='pageContent'>
@@ -133,8 +143,8 @@
     <h5>Note : You have to refresh your page for the new Username to be displayed in your profile.</h5>
   </div>
 </div>";
+    echo $pageContent;
 
-  $sessionHandler->redirectNotLoggedUser($pageContent,'login.php');
 ?>
 
 <?php

@@ -1,16 +1,24 @@
 <?php
 session_start();
-$q = "INSERT INTO assignments (ass_title,ass_description,class_id,stream_id,teacher_id,due_date) VALUES(?,?,?,?,?,?)";
+$q = "INSERT INTO assignments (ass_title,ass_description,class_id,stream_id,teacher_id,due_date,ass_file_path) VALUES(?,?,?,?,?,?,?)";
 
 require('../../esomoDbConnect.php');
+
+require_once('fileUpload.php');#file that handles file uploads
+#assResourceInput - content file input name
+$fileUpload = new FileUpload();
+
+
 
 //Only enter the information if the assignment is valid
 if(assInfoValid())
 {
 	if($stmt=$dbCon->prepare($q))
 	{
-
-		$stmt->bind_param('ssiiis',$title,$descr,$class_id,$stream_id,$teacher_id,$due_date);
+		$fileUpload->uploadAss('assResourceInput');
+		//echo "ASSIGNMENT STORAGE PATH = ".$fileUpload->storage_path;#path for the stored file
+		
+		$stmt->bind_param('ssiiiss',$title,$descr,$class_id,$stream_id,$teacher_id,$due_date,$fileUpload->storage_path);
 		$title = htmlspecialchars($_POST['assTitleInput']);
 		$descr = htmlspecialchars($_POST['assDescrInput']);
 		$class_id = htmlspecialchars($_POST['assGradeInput']);
@@ -18,6 +26,7 @@ if(assInfoValid())
 		$teacher_id = htmlspecialchars($_SESSION['s_admin_id']);#set the teacher id to the current logged teacher id
 		$due_date = htmlspecialchars($_POST['assDueDateInput']);
 		$stmt->execute();#execute the query and insert the values into the database
+		
 	}
 	else
 	{

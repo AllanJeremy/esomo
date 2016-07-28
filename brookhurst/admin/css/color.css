@@ -1,0 +1,71 @@
+/*
+***********************
+COLOR SCHEME
+***********************
+*/
+
+.white {
+    background-color: #fff !Important;
+}
+
+.yellow {
+    background-color: #f9a825; 
+}
+
+.orange {
+    background-color: #ef6c00; 
+}
+
+.grey-text {
+    color: rgba(0,0,0,0.54);
+}
+
+.primary-color {
+    background-color: sandybrown;
+}
+
+.white-text {
+    color: #fff !Important;
+}
+.black-text {
+    color: #111 !Important;
+}
+
+.grey-bg {
+    background-color: #818181;
+}
+.far-grey {
+    background-color: #f1f1f1;
+}
+.grey-text {
+    color: #777777 !Important;
+}
+
+.languages {
+    background-color: #a9a6cf;
+}
+.sciences {
+    background-color: #769982;
+}
+.humanities {
+    background-color: #999076;
+}
+.extra-subjects {
+    background-color: #aa9392;
+}
+
+.action-color, .green {
+    background-color: #2c8c4c;
+}
+
+td.highlight-text {
+    background-color: #2c8c4c !Important;
+    color: #fff !Important;
+    text-align: center;
+}
+
+.empty-data-error {
+    background-color: #ef6c00 !Important;
+    color: #fff !Important;
+    text-align: center;
+}

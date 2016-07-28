@@ -21,7 +21,7 @@ class ContentHandler
 	public $scheduleClass;
 	public $statClass;
 
-	#different access level constants
+    #different access level constants
 	const NONE_ACCOUNT = 1;
 	const CONTENT_CREATOR = 2;
 	const TEACHER = 3;
@@ -37,6 +37,7 @@ class ContentHandler
 	
 	#assignment content types accepted for files
 	private $ass_contentTypes;
+
 	//constructor - when a new content handler is created
 	function __construct()
 	{	
@@ -81,13 +82,13 @@ class ContentHandler
         //echo 'push    ' . $push . '   shows inside the right function';
 		#content here
 		$content .= "<h3>Manage Content</h3>";
-		$content .= "<form class='form-horizontal' method='POST'>";#create form
+		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php' enctype='multipart/form-data'>";#create form
 
 		$content .= "<label for='contTabTitle'>Content Title</label>";
 		$content .= "<input class='form-control' required='yes' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput'></input><br>";
 		
 		$content .= "<label for='contTabPath'>Content Path</label>";
-		$content .= "<input class='form-control' required='yes' type='url' placeholder='Content Path' id='contTabPath' name='adm_contPathInput'></input><br>";
+		$content .= "<input class='form-control' required='yes' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput'></input><br>";
 		
 		#generates the subject dropdown
 		if($this->getSubjects()!==null)//meaning we have a valid list of subjects
@@ -132,7 +133,6 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_content','active');#$this->errorMessage can be swapped with custom error message
-
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	
@@ -207,21 +207,23 @@ class ContentHandler
 		#subject dropdown
 		$dropdown .= "<select class='form-control' id='topicDropdown'>";#create a selection box
 		
-		foreach ($topics as $topic)
+		if($topics!==0)
 		{
-			$tmp_topicId=@$topic['topic_id'];
-			$tmp_topicName = @$topic['topic_name'];
+			foreach ($topics as $topic)
+			{
+				$tmp_topicId=@$topic['topic_id'];
+				$tmp_topicName = @$topic['topic_name'];
 
-			$dropdown .= ("<option value=$tmp_topicId>".$tmp_topicName."</option>");
-		}
+				$dropdown .= ("<option value=$tmp_topicId>".$tmp_topicName."</option>");
+			}
 
-		#unset the loop variables
-		unset($subject);
-		unset($tmp_topicId);
-		unset($tmp_topicName);
-
-		#close select 
-		$dropdown.="</select>";
+			#unset the loop variables
+			unset($subject);
+			unset($tmp_topicId);
+			unset($tmp_topicName);
+			}
+			#close select 
+			$dropdown.="</select>";
 
 		return $dropdown;
 	}#end of generateTopicDropdown
@@ -246,13 +248,23 @@ class ContentHandler
 		#variables for accessing information from the database
 		$streams = $dbInfo->getAvailableStreams();
 		$grades = $dbInfo->getAvailableClasses();
-
-		#assignment content - escape every newline with \ for js usage
+		$assignments = $dbInfo->getSpecificAss($_SESSION['s_admin_id']);
+		#assignment content
 		$content ="<div class='tab-pane fade in panel panel-primary col-xs-12' id='nav_ass'>";#open div
 
 		#content here
-		$content .= "<h2>Assignments</h2>";
-		$content .= "<form method='post' action='handlers/submitAss.php' class='form'>";
+		$content .= "<h4 class='center_text'>Assignments</h4>";
+
+		#tab content for assignments
+		$content .= "<ul class='nav nav-tabs nav-justified'>
+			<li class='active'><a data-toggle='tab' href='#ass_send'>SEND</a></li>
+			<li><a data-toggle='tab' href='#ass_manage'>MANAGE</a></li>
+		";
+		$content .= "<div class='tab-content container-fluid'>";
+
+		#send tab [assignments]
+		$content .= "<div class='tab-pane active' id='ass_send'><br>";
+		$content .= "<form method='post' action='handlers/submitAss.php' class='form' enctype='multipart/form-data'>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assTitle'>Assignment Title *</label>
 		<input class='form-control' type='text' name='assTitleInput' required='yes' id='assTitle' placeholder='Assignment Title *'/> </div>";
@@ -293,7 +305,7 @@ class ContentHandler
 		$content .= "<button type='submit' class='btn btn-primary adminSubmitBtn'>Send Assignment</button>";#create a submit button
 		
 		//show error message at the bottom of the page
-		switch (htmlspecialchars(@$_GET['nassfail'])) {
+		switch (htmlspecialchars(@$_GET['assfail'])) {
 			case 1:
 				$content .= "<br><div class='panel-warning'><div class='panel-body'><h6>Error. Ensure you fill in all required information before trying to send an assignment</h6></div></div>";
 				break;
@@ -304,17 +316,54 @@ class ContentHandler
 		}
 
 		$content .= "</form>";
+		$content .= "</div>";#close the tab pane div
 
+		#manage assignments tab
+		$content .= "<div class='tab-pane' id='ass_manage'>";
+		
+		#if there are assignments in the database
+		if($assignments !== 0 && $assignments!==false)
+		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
+			<tr>
+				<th>Title</th>
+				<th>Class</th>
+				<th>Stream</th>
+				<th>Sent Date</th>
+				<th>Due Date</th>
+				<th>Remove</th>
+			</tr>";
+			foreach($assignments as $ass )
+			{
+				$content .= "<tr>
+				<td>".@$ass['ass_title']."</td>
+				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
+				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
+				<td>".@$ass['sent_date']."</td>
+				<td>".@$ass['due_date']."</td>
+				<td><a class='btn btn-warning' href='#'>Remove</a></td>
+			</tr>";
+			}
+			unset($ass);#cleanup after foreach
+		
+			$content .= "</table></div>";
+		}
+		else if($assignments==0)#query ran successfully but there were 0 schedules in the database
+		{
+			$content .= $this->noContentMessage('<b>There are currently no assignments</b>.<br> Once teachers send assignments, the assignments will appear here');
+		}		
+		$content .= "</div>";
+
+		$content .= "</div>";#close the tab-content div
 		#close div
 		$content.="</div>";
-
+        
 		
 		#the minimum level admin should be to view this content [Assignments tab]
 		$this->levelRequired = self::ASSIGNMENTS_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_ass','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -444,7 +493,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_schedule','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -462,7 +511,6 @@ class ContentHandler
 
 		#content here
 		$content .= "<h3>Statistics</h3>";
-		//$content .= "<p>This module is still under construction, please check again later.</p>";
 
 		$content .= "<ul class='nav nav-tabs nav-justified'>
 			<li class='active'><a data-toggle='tab' href='#stats_schedules'>SCHEDULES</a></li>
@@ -474,16 +522,21 @@ class ContentHandler
 		#schedules tab pane
 		$content .= "<div class='tab-pane active clearfix' id='stats_schedules'>";
 
-		#search
+		#search schedules
 		$content .= "<div class='container-fluid clearfix'>";
-		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2' id='stat_schedule_search'>Search</button><br><br>";
-		$content .= "</div>";
+		$content .= "<br><input class='col-xs-9 admin-search-btn'id='ScheduleStatsInput' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_schedule_search' onclick='statisticsSearch()'>Search</button><br><br>";
+		
+		$content .= "<div class='row clearfix' id='scheduleStat'>
+		<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+        $content .= "</div>";
 		#end of search
 
 		#if there are schedules in the database
 		if($schedules !== 0 && $schedules!==false)
-		{	$content .= "<table class='table table-striped'>
+		{	$content .= "<div class='schedule-table-container'><table class='table table-striped'>
 			<tr>
 				<th>Teacher</th>
 				<th>Schedule Name</th>
@@ -503,11 +556,11 @@ class ContentHandler
 			}
 			unset($schedule);#cleanup after foreach
 		
-			$content .= "</table>";
+			$content .= "</table></div>";
 		}
 		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
 		{
-			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+			$content .= $this->noContentMessage('<b>There are currently no schedules.</b><br> Once teachers make schedules, the schedules will appear here');
 		}
 
 		$content .= "</div>";#close assignments tab pane
@@ -515,16 +568,19 @@ class ContentHandler
 		#assignments tab panel
 		$content .= "<div class='table-responsive tab-pane clearfix' id='stats_ass'>";
 
-		#search
+		#search assignments
 		$content .= "<div class='container-fluid clearfix'>";
-		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2' id='stat_ass_search'>Search</button><br><br>";
-		$content .= "</div>";
+		$content .= "<br><input class='col-xs-9 admin-search-btn' id='AssStatsInput' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_ass_search' onclick='statisticsSearch()'>Search</button><br><br>";
+        $content .= "<div class='row clearfix' id='assStat'><div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4' ><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+        $content .= "</div>";
 		#end of search
 
-		#if there are schedules in the database
+		#if there are assignments in the database
 		if($assignments !== 0 && $assignments!==false)
-		{	$content .= "<table class='table table-striped'>
+		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
 			<tr>
 				<th>Teacher</th>
 				<th>Title</th>
@@ -536,21 +592,21 @@ class ContentHandler
 			foreach($assignments as $ass )
 			{
 				$content .= "<tr>
-				<td>".$dbInfo->getTeacherName($ass['teacher_id'])."</td>
-				<td>".$ass['ass_title']."</td>
-				<td>".$dbInfo->getClassName($ass['class_id'])."</td>
-				<td>".$dbInfo->getStreamName($ass['stream_id'])."</td>
-				<td>".$ass['sent_date']."</td>
-				<td>".$ass['due_date']."</td>
+				<td>".@$dbInfo->getTeacherName($ass['teacher_id'])."</td>
+				<td>".@$ass['ass_title']."</td>
+				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
+				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
+				<td>".@$ass['sent_date']."</td>
+				<td>".@$ass['due_date']."</td>
 			</tr>";
 			}
-			unset($schedule);#cleanup after foreach
+			unset($ass);#cleanup after foreach
 		
-			$content .= "</table>";
+			$content .= "</table></div>";
 		}
-		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
+		else if($assignments==0)#query ran successfully but there were 0 schedules in the database
 		{
-			$content .= $this->noContentMessage('There are currently no schedules, once teachers schedule, the schedules will appear here');
+			$content .= $this->noContentMessage('<b>There are currently no assignments</b>.<br> Once teachers send assignments, the assignments will appear here');
 		}
 
 		$content .= "</div>";#close assignments tab pane
@@ -565,7 +621,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_stats','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -583,17 +639,24 @@ class ContentHandler
 			<form class='form' action='handlers/changePassword.php' method='POST'>
 				<h6 class='center_text'><b>Username : </b> " . ($_SESSION['s_admin_username']) . "</h6>
 
-				<label class='control-label hidden-xs col-sm-2' for='adm_curPass'>Current Password : </label>
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_curPass'>Current Password : </label>
 				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
-				
-				<label class='control-label hidden-xs col-sm-2' for='adm_newPass'>New Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
-				
-				<label class='control-label hidden-xs col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+			</div>
 
-				<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
-				<br><br>
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_newPass'>New Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
+			</div>
+			
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+			</div>
+			
+			<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
+			
+			<br><br>
 			</form>
 		</div>";
 		
@@ -605,7 +668,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_profile','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -625,7 +688,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_subjects','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -645,7 +708,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_topics','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -669,7 +732,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_logout','');
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -703,14 +766,7 @@ class ContentHandler
         
 		if($result = mysqli_query($dbCon, $q))
 		{
-            $rows = '';
-            while ($row = $result->fetch_assoc()) {
-                //echo $row['classtype']."<br>";
-                
-                $rows[] = $row;
-                //echo $row['class_name'];
-            }
-			return $rows;
+            return $result;
 		}
 		else
 		{
@@ -729,11 +785,28 @@ class ContentHandler
 		//require('../esomoDbConnect.php');
 		if($result = mysqli_query($dbCon, $q))
 		{
-			return $result;
+            
+            $rows = '';
+            while ($row = $result->fetch_assoc()) {
+                //echo $row['classtype']."<br>";
+
+                $rows[] = $row;
+                //echo $row['class_name'];
+            }
+			#If there are rows in the table return the rows
+			if(mysqli_num_rows($result)>0)
+            {
+				return $rows;
+			}
+			else#otherwise return 0
+			{
+				return 0;
+			}   
+	
 		}
 		else
 		{
-			echo "Error running query<br> ".$dbCon->error;#debug
+            echo "Error running query<br> ".$dbCon->error;#debug
 			return null;
 		}
 	}
@@ -750,10 +823,10 @@ class ContentHandler
 		}
 	}
 	private function getErrorContent($errorInput,$id,$extraClass)#id is the id of the tab pane
-	{	
+    {
 		#changed to be handled by bootstrap
 		#cannot have it as multiple lines because js will read incorrectly
-		return "<div class='$extraClass well tab-pane fade in panel panel-primary col-xs-12' id='$id'><h3>Restricted access</h3><p>$errorInput</p></div>";
+        return "<div class='$extraClass tab-pane fade in panel panel-primary col-xs-12' id='$id'><h3>Restricted access</h3><p>$errorInput</p></div>";
 	}
 
 	#displays a message when there is no content - convenience function
