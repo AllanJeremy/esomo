@@ -48,7 +48,7 @@ else#the value are not set for the new password input for some reason
     #check if password is 8-50 characters long
     $passLength = strlen(@$_POST['adm_newPassInput']);
 
-      if((!($passLength < 8))&&(!($passLength > 50)&&(htmlspecialchars($_POST['adm_newPassInput']) == htmlspecialchars($_POST['adm_confirmInput']))))#if the password is too short
+      if((!($passLength < 8))&&(!($passLength > 50)&&(@htmlspecialchars($_POST['adm_newPassInput']) == @htmlspecialchars($_POST['adm_confirmInput']))))#if the password is too short
       {#if met conditions - valid
         
        
@@ -80,7 +80,7 @@ else#the value are not set for the new password input for some reason
   #alters the table data - changes password
   function changePassword()
   {
-    $password = htmlspecialchars($_POST['adm_newPassInput']);#sanitized password_get_info
+    $password = @htmlspecialchars($_POST['adm_newPassInput']);#sanitized password_get_info
     $password = $GLOBALS['passEncrypt']->encryptPass($password);#encrypt the password so it can be stored in the database
 
     $q = "UPDATE admin_accounts 
