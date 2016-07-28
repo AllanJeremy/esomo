@@ -524,12 +524,12 @@ class ContentHandler
 		#search schedules
 		$content .= "<div class='container-fluid clearfix'>";
 		$content .= "<br><input class='col-xs-9 admin-search-btn'id='ScheduleStatsInput' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_schedule_search' onclick='statisticsSearch()'>Search</button><br><br>";
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_schedule_search' onclick='statisticsSearch()'><span class='glyphicon glyphicon-search hide-on-sm-and-up'></span><span class='sr-only'>SEARCH</span> <span class=' hide-on-sm-and-down'>Search</span> </button><br><br>";
 		
 		$content .= "<div class='row clearfix' id='scheduleStat'>
-		<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
-        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
-        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+		<div class='checkbox col-xs-12 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-12 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-12 col-sm-4'><label><input type='checkbox' id='byClass'> By class</label></div></div>";
         $content .= "</div>";
 		#end of search
 
@@ -570,10 +570,10 @@ class ContentHandler
 		#search assignments
 		$content .= "<div class='container-fluid clearfix'>";
 		$content .= "<br><input class='col-xs-9 admin-search-btn' id='AssStatsInput' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_ass_search' onclick='statisticsSearch()'>Search</button><br><br>";
-        $content .= "<div class='row clearfix' id='assStat'><div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
-        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
-        $content .= "<div class='checkbox col-xs-6 col-sm-4' ><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_ass_search' onclick='statisticsSearch()'><span class='glyphicon glyphicon-search hide-on-sm-and-up'></span><span class='sr-only'>SEARCH</span> <span class=' hide-on-sm-and-down'>Search</span> </button><br><br>";
+        $content .= "<div class='row clearfix' id='assStat'><div class='checkbox col-xs-12 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-12 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-12 col-sm-4' ><label><input type='checkbox' id='byClass'> By class</label></div></div>";
         $content .= "</div>";
 		#end of search
 
