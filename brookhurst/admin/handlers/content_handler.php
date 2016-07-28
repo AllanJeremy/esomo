@@ -322,7 +322,7 @@ class ContentHandler
 		
 		#if there are assignments in the database
 		if($assignments !== 0 && $assignments!==false)
-		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
+		{	$content .= "<div class='ass-table-container'><table class='table table-striped'>
 			<tr>
 				<th>Title</th>
 				<th>Class</th>
