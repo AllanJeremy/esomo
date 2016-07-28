@@ -291,7 +291,7 @@ EOD;
 						$tmp_dateAdded = $result['date_added'];
 
 						//path to the article document handler
-						$pathExtension = "#";
+						$pathExtension = "javascript:void(0)";
 
 						#generate article section using the information above
 
@@ -363,7 +363,7 @@ EOD;
 					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
-					$pathExtension = "#";
+					$pathExtension = "javascript:void(0)";
 
 					#generate article section using the information above
 
@@ -436,7 +436,7 @@ EOD;
 					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
-					$pathExtension = "/esomo/book.php?a=$tmp_videoId";
+					$pathExtension = "javascript:void(0)";
 
 					#generate book section using the information above
 					#generate article section using the information above
