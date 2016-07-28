@@ -590,17 +590,24 @@ class ContentHandler
 			<form class='form' action='handlers/changePassword.php' method='POST'>
 				<h6 class='center_text'><b>Username : </b> " . ($_SESSION['s_admin_username']) . "</h6>
 
-				<label class='control-label hidden-xs col-sm-2' for='adm_curPass'>Current Password : </label>
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_curPass'>Current Password : </label>
 				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
-				
-				<label class='control-label hidden-xs col-sm-2' for='adm_newPass'>New Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
-				
-				<label class='control-label hidden-xs col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+			</div>
 
-				<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
-				<br><br>
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_newPass'>New Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
+			</div>
+			
+			<div class='form-group'>
+				<label class='control-label hidden-sm col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+			</div>
+			
+			<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
+			
+			<br><br>
 			</form>
 		</div>";
 		
