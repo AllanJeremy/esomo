@@ -6,8 +6,45 @@ if(isset($_POST['chosenSubjectLevel']) && !empty($_POST['chosenSubjectLevel'])) 
     subjectChange();
 } elseif(isset($_POST['chosenGrade']) && !empty($_POST['chosenGrade'])) {
     gradeChange();
+} elseif(isset($_POST['scheduleTrId']) && !empty($_POST['scheduleTrId'])) {
+    removeScheduleRow();
+} elseif(isset($_POST['assignmentTrId']) && !empty($_POST['assignmentTrId'])) {
+    removeAssignmentRow();
 } else {
     //echo 'forbiden';
+}
+
+function removeScheduleRow() {
+    if(isset($_POST['assignmentTrId']))
+    {
+        session_start();
+        $chosenTrId = $_POST['assignmentTrId'];
+        $task_id = $chosenTrId;
+
+        require_once("content_handler.php");
+        $handler = new ContentHandler();
+
+        $tr = $handler->deleteAssignment($task_id);
+
+        echo $tr;
+
+    }
+}
+function removeAssignmentRow() {
+    if(isset($_POST['scheduleTrId']))
+    {
+        session_start();
+        $chosenTrId = $_POST['scheduleTrId'];
+        $task_id = $chosenTrId;
+
+        require_once("content_handler.php");
+        $handler = new ContentHandler();
+
+        $tr = $handler->deleteAssignment($task_id);
+
+        echo $tr;
+
+    }
 }
 
 function subjectChange() {

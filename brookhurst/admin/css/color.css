@@ -69,3 +69,9 @@ td.highlight-text {
     color: #fff !Important;
     text-align: center;
 }
+
+.success-message {
+    background-color: #2c8c4c !Important;
+    color: #fff !Important;
+    text-align: center;
+}
