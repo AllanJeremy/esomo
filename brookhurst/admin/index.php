@@ -31,7 +31,7 @@ session_start();
 $curUsername = $_SESSION['s_admin_username'];
 $indexContent = <<<EOD
       
-       <div class='container-fluid'>
+       
 
         <div class='col-sm-3'>
           <h3>Admin Panel</h3>
