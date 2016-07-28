@@ -40,7 +40,7 @@ class FileUpload
                     {
                         #truncates the storage path so that we only get the relative path for effective storage in database
                         $this->storage_path = substr($this->storage_path,6);#only use if using the same host as file handler
-                        echo "<p>File uploaded successfully to : <b>".$uploadPath."</b></p>";
+                        echo "<p>File uploaded successfully to : <b>".$this->storage_path."</b></p>";
                     }
                     else#if the upload fails throw an exception
                     { 

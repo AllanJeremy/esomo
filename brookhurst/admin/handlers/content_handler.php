@@ -67,7 +67,6 @@ class ContentHandler
 	//returns the content management content
 	function getContent($chosenSubjectLevel = '')
 	{	
-        
 		$content ="<div class='tab-pane fade in active panel panel-primary col-xs-12' id='nav_content'>";#open div
         global $pushArray;
         global $subjectLevel;
@@ -183,7 +182,7 @@ class ContentHandler
 		$dropdown .= "<label class='control-label' for='subjectDropdown'>Grade </label>";
         
 		#subject dropdown
-		$dropdown .= "<select class='form-control' id='gradeDropdown' onchange='gradeChange(this.value)'>";#create a selection box
+		$dropdown .= "<select class='form-control' id='gradeDropdown' name='gradeDropdown' onchange='gradeChange(this.value)'>";#create a selection box
         
         $dropdown .= ("<option value=''></option>");
 		#unset the loop variables
@@ -205,7 +204,7 @@ class ContentHandler
 		$dropdown .= "<br><label class='control-label' for='subjectDropdown'>Topic </label>";
 
 		#subject dropdown
-		$dropdown .= "<select class='form-control' id='topicDropdown'>";#create a selection box
+		$dropdown .= "<select class='form-control' id='topicDropdown' name='topicDropdown'>";#create a selection box
 		
 		if($topics!==0)
 		{
@@ -232,7 +231,7 @@ class ContentHandler
 	private function genContTypeDropdown()
 	{	
 		$dropdown = "<br><label class='control-label' for='contTypeDrop'>Content type</label>";
-		$dropdown .= "<select class='form-control' id='contTypeDrop'>";
+		$dropdown .= "<select class='form-control' id='contTypeDrop' name='contTypeDropdown'>";
 		$dropdown .= "<option value='article'>Article</option>";
 		$dropdown .= "<option value='book'>Book</option>";
 		$dropdown .= "<option value='video'>Video</option>";
