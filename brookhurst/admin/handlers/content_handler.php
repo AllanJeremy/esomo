@@ -21,7 +21,7 @@ class ContentHandler
 	public $scheduleClass;
 	public $statClass;
 
-	#different access level constants
+    #different access level constants
 	const NONE_ACCOUNT = 1;
 	const CONTENT_CREATOR = 2;
 	const TEACHER = 3;
@@ -34,7 +34,6 @@ class ContentHandler
 	const PROFILE_ACCESS_LEVEL = self::NONE_ACCOUNT;
 	const SCHEDULE_ACCESS_LEVEL = self::TEACHER;
 	const STATS_ACCESS_LEVEL = self::PRINCIPAL;
-	
 	#assignment content types accepted for files
 	private $ass_contentTypes;
 	//constructor - when a new content handler is created
@@ -132,7 +131,6 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_content','active');#$this->errorMessage can be swapped with custom error message
-
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	
@@ -307,14 +305,14 @@ class ContentHandler
 
 		#close div
 		$content.="</div>";
-
+        
 		
 		#the minimum level admin should be to view this content [Assignments tab]
 		$this->levelRequired = self::ASSIGNMENTS_ACCESS_LEVEL;
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_ass','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -444,7 +442,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_schedule','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -476,14 +474,18 @@ class ContentHandler
 
 		#search
 		$content .= "<div class='container-fluid clearfix'>";
-		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2' id='stat_schedule_search'>Search</button><br><br>";
-		$content .= "</div>";
+		$content .= "<br><input class='col-xs-9 admin-search-btn'id='ScheduleStatsInput' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_schedule_search' onclick='statisticsSearch()'>Search</button><br><br>";
+		
+		$content .= "<div class='row clearfix' id='scheduleStat'><div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+        $content .= "</div>";
 		#end of search
 
 		#if there are schedules in the database
 		if($schedules !== 0 && $schedules!==false)
-		{	$content .= "<table class='table table-striped'>
+		{	$content .= "<div class='schedule-table-container'><table class='table table-striped'>
 			<tr>
 				<th>Teacher</th>
 				<th>Schedule Name</th>
@@ -503,7 +505,7 @@ class ContentHandler
 			}
 			unset($schedule);#cleanup after foreach
 		
-			$content .= "</table>";
+			$content .= "</table></div>";
 		}
 		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
 		{
@@ -517,14 +519,17 @@ class ContentHandler
 
 		#search
 		$content .= "<div class='container-fluid clearfix'>";
-		$content .= "<br><input class='col-xs-10 admin-search-btn' type='search' placeholder='Search Filter'>";#search box
-		$content .= "<button class='btn btn-primary col-xs-2' id='stat_ass_search'>Search</button><br><br>";
-		$content .= "</div>";
+		$content .= "<br><input class='col-xs-9 admin-search-btn' id='AssStatsInput' type='search' placeholder='Search Filter'>";#search box
+		$content .= "<button class='btn btn-primary col-xs-2 col-xs-offset-1' id='stat_ass_search' onclick='statisticsSearch()'>Search</button><br><br>";
+        $content .= "<div class='row clearfix' id='assStat'><div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTeacherName'> By Teacher's name</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4'><label><input type='checkbox' id='byTitle'> By Title</label></div>";
+        $content .= "<div class='checkbox col-xs-6 col-sm-4' ><label><input type='checkbox' id='byClass'> By class</label></div></div>";
+        $content .= "</div>";
 		#end of search
 
 		#if there are schedules in the database
 		if($assignments !== 0 && $assignments!==false)
-		{	$content .= "<table class='table table-striped'>
+		{	$content .= "<div class='stat-table-container'><table class='table table-striped'>
 			<tr>
 				<th>Teacher</th>
 				<th>Title</th>
@@ -536,17 +541,17 @@ class ContentHandler
 			foreach($assignments as $ass )
 			{
 				$content .= "<tr>
-				<td>".$dbInfo->getTeacherName($ass['teacher_id'])."</td>
-				<td>".$ass['ass_title']."</td>
-				<td>".$dbInfo->getClassName($ass['class_id'])."</td>
-				<td>".$dbInfo->getStreamName($ass['stream_id'])."</td>
-				<td>".$ass['sent_date']."</td>
-				<td>".$ass['due_date']."</td>
+				<td>".@$dbInfo->getTeacherName($ass['teacher_id'])."</td>
+				<td>".@$ass['ass_title']."</td>
+				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
+				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
+				<td>".@$ass['sent_date']."</td>
+				<td>".@$ass['due_date']."</td>
 			</tr>";
 			}
 			unset($schedule);#cleanup after foreach
 		
-			$content .= "</table>";
+			$content .= "</table></div>";
 		}
 		else if($schedules==0)#query ran successfully but there were 0 schedules in the database
 		{
@@ -565,7 +570,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_stats','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -605,7 +610,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_profile','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -625,7 +630,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_subjects','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -645,7 +650,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_topics','');#$this->errorMessage can be swapped with custom error message
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -669,7 +674,7 @@ class ContentHandler
 		
 		#error to be shown if access level is not valid
 		$error = $this->getErrorContent($this->errorMessage,'nav_logout','');
-
+        
 		#return the content if the user has access rights else show error
 		return ($this->restrictAccess($this->levelRequired,$content,$error));
 	}
@@ -703,14 +708,7 @@ class ContentHandler
         
 		if($result = mysqli_query($dbCon, $q))
 		{
-            $rows = '';
-            while ($row = $result->fetch_assoc()) {
-                //echo $row['classtype']."<br>";
-                
-                $rows[] = $row;
-                //echo $row['class_name'];
-            }
-			return $rows;
+            return $result;
 		}
 		else
 		{
@@ -729,11 +727,21 @@ class ContentHandler
 		//require('../esomoDbConnect.php');
 		if($result = mysqli_query($dbCon, $q))
 		{
-			return $result;
+            
+            $rows = '';
+            while ($row = $result->fetch_assoc()) {
+                //echo $row['classtype']."<br>";
+
+                $rows[] = $row;
+                //echo $row['class_name'];
+            }
+            return $rows;
+            
+			
 		}
 		else
 		{
-			echo "Error running query<br> ".$dbCon->error;#debug
+            echo "Error running query<br> ".$dbCon->error;#debug
 			return null;
 		}
 	}
@@ -750,10 +758,10 @@ class ContentHandler
 		}
 	}
 	private function getErrorContent($errorInput,$id,$extraClass)#id is the id of the tab pane
-	{	
+    {
 		#changed to be handled by bootstrap
 		#cannot have it as multiple lines because js will read incorrectly
-		return "<div class='$extraClass well tab-pane fade in panel panel-primary col-xs-12' id='$id'><h3>Restricted access</h3><p>$errorInput</p></div>";
+        return "<div class='$extraClass tab-pane fade in panel panel-primary col-xs-12' id='$id'><h3>Restricted access</h3><p>$errorInput</p></div>";
 	}
 
 	#displays a message when there is no content - convenience function

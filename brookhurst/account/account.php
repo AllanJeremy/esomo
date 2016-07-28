@@ -17,8 +17,20 @@
   //create  a session function handler
   require_once('../functions/session_functions.php');
   $sessionHandler = new SessionFunctions();
-
-  $sessionHandler->updateSessionVars('../esomoDbConnect.php');
+    
+    if (!$sessionHandler->sessionActive())#echo content only if not logged in
+    {
+        session_write_close();
+        $sessionHandler->redirectNotLoggedUser($pageContent,'login.php');
+        //header('Location:'.$redirectPath);
+    }
+    else
+    {
+        $sessionHandler->updateSessionVars('../esomoDbConnect.php');
+        
+        
+    }
+  
 ?>
 <?php
 #load the navigation menu
@@ -133,8 +145,8 @@
     <h5>Note : You have to refresh your page for the new Username to be displayed in your profile.</h5>
   </div>
 </div>";
-
-  $sessionHandler->redirectNotLoggedUser($pageContent,'login.php');
+    echo $pageContent;
+  
 ?>
 
 <?php
