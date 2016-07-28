@@ -24,6 +24,10 @@ COLOR SCHEME
     background-color: sandybrown;
 }
 
+.beige-text
+{
+    color:#d8b859 !Important;
+}
 .white-text {
     color: #fff !Important;
 }

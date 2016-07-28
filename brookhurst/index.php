@@ -37,17 +37,17 @@
            
             <div class='row landing-links'>
                 <div class="col-sm-4 col-xs-12">
-                    <a class='col-xs-12 primary-color-beige white-text' href='learn.php'>
+                    <a class='col-xs-12 primary-color-maroon beige-text center_text' href='learn.php'>
                         Learn
                     </a>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <a class='col-xs-12 primary-color-beige white-text' href='assignment.php'>
+                    <a class='col-xs-12 primary-color-maroon beige-text center_text' href='assignment.php'>
                         Assignments
                     </a>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <a class='col-xs-12 primary-color-beige white-text' href='tests.php'>
+                    <a class='col-xs-12 primary-color-maroon beige-text center_text' href='tests.php'>
                         Tests
                     </a>
                 </div>
