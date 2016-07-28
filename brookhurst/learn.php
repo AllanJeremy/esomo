@@ -22,10 +22,6 @@
        
         
         <?php
-         
-
-
-
           require_once('functions/session_functions.php');
           $sessionHandler = new SessionFunctions();
           $errorMessage = "<div class='container'> <div class='panel panel-info col-sm-12'> <div class='panel-header'> <h2>Restricted access content</h2>  </div><div class='panel-body'> <p>You need to be logged in to access learning material. Login and try again</p></div></div></div>";
@@ -41,50 +37,53 @@
               $formSelection = new FormSelection();
               $formSelection->generateFormPage($curSubId);
             }
-            require_once('esomoDbConnect.php');//includes an opening to the database
-            echo "<h2 style='padding:2rem;' class='grey-text'>Learning material to get you started as the best student.</h2>";
-            echo "<div class='far-grey'>";
-            
-
-            $scienceSubs =$languageSubs= $humanitySubs= $extraSubs = "";
-            $subContainerClasses = 'panel panel-default col-xs-12 col-sm-5 col-sm-offset-1 col-md- col-md-offset-1 col-lg-2 col-lg-offset-1';//classes for the subject container classes
-
-            $rawQuery = 'SELECT subject_id,subject_name,subject_description,subject_category FROM subjects WHERE subject_category=?';
-
-            if($fetchSubsQuery = $dbCon->prepare($rawQuery))//if we successfully prepared query set fetchSubsQuery
+            else
             {
-            //
+                require('esomoDbConnect.php');//includes an opening to the database
+                echo "<h2 style='padding:2rem;' class='grey-text'>Learning material to get you started as the best student.</h2>";
+                echo "<div class='far-grey'>";
+              
 
-            $fetchSubsQuery->bind_param('s', $tempSubCategory);   //set the information for each category
-            $tempSubCategory = SC_SCIENCES;
-            $fetchSubsQuery->execute();
-            $scienceSubs = $fetchSubsQuery->get_result();
+              $scienceSubs =$languageSubs= $humanitySubs= $extraSubs = "";
+              $subContainerClasses = 'panel panel-default col-xs-12 col-sm-5 col-sm-offset-1 col-md- col-md-offset-1 col-lg-2 col-lg-offset-1';//classes for the subject container classes
 
-            $tempSubCategory = SC_LANGUAGES;
-            $fetchSubsQuery->execute();
-            $languageSubs = $fetchSubsQuery->get_result();
+              $rawQuery = 'SELECT subject_id,subject_name,subject_description,subject_category FROM subjects WHERE subject_category=?';
 
-            $tempSubCategory = SC_HUMANITIES;
-            $fetchSubsQuery->execute();
-            $humanitySubs = $fetchSubsQuery->get_result();
+              if($fetchSubsQuery = $dbCon->prepare($rawQuery))//if we successfully prepared query set fetchSubsQuery
+              {
+              
 
-            $tempSubCategory = SC_EXTRAS;
-            $fetchSubsQuery->execute();
-            $extraSubs = $fetchSubsQuery->get_result();
-            }else
-            {
-              echo "<p style='background-color:black;text-align:center;color:red;font-size:1.2em;'> could not execute query :".$dbCon->error." </p> ";//LIFE SAVER - HELPED FIND THE ERROR
-              #exit();
+              $fetchSubsQuery->bind_param('s', $tempSubCategory);   //set the information for each category
+              $tempSubCategory = SC_SCIENCES;
+              $fetchSubsQuery->execute();
+              $scienceSubs = $fetchSubsQuery->get_result();
+
+              $tempSubCategory = SC_LANGUAGES;
+              $fetchSubsQuery->execute();
+              $languageSubs = $fetchSubsQuery->get_result();
+
+              $tempSubCategory = SC_HUMANITIES;
+              $fetchSubsQuery->execute();
+              $humanitySubs = $fetchSubsQuery->get_result();
+
+              $tempSubCategory = SC_EXTRAS;
+              $fetchSubsQuery->execute();
+              $extraSubs = $fetchSubsQuery->get_result();
+              }else
+              {
+                echo "<p style='background-color:black;text-align:center;color:red;font-size:1.2em;'> could not execute query :".$dbCon->error." </p> ";//LIFE SAVER - HELPED FIND THE ERROR
+                #exit();
+              }
+
+              //loops through and categorizes subjects
+              loopSubjects($languageSubs,"Languages");
+              loopSubjects($scienceSubs,"Sciences");
+              loopSubjects($humanitySubs,"Humanities");
+              loopSubjects($extraSubs,"Extra Subjects");
+
+              //done generating content , close the div wrapper
+              echo "</div>";
             }
-
-            //loops through and categorizes subjects
-            loopSubjects($languageSubs,"Languages");
-            loopSubjects($scienceSubs,"Sciences");
-            loopSubjects($humanitySubs,"Humanities");
-            loopSubjects($extraSubs,"Extra Subjects");
-
-            //done generating content , close the div wrapper
-            echo "</div>";
           }
           else #do this if the user is not logged in
           {
