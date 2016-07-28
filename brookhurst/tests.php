@@ -72,7 +72,7 @@
               }
               else 
               {
-               $content .= "<a class='btn btn-default col-xs-12' href='#'>DOWNLOAD</a>";
+               $content .= "<a class='btn btn-default col-xs-12' disabled href='javascript:void(0)'>DOWNLOAD</a>";
               }
 
               $content .= "</td></tr>";

@@ -1,3 +1,16 @@
+<html lang="en">
+    <head>
+        <title>Submit Assin</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link  rel="stylesheet" type="text/css" href="../css/theme.min.css"/>
+       <link  rel="stylesheet" type="text/css" href="../css/main.css"/>
+       <link  rel="stylesheet" type="text/css" href="../css/color.css"/>
+    </head>
+    
+    <body>
+
+
 <?php
 
 session_start();#start session so we can use the session variables
@@ -92,3 +105,7 @@ else#the value are not set for the new password input for some reason
     unset($_POST['adm_newPassInput']);
     unset($_POST['f_confirmInput']);
   }
+?>
+
+</body>
+</html>

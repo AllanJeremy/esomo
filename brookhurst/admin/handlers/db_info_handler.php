@@ -136,6 +136,27 @@ function getAllAss()
 	}
 }
 
+function getSpecificAss($teacherId)
+{
+		require("../esomoDbConnect.php");
+	$q = "SELECT * FROM assignments WHERE teacher_id=$teacherId";
+
+	if($result = mysqli_query($dbCon,$q))
+	{	
+		if(mysqli_num_rows($result)>0)
+		{
+			return $result;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
 	#column(column whose data we want), tableName(table we want to access the column from), idName (name of the identifier whose id we are using' , attrId(the id of the attribute)
 	function getAttributeName($column,$tableName,$idName,$attrId)
 	{

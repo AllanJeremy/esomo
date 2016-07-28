@@ -75,3 +75,24 @@ tbody{
 	height:100%;
 	overflow-y:auto;
 }
+
+.checkbox {
+	margin-top: 10px !Important;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../../fonts/glyphicons-halflings-regular.eot');
+  src: url('../../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+@media only screen and (min-width: 769px) {
+.hide-on-sm-and-up {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+.hide-on-xs-only, .hide-on-sm-and-down {
+    display: none !important;
+  }
