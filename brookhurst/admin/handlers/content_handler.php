@@ -333,7 +333,7 @@ class ContentHandler
 			</tr>";
 			foreach($assignments as $ass )
 			{
-				$content .= "<tr id='".$ass['ass_id']"'>
+				$content .= "<tr id='".$ass['ass_id']."'>
 				<td>".@$ass['ass_title']."</td>
 				<td>".@$dbInfo->getClassName($ass['class_id'])."</td>
 				<td>".@$dbInfo->getStreamName($ass['stream_id'])."</td>
