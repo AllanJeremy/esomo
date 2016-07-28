@@ -81,7 +81,7 @@ function deleteSchedule(tr,td) {
         complete: function () {},
         success: function (html) {
             
-            //console.log(html);
+            console.log(html);
             
             trPart.parent().parent().prepend('<div class="success-message trIn col-xs-12 clearfix">Data removed</div>');
             $('.trIn').delay(4000).fadeOut();

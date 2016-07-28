@@ -11,14 +11,14 @@ if(isset($_POST['chosenSubjectLevel']) && !empty($_POST['chosenSubjectLevel'])) 
 } elseif(isset($_POST['assignmentTrId']) && !empty($_POST['assignmentTrId'])) {
     removeAssignmentRow();
 } else {
-    //echo 'forbiden';
+    echo 'forbidden';
 }
 
 function removeScheduleRow() {
-    if(isset($_POST['assignmentTrId']))
+    if(isset($_POST['scheduleTrId']))
     {
         session_start();
-        $chosenTrId = $_POST['assignmentTrId'];
+        $chosenTrId = $_POST['scheduleTrId'];
         $task_id = $chosenTrId;
 
         require_once("content_handler.php");
@@ -31,10 +31,10 @@ function removeScheduleRow() {
     }
 }
 function removeAssignmentRow() {
-    if(isset($_POST['scheduleTrId']))
+    if(isset($_POST['assignmentTrId']))
     {
         session_start();
-        $chosenTrId = $_POST['scheduleTrId'];
+        $chosenTrId = $_POST['assignmentTrId'];
         $task_id = $chosenTrId;
 
         require_once("content_handler.php");
