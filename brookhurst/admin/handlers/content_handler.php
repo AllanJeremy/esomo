@@ -539,18 +539,18 @@ class ContentHandler
 			<tr>
 				<th>Teacher</th>
 				<th>Schedule Name</th>
-				<th>Date</th>
 				<th>Class</th>
 				<th>Stream</th>
+				<th>Date</th>
 			</tr>";
 			foreach($schedules as $schedule )
 			{
 				$content .= "<tr>
 				<td>".$dbInfo->getTeacherName($schedule['teacher_id'])."</td>
 				<td>".$schedule['task_title']."</td>
-				<td>".$schedule['task_date']."</td>
 				<td>".$dbInfo->getClassName($schedule['class_id'])."</td>
 				<td>".$dbInfo->getStreamName($schedule['stream_id'])."</td>
+				<td>".$schedule['task_date']."</td>
 			</tr>";
 			}
 			unset($schedule);#cleanup after foreach
