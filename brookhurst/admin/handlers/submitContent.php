@@ -1,10 +1,32 @@
+<html lang="en">
+    <head>
+        <title>Submit Content</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link  rel="stylesheet" type="text/css" href="../css/theme.min.css"/>
+       <link  rel="stylesheet" type="text/css" href="../css/main.css"/>
+       <link  rel="stylesheet" type="text/css" href="../css/color.css"/>
+    </head>
+    
+    <body>
+
+
 <?php
 require('../../esomoDbConnect.php');
 require_once('fileUpload.php');#file that handles file uploads
 #adm_contFileInput - content file input name
 $fileUpload = new FileUpload();
 
-$fileUpload->uploadContent('adm_contFileInput');
+if($fileUpload->uploadContent('adm_contFileInput'))
+{
+echo "<div class='container col-xs-12 col-sm-6 col-sm-offset-3'><h3 class='grey-text col-xs-12 '>Successfully uploaded the content</h3>
+<a class='btn btn-primary col-xs-12 col-sm-6 col-sm-offset-3' href='../index.php'>GO BACK TO ADMIN</a> </div>";
+}
+else {
+    echo "<div class='container col-xs-12 col-sm-6 col-sm-offset-3'><h3 class='grey-text col-xs-12 '>Failed to upload the assignment</h3>
+<a class='btn btn-primary col-xs-12 col-sm-6 col-sm-offset-3' href='../index.php'>GO BACK TO ADMIN</a> </div>";
+}
+		
 
 #adm_contTitleInput - content title
 #adm_contFileInput - file input
@@ -47,7 +69,7 @@ function addArticle($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            echo "<br>Added article to database";
+            //echo "<br>Added article to database";
             #redirect user
         }
         else #query failed to run, display error message
@@ -74,7 +96,7 @@ function addBook($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            echo "<br>Added book to database";
+            //echo "<br>Added book to database";
             #redirect user
         }
         else #query failed to run, display error message
@@ -101,7 +123,7 @@ function addVideo($storagePath)
         #Check if the query executed successfully
         if($stmt->execute())
         {
-            echo "<br>Added video to database";
+            //echo "<br>Added video to database";
             #redirect user
         }
         else #query failed to run, display error message
@@ -114,3 +136,6 @@ function addVideo($storagePath)
         echo "<p>Error preparing query to add video</p>";
     }
 }
+?>
+</body>
+</html>
