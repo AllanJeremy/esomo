@@ -47,13 +47,13 @@
 		</div> 
 
 		<div class='panel-body'>
-	 <form class='form-horizontal' method='post' action='signup.php?' role='form'>
+	 <form class='form-horizontal' method='post' action='signup.php?' role='form' id='signupForm'>
 
                 <!--First name Input-->
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_firstName'>First Name</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='text' name='admin_fNameInput' id='admin_firstName' placeholder='First Name'>
+                    <input class='form-control required' type='text' name='admin_fNameInput' id='admin_firstName' placeholder='First Name'>
                   </div>
                 </div>
                 
@@ -61,7 +61,7 @@
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_lastName'>Last Name</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='text' name='admin_lNameInput' id='admin_lastName' placeholder='Last Name'>
+                    <input class='form-control required' type='text' name='admin_lNameInput' id='admin_lastName' placeholder='Last Name'>
                   </div>
                 </div>
                 
@@ -69,7 +69,7 @@
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_username'>Username</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='text' name='admin_usernameInput' id='admin_username' placeholder='Username'>
+                    <input class='form-control required' type='text' name='admin_usernameInput' id='admin_username' placeholder='Username'>
                   </div>
                 </div>
                 
@@ -78,7 +78,7 @@
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_email'>Email</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='email' name='admin_emailInput' id='admin_email' placeholder='Email address'>
+                    <input class='form-control required' type='email' name='admin_emailInput' id='admin_email' placeholder='Email address'>
                   </div>
                 </div>
                 
@@ -94,7 +94,7 @@
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_password'>Password</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='password' name='admin_passwordInput' id='admin_password' placeholder='Password'>
+                    <input class='form-control required' type='password' name='admin_passwordInput' id='admin_passwordInput' placeholder='Password'>
                   </div>
                 </div>
                 
@@ -102,7 +102,7 @@
                 <div class='form-group col-xs-11 col-sm-9 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='admin_passwordConfirm'>Confirm</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='password' name='admin_passConfirmInput' id='admin_passwordConfirm' placeholder='Confirm password'>
+                    <input class='form-control required' type='password' name='admin_passConfirmInput' id='admin_passConfirmInput' placeholder='Confirm password'>
                   </div>
                 </div> 
                                                  
@@ -178,5 +178,17 @@
 <!-- jquery and bs javascript -->
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-
+<script src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript">    
+	$(document).ready(function() {
+		$("#signupForm").validate({
+          rules: {
+            admin_passwordInput: "required",
+            admin_passConfirmInput: {
+              equalTo: "#admin_passwordInput"
+            }
+          }
+        });
+    });
+</script>
 </html>

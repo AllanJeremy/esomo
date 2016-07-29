@@ -34,14 +34,14 @@
 		</div> 
 
 		<div class='panel-body'>
- 		<form action='loginHandler.php' method='POST'>
+ 		<form action='loginHandler.php' method='POST' id='loginForm'>
 	      <input type='email' id='email' class='col-sm-offset-3 col-sm-6' placeholder='Email' name='loginUserInput'><br/><br/><br/>
           
-	      <input type='password' id='pass' class='col-sm-offset-3 col-sm-6'  placeholder='Password' name='loginPassInput'><br/><br/><br/>
+	      <input type='password' id='pass' class='col-sm-offset-3 col-sm-6 required'  placeholder='Password' name='loginPassInput'><br/><br/><br/>
 
 	      
 	        <button class='btn btn-primary' id='loginButton'>Login</button>
-	        <a class='col-sm-offset-1' href='forgot.php'> Forgot password?</a> <br/><br/>
+	        <a class='col-sm-offset-1 required' href='forgot.php'> Forgot password?</a> <br/><br/>
          </form>
 
 	    <div class='modal-footer'>
@@ -80,6 +80,8 @@
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 
-
+<script src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $( "#loginForm" ).validate();
 </script>
 </html>
