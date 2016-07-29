@@ -851,7 +851,7 @@ class ContentHandler
 		if($stmt = $dbCon->prepare($q))
 		{
 			$stmt->bind_param('i',$ass_id);
-			$stmt->execute();
+			$stmt->execute();	
 		}
 		else
 		{
