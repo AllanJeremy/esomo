@@ -63,6 +63,74 @@ function subjectChange(str) {
             //console.log('error');
         }
     });
+    
+}
+
+function deleteSchedule(tr,td) {
+    var trPart, tdId;
+    trPart = tr;
+    scheduleTrId = td;
+    $.ajax({
+        type: 'POST',
+        url: '../admin/handlers/dynamic_content.php',
+        dataType: 'html',
+        data: {'scheduleTrId': scheduleTrId},
+        beforeSend: function() {
+            trPart.addClass('trOut');
+        },
+        complete: function () {},
+        success: function (html) {
+            
+            console.log(html);
+            
+            trPart.parent().parent().prepend('<div class="success-message trIn col-xs-12 clearfix">Data removed</div>');
+            $('.trIn').delay(4000).fadeOut();
+            
+            
+            trPart.delay(1000).slideUp();
+            setTimeout(function() {
+                $('.trIn').remove();
+                trPart.remove();
+            }, 5000);
+        },
+        error: function (html) {
+            trPart.removeClass('trOut');
+            console.log('---------->error');
+        }
+    });
+}
+function deleteAssignment(tr,td) {
+    var trPart, tdId;
+    trPart = tr;
+    assignmentTrId = td;
+    $.ajax({
+        type: 'POST',
+        url: '../admin/handlers/dynamic_content.php',
+        dataType: 'html',
+        data: {'assignmentTrId': assignmentTrId},
+        beforeSend: function() {
+            tr.addClass('trOut');
+        },
+        complete: function () {},
+        success: function (html) {
+            
+            //console.log(html);
+            
+            trPart.parent().parent().prepend('<div class="success-message trIn col-xs-12 clearfix">Data removed</div>');
+            $('.trIn').delay(4000).fadeOut();
+            
+            
+            trPart.delay(1000).slideUp();
+            setTimeout(function() {
+                $('.trIn').remove();
+                trPart.remove();
+            }, 5000);
+        },
+        error: function (html) {
+            trPart.removeClass('trOut');
+            console.log('---------->error');
+        }
+    });
 }
 
 function checkOutputVal(str) {
@@ -110,6 +178,7 @@ function statisticsSearch() {
             
             $('.stat-table-container .table').addClass('in');
             $('.schedule-table-container .table').removeClass('in');
+            
             table = '.stat-table-container .table.in ';
             //console.log(searchDiv.length);
             
@@ -153,7 +222,7 @@ function statisticsSearch() {
             $('.stat-table-container .table').removeClass('in');
             
             table = '.schedule-table-container .table.in ';
-            console.log('schedule true');
+            //console.log('schedule true');
             
             if (keyWord.length === 0) {
                 
@@ -307,4 +376,28 @@ $(window).ready(function () {
     'use strict';
     var str = $('#subjectDropdown').val();
     subjectChange(str);
+    
+    $('.remove_schedule').click(function () {
+        var td, tr;
+        tr = $(this).parent().parent();
+        $('.trIn').remove();
+        td = tr.attr('id');
+        
+        deleteSchedule(tr,td);
+        //console.log(id);
+        
+        
+    });
+    
+    $('.remove_ass').click(function () {
+        var td, tr;
+        tr = $(this).parent().parent();
+        $('.trIn').remove();
+        td = tr.attr('id');
+        
+        deleteAssignment(tr,td);
+        //console.log(id);
+        
+        
+    });
 });

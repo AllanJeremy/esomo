@@ -307,7 +307,7 @@ class ContentHandler
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assResource'>Resources path (optional)</label>
 		<input class='form-control' type='file' name='assResourceInput' id='assResource' placeholder='Resource path' accept='$this->ass_contentTypes'/> </div>";
 
-		$content .= "<button type='submit' class='btn btn-primary adminSubmitBtn'>Send Assignment</button>";#create a submit button
+		$content .= "<button type='submit' class='btn btn-primary adminSubmitBtn'>Send Assignment</button><br><br>";#create a submit button
 		
 		//show error message at the bottom of the page
 		switch (htmlspecialchars(@$_GET['assfail'])) {

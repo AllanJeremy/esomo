@@ -96,3 +96,42 @@ tbody{
 .hide-on-xs-only, .hide-on-sm-and-down {
     display: none !important;
   }
+}
+
+.trOut {
+    transition-delay: .3s;
+    transition-timing-function: ease-out;
+    opacity: 1;
+    transform: scale(1);
+    animation-name: delete !Important;
+    animation-fill-mode: forwards;
+    animation-delay: .3s;
+    animation-duration: .3s;
+    animation-play-state: running;
+    animation-timing-function: ease-out;
+}
+.trIn {
+    transform: scale(0);
+    opacity: 0;
+    animation-name: add;
+    animation-fill-mode: forwards;
+    animation-delay: .6s;
+    animation-duration: .3s;
+    animation-play-state: running;
+    animation-timing-function: ease-out;
+}
+
+@keyframes delete {
+    
+  to {
+      transform: scale(0);
+      opacity: 0;
+      margin-bottom: 50px;
+    }
+}
+@keyframes add {
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+}
