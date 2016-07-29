@@ -60,13 +60,13 @@
       $sessionHandler = new SessionFunctions();#contains convenience session functions
 
       $content ='
-                <form class="form-horizontal" method="post" action="signup.php?" role="form">
+                <form class="form-horizontal" method="post" action="signup.php?" role="form" id="signupForm">
 
                 <!--First name Input-->
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="firstName" >First Name</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="text" name="fNameInput" id="firstName" placeholder="First Name">
+                    <input class="form-control required" type="text" name="fNameInput" id="firstName" placeholder="First Name">
                   </div>
                 </div>
                 
@@ -74,7 +74,7 @@
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="lastName">Last Name</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="text" name="lNameInput" id="lastName" placeholder="Last Name">
+                    <input class="form-control required" type="text" name="lNameInput" id="lastName" placeholder="Last Name">
                   </div>
                 </div>
                 
@@ -82,15 +82,15 @@
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="username">Username</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="text" name="usernameInput" id="username" placeholder="Username">
+                    <input class="form-control required" type="text" name="usernameInput" id="username" placeholder="Username">
                   </div>
                 </div>
                 
-                <!--Username Input-->
+                <!--Student id Input-->
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="std_id">Student Id</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="number" name="std_id_Input" id="std_id" placeholder="Student Id">
+                    <input class="form-control required" type="number" name="std_id_Input" id="std_id" placeholder="Student Id">
                   </div>
                 </div>
                                 
@@ -98,7 +98,7 @@
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="email">Email</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="email" name="emailInput" id="email" placeholder="Email address">
+                    <input class="form-control required" type="email" name="emailInput" id="email" placeholder="Email address">
                   </div>
                 </div>
                 
@@ -106,7 +106,7 @@
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="password">Password</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="password" name="passwordInput" id="password" placeholder="Password">
+                    <input class="form-control required" type="password" name="passwordInput" id="passwordInput" placeholder="Password">
                   </div>
                 </div>
                 
@@ -114,7 +114,7 @@
                 <div class="form-group col-xs-11 col-sm-9 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="passwordConfirm">Confirm Password</label>
                   <div class="col-sm-9">
-                    <input class="form-control" type="password" name="passConfirmInput" id="passwordConfirm" placeholder="Confirm Password">
+                    <input class="form-control required" type="password" name="passConfirmInput" id="passConfirmInput" placeholder="Confirm Password">
                   </div>
                 </div> 
                                                  
@@ -191,4 +191,17 @@
     </body>
    <script src="../js/jquery.min.js"></script>
    <script src="../js/bootstrap.min.js"></script>
+   <script src="../js/jquery.validate.min.js"></script>
+    <script type="text/javascript">    
+        $(document).ready(function() {
+            $("#signupForm").validate({
+              rules: {
+                passwordInput: "required",
+                passConfirmInput: {
+                  equalTo: "#passwordInput"
+                }
+              }
+            });
+        });
+    </script>
 </html>

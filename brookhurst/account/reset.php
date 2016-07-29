@@ -50,7 +50,7 @@ if(isset($_GET['action']))
                 <div class="form-group col-xs-12">
                   <label class="control-label col-sm-3 hidden-xs" for="newPass" >New Password</label>
                   <div class="col-sm-6">
-                    <input class="form-control" type="password" name="newPass" id="newPass" placeholder="Type your new password" class="validate" required>
+                    <input class="form-control required" type="password" name="newPass" id="newPass" placeholder="Type your new password" minlength="8">
                   </div>
                 </div>
                 
@@ -58,7 +58,7 @@ if(isset($_GET['action']))
                 <div class="form-group col-xs-12">
                   <label class="control-label col-sm-3 hidden-xs" for="newPassConfirm">Confirm password</label>
                   <div class="col-sm-6">
-                    <input class="form-control" type="password" name="newPassConfirm" id="PassConfirm" placeholder="Confirm new password" class="validate" required>
+                    <input class="form-control required" type="password" name="newPassConfirm" id="PassConfirm" placeholder="Confirm new password" minlength="8">
                   </div>
                 </div>
                 <br>
@@ -103,7 +103,14 @@ else {
     <script src="../js/jquery.validate.min.js"></script>
 
     <script type="text/javascript">
-        $('#resetPassForm').validate();
+        $( "#resetPassForm" ).validate({
+          rules: {
+            newPass: "required",
+            newPassConfirm: {
+              equalTo: "#newPass"
+            }
+          }
+        });
         
     </script>
         </body>

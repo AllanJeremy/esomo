@@ -28,18 +28,18 @@
 		</div> 
 
 		<div class='panel-body'>
-			<form class='form-horizontal' action='admin_login_handler.php' method='post'>
+			<form class='form-horizontal' action='admin_login_handler.php' method='post' id='loginForm'>
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='login_email_input'>Email</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='email' name='admin_loginEmailInput' id='login_email_input' placeholder='Email address'>
+                    <input class='form-control required' type='email' name='admin_loginEmailInput' id='login_email_input' placeholder='Email address'>
                   </div>
                 </div>
 
                 <div class='form-group col-xs-11 col-sm-10 col-md-9 col-lg-8'>
                   <label class='control-label col-sm-3 hidden-xs' for='login_pass_input'>Password</label>
                   <div class='col-sm-9'>
-                    <input class='form-control' type='password' name='admin_loginPassInput' id='login_pass_input' placeholder='Password'>
+                    <input class='form-control required' type='password' name='admin_loginPassInput' id='login_pass_input' placeholder='Password'>
                   </div>
                 </div>
 
@@ -85,6 +85,9 @@
 <!-- jquery and bs javascript -->
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-
+<script src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $( "#loginForm" ).validate();
+</script>
 
 </html>
