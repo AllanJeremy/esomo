@@ -135,3 +135,15 @@ tbody{
       opacity: 1;
     }
 }
+
+label.error {
+    left: 20% !Important;
+    background-color: #F44336;
+    color: #fff;
+    width: auto;
+    min-height: 2rem;
+    line-height: 20px;
+    transition: all .2s;
+    content: '&#33;';
+    padding: 10px;
+}

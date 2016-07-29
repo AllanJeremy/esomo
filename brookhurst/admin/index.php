@@ -127,5 +127,22 @@ unset($curUsername);#cleanup - variable has served its purpose
    <script src="../js/bootstrap.min.js"></script>
    
    <script src="js/dynamic_content.js"> </script>
-
+   <script src="../js/jquery.validate.min.js"> </script>
+   <script src="js/additional_file_validation.js"> </script>
+    <script type="text/javascript">
+        
+	$(document).ready(function() {
+		$("#contentForm").validate();
+		$("#assignmentForm").validate();
+		$("#contentForm").validate();
+        $( "#passwordChange" ).validate({
+          rules: {
+            adm_newPassInput: "required",
+            adm_confirmInput: {
+              equalTo: "#adm_newPassInput"
+            }
+          }
+        });
+    });
+	</script>
 </html>

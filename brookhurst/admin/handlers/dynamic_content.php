@@ -11,7 +11,7 @@ if(isset($_POST['chosenSubjectLevel']) && !empty($_POST['chosenSubjectLevel'])) 
 } elseif(isset($_POST['assignmentTrId']) && !empty($_POST['assignmentTrId'])) {
     removeAssignmentRow();
 } else {
-    echo 'forbidden';
+    //echo 'forbidden';
 }
 
 function removeScheduleRow() {

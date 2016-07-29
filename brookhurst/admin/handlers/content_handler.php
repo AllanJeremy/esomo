@@ -54,9 +54,9 @@ class ContentHandler
 
 		$this->contentClass = 'active';
 		#accepted assignment content types
-		$this->ass_contentTypes = "\'.zip .pdf .docx .xls .rtf audio/* image/* video/* \'";
+		$this->ass_contentTypes = "image/*,video/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel";
 		
-		$this->content_acceptedTypes = "\'.zip .pdf .docx .xls .rtf audio/* image/* video/* \'";
+		$this->content_acceptedTypes = "image/*,video/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel";
 
 		#access level stuff
 		$this->levelRequired = 2;#by default the level required is 2
@@ -84,15 +84,15 @@ class ContentHandler
         //echo 'push    ' . $push . '   shows inside the right function';
 		#content here
 		$content .= "<h3>Manage Content</h3>";
-		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php' enctype='multipart/form-data'>";#create form
+		$content .= "<form class='form-horizontal' method='POST' action='handlers/submitContent.php' enctype='multipart/form-data' id='contentForm'>";#create form
 
 		$content .= "<label for='contTabTitle'>Content Title</label>";
-		$content .= "<input class='form-control' required='yes' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput'></input><br>";
+		$content .= "<input class='form-control required' placeholder='Content Title' id='contTabTitle' name='adm_contTitleInput' ></input><br>";
 		
 		$content .= "<label for='contTabPath'>Content Path</label>";
 		
 		#content file input
-		$content .= "<input class='form-control' required='yes' accept='$this->content_acceptedTypes' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput'></input><br>";
+		$content .= "<input class='form-control required' type='file' placeholder='Content Path' id='contTabPath' name='adm_contFileInput' accept='$this->content_acceptedTypes'></input><br>";
 		
 		#generates the subject dropdown
 		if($this->getSubjects()!==null)//meaning we have a valid list of subjects
@@ -269,16 +269,16 @@ class ContentHandler
 
 		#send tab [assignments]
 		$content .= "<div class='tab-pane active' id='ass_send'><br>";
-		$content .= "<form method='post' action='handlers/submitAss.php' class='form' enctype='multipart/form-data'>";
+		$content .= "<form method='post' action='handlers/submitAss.php' class='form' enctype='multipart/form-data' id='assignmentForm'>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assTitle'>Assignment Title *</label>
-		<input class='form-control' type='text' name='assTitleInput' required='yes' id='assTitle' placeholder='Assignment Title *'/> </div>";
+		<input class='form-control required' type='text' name='assTitleInput' id='assTitle' placeholder='Assignment Title *'/> </div>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assDescr'>Assignment Description *</label>
-		<textarea class='form-control' name='assDescrInput' id='assDescr' required='yes' placeholder='Assignment description/instructions *' rows='5'></textarea></div>";
+		<textarea class='form-control required' name='assDescrInput' id='assDescr' placeholder='Assignment description/instructions *' rows='5'></textarea></div>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assGrade'>Assignment Grade *</label>
-			<select id='assGrade' name='assGradeInput' required='yes' class='form-control'>";
+			<select id='assGrade' name='assGradeInput' class='form-control'>";
 			
 		#getting the grades
 		foreach($grades as $grade)
@@ -289,7 +289,7 @@ class ContentHandler
 		$content .= "</select></div>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assStream'>Class Stream *</label>
-			<select id='assStream' name='assStreamInput' required='yes' class='form-control'>";
+			<select id='assStream' name='assStreamInput' class='form-control'>";
 			
 		#getting the grades
 		foreach($streams as $stream)
@@ -301,11 +301,11 @@ class ContentHandler
 
 		#due date
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assDueDate'>Due date *</label>
-		<input class='form-control' type='date' name='assDueDateInput' required='yes' id='assDueDate' placeholder='Due date' min=$this->minDueDate max=$this->maxDueDate/> </div>";
+		<input class='form-control required' type='date' name='assDueDateInput' id='assDueDate' placeholder='Due date' min=$this->minDueDate max=$this->maxDueDate/> </div>";
 
 		#resource url
-		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assResource'>Resources path (optional)</label>
-		<input class='form-control' type='file' name='assResourceInput' id='assResource' placeholder='Resource path' accept='$this->ass_contentTypes'/> </div>";
+		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='assResource' >Resources path (optional)</label>
+		<input class='form-control required' type='file' name='assResourceInput' id='assResource' placeholder='Resource path' accept='$this->ass_contentTypes'/> </div>";
 
 		$content .= "<button type='submit' class='btn btn-primary adminSubmitBtn'>Send Assignment</button><br><br>";#create a submit button
 		
@@ -398,20 +398,20 @@ class ContentHandler
 		#create tab
 		$content .= "<div class='tab-pane fade in active' id='createSchedule'>";
 		#form for creating schedule
-		$content .= "<form class ='form top_spacing bottom_spacing' method='post' action='handlers/submitSchedule.php'>";
+		$content .= "<form class ='form top_spacing bottom_spacing' id='scheduleForm' method='post' action='handlers/submitSchedule.php'>";
 		
 		$content .= "<div class='form-group'>
 		<label class='control-label hidden-xs' for='schTitle'> Title *</label>
-		<input type='text' id='schTitle' name='schTitleInput' required='yes' class='form-control' placeholder='Schedule Title'></input>
+		<input type='text' id='schTitle' name='schTitleInput'  class='form-control required' placeholder='Schedule Title'></input>
 		</div>";
 		
 		$content .= "<div class='form-group'>
 		<label class='control-label hidden-xs' for='schDescr'> Description (Optional)</label>
-		<textarea col='3' type='text' id='schDescr' name='schDescrInput' required='yes' class='form-control'  placeholder='Schedule Description'></textarea>
+		<textarea col='3' type='text' id='schDescr' name='schDescrInput' class='form-control required'  placeholder='Schedule Description'></textarea>
 		</div>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='schGrade'> Grade/Class *</label>
-			<select id='schGrade' name='schGradeInput' required='yes' class='form-control'>";
+			<select id='schGrade' name='schGradeInput'  class='form-control'>";
 
 		#getting the grades
 		foreach($grades as $grade)
@@ -422,7 +422,7 @@ class ContentHandler
 		$content .= "</select></div>";
 
 		$content .= "<div class='form-group'><label class='control-label hidden-xs' for='schStream'>Stream *</label>
-			<select id='schStream' name='schStreamInput' required='yes' class='form-control'>";
+			<select id='schStream' name='schStreamInput'  class='form-control'>";
 			
 		#getting the grades
 		foreach($streams as $stream)
@@ -436,11 +436,11 @@ class ContentHandler
 		$content .= "
 		<div class='form-group'>
 			<label for='sch_date' class='control-label'>Date *</label>
-			<input type='date' required='yes' class='form-control' name='sch_dateInput' id='sch_date'></input>
+			<input type='date' class='form-control required' name='sch_dateInput' id='sch_date'></input>
 		</div>
 		<div class='form-group'>
 			<label for='sch_date' class='control-label'>Time * </label>
-			<input type='time' required='yes' class='form-control' name='sch_timeInput' id='sch_date'></input>
+			<input type='time' class='form-control required' name='sch_timeInput' id='sch_date'></input>
 		</div>";
 
 		$content .= "<button type='submit' class='btn btn-primary col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bottom_spacing top_spacing'>ADD SCHEDULE</button>";
@@ -643,22 +643,22 @@ class ContentHandler
 		$content .= "<h3 class='center_text'>Profile</h3>";
 		// $content .= "<p>This module is still under construction, please check again later.</p>";
 		$content .= "<div class='panel-primary container-fluid clearfix'>
-			<form class='form' action='handlers/changePassword.php' method='POST'>
+			<form class='form' action='handlers/changePassword.php' id='passwordChange' method='POST'>
 				<h6 class='center_text'><b>Username : </b> " . ($_SESSION['s_admin_username']) . "</h6>
 
 			<div class='form-group'>
-				<label class='control-label hidden-sm col-sm-2' for='adm_curPass'>Current Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
+				<label class='control-label hidden-sm col-sm-2 col-md-4' for='adm_curPass'>Current Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 required' type='password' name='adm_curPassInput' id='adm_curPass' placeholder='Current Password'></input><br><br>
 			</div>
 
 			<div class='form-group'>
-				<label class='control-label hidden-sm col-sm-2' for='adm_newPass'>New Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_newPassInput' id='adm_newPass' placeholder='New Password'></input><br><br>
+				<label class='control-label hidden-sm col-sm-2 col-md-4' for='adm_newPass'>New Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 required' type='password' name='adm_newPassInput' id='adm_newPassInput' placeholder='New Password'></input><br><br>
 			</div>
 			
 			<div class='form-group'>
-				<label class='control-label hidden-sm col-sm-2' for='adm_confirmPass'>Confirm Password : </label>
-				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0'type='password' name='adm_confirmInput' id='adm_confirmPass' placeholder='Confirm Password'></input><br><br>
+				<label class='control-label hidden-sm col-sm-2 col-md-4' for='adm_confirmPass'>Confirm Password : </label>
+				<input required class='col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 required' type='password' name='adm_confirmInput' id='adm_confirmInput' placeholder='Confirm Password'></input><br><br>
 			</div>
 			
 			<button type='submit' class='btn btn-primary col-xs-offset-1 col-sm-offset-4'>CHANGE PASSWORD</button>
