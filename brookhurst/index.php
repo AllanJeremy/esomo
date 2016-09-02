@@ -54,25 +54,23 @@
               </div>
         </div>
         <br>
-        <br>
-        <!--4 segments at the bottom-->
+        <!--video segment at the bottom-->
         <div class="container-fluid my-container">
-            <div class="container-fluid">
-            <div class="row shelves">
-                <div class="col-sm-4 col-xs-12">
-
-                <h3 class="white-text">New in Shelves</h3>
-
-                </div>
-                <div class="col-sm-8 col-xs-12">
-                </div>
-            </div>
-            </div>   
+            <video class="col-xs-12 col-sm-10 col-sm-offset-1" controls>
+            <source src="media/tutorial.mp4" type="video/mp4">
+            <source src="media/tutorial.ogg" type="video/ogg">
+            
+            <p>Your browser cannot recognize the video. Please try a different browser. We recommend using the latest version of Google Chrome or Mozilla Firefox</p>
+            </video>
         </div>
            
-
+        <br><br>
        <!--footer. Will add once I figure a way of having a sticky footer.-->
-
+       <div class="container-fluid">
+        <footer>
+            <p>Your footer goes here.</p>
+        </footer>
+       </div>
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
