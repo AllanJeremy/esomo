@@ -79,7 +79,7 @@ class Navigation
 		<nav class='navbar navbar-default'>
           <div class='container-fluid'>
                 <div class='navbar-head'>
-                    <a class='navbar-brand' href='#'>Logo</a>
+                    <a class='navbar-brand' href='#'>Brookhurst Website</a>
                 </div>
             
 

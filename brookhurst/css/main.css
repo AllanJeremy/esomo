@@ -391,5 +391,12 @@ label.error {
     color: #fff;
 }
 
-
+/*Footer*/
+.footer
+{
+    background-color:#781822 !Important;
+    color:#d8b859;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+}
 

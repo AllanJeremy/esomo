@@ -46,6 +46,7 @@
         {
           
           echo $content;
+          include_once("footer.php"); 
         }else
         {
           echo $nilAssignmentMessage;
@@ -186,8 +187,8 @@
       }
 
     ?>
-       <!--footer. Will add once I figure a way of having a sticky footer.-->
-
+      
+      
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>

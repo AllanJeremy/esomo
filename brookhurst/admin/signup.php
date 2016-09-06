@@ -113,7 +113,7 @@
 		</div>
 
         <div class='panel-footer col-xs-12'>
-          <h5 class='float_right'>Already have an account? <a href='login.php'>Login now </a> </h5>
+          <h5 class='float_right'>Already have an account? <a href='login.php'>Login</a> </h5>
         </div>
 	</div>";
 
