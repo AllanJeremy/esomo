@@ -55,19 +55,19 @@ class TopicHolder{
 	function createSearchPanel()
 	{
 
-		$searchPanelStyle = 'background-color:rgba(0,0,0,0.8);margin-bottom:1em;';
-		$searchPanel = <<<EOD
-		<div class='col-xs-12' style=$searchPanelStyle>
-			<div style='float:right;'>
-				<input type="text" placeholder="Search">
-				<button type="button" class="btn btn-primary" name="btn_topicSearch">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</div>
-		</div>
-EOD;
+// 		$searchPanelStyle = 'background-color:rgba(0,0,0,0.8);margin-bottom:1em;';
+// 		$searchPanel = <<<EOD
+// 		<div class='col-xs-12' style=$searchPanelStyle>
+// 			<div style='float:right;'>
+// 				<input type="text" placeholder="Search">
+// 				<button type="button" class="btn btn-primary" name="btn_topicSearch">
+// 					<span class="glyphicon glyphicon-search"></span>
+// 				</button>
+// 			</div>
+// 		</div>
+// EOD;
 
-		echo $searchPanel;
+// 		echo $searchPanel;
 	}
 
 	//creates the topic panel

@@ -43,7 +43,8 @@
                 </div>
                 <div class="col-sm-4 col-xs-12">
                     <a class='col-xs-12 primary-color-maroon beige-text center_text' href='assignment.php'>
-                        Assignments
+                        <span class="hidden-sm hidden-xs">Assignments</span>
+                        <span class="visible-sm visible-xs">ASGMNT</span>
                     </a>
                 </div>
                 <div class="col-sm-4 col-xs-12">
