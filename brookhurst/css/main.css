@@ -391,6 +391,15 @@ label.error {
     color: #fff;
 }
 
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
 /*Footer*/
 .footer
 {
@@ -400,5 +409,7 @@ label.error {
     color:#d8b859;
     padding-top:0.5em;
     padding-bottom:0.5em;
+    width: 100%;
+    
 }
 
