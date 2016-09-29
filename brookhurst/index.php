@@ -5,8 +5,8 @@
         <title>Esomo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-       <!--<link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>-->
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+       <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
+       <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
        <link  rel="stylesheet" type="text/css" href="css/main.css"/>
        <link  rel="stylesheet" type="text/css" href="css/color.css"/>
     </head>
@@ -43,7 +43,8 @@
                 </div>
                 <div class="col-sm-4 col-xs-12">
                     <a class='col-xs-12 primary-color-maroon beige-text center_text' href='assignment.php'>
-                        Assignments
+                        <span class="hidden-sm hidden-xs">Assignments</span>
+                        <span class="visible-sm visible-xs">ASGMNT</span>
                     </a>
                 </div>
                 <div class="col-sm-4 col-xs-12">
@@ -54,25 +55,18 @@
               </div>
         </div>
         <br>
-        <br>
-        <!--4 segments at the bottom-->
+        <!--video segment at the bottom-->
         <div class="container-fluid my-container">
-            <div class="container-fluid">
-            <div class="row shelves">
-                <div class="col-sm-4 col-xs-12">
-
-                <h3 class="white-text">New in Shelves</h3>
-
-                </div>
-                <div class="col-sm-8 col-xs-12">
-                </div>
-            </div>
-            </div>   
+            <video class="col-xs-12 col-sm-10 col-sm-offset-1" controls>
+            <source src="media/tutorial.mp4" type="video/mp4">
+            <source src="media/tutorial.ogg" type="video/ogg">
+            
+            <p>Your browser cannot recognize the video. Please try a different browser. We recommend using the latest version of Google Chrome or Mozilla Firefox</p>
+            </video>
         </div>
            
-
-       <!--footer. Will add once I figure a way of having a sticky footer.-->
-
+        <br><br>
+        <?php include_once("footer.php"); ?>
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
