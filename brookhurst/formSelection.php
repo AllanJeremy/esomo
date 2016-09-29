@@ -102,7 +102,7 @@ class FormSelection
 		//$formQuery = "SELECT class_name,class_id FROM class_selection WHERE class_level= '" . HIGH_SCHOOL ."'";
 
 		$formQuery = "SELECT class_name,class_id FROM class_selection";
-		$contentClasses = 'col-xs-12 col-sm-3 col-sm-offset-1 form_selection center_text form_selection';
+		$contentClasses = 'col-xs-12 col-sm-10 col-sm-offset-1 form_selection center_text form_selection';
 		
 		$subjectId =  stripslashes(htmlspecialchars(@($_GET['subId']))); //sanitized subject Id
 

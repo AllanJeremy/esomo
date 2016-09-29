@@ -10,7 +10,7 @@
     </head>
     
     <body id="homeBody">
-
+    <main>
     <?php
         include_once('navigation.php');
         $assNav = new Navigation('index.php','learn.php','tests.php','account/signup.php','account/forgot.php','#','account/account.php');
@@ -185,7 +185,7 @@
         }
 
       }
-
+include_once("footer.php"); #Footer if person is logged in
     ?>
       
       
