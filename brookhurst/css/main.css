@@ -153,7 +153,7 @@ li.active:hover
 /*CSS RULES FOR TOPICS PAGE*/
 .topicItem /*For the li that contains topic link*/
 {
-
+        list-style-type: none;
 }
 
 .topicLink{
@@ -391,5 +391,14 @@ label.error {
     color: #fff;
 }
 
-
+/*Footer*/
+.footer
+{
+    margin-top:1%;
+    box-shadow: 2px 2px 2px 2px 1px rgba(0,1,0,0.6);
+    background-color:#781822 !Important;
+    color:#d8b859;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+}
 

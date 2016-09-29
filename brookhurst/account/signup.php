@@ -123,7 +123,7 @@
                 </div>
               </form>
         <div class="panel-footer col-xs-12">
-          <h5 class="float_right">Already have an account? <a href="login.php">Login now </a> </h5>
+          <h5 class="float_right">Already have an account? <a href="login.php">Login</a> </h5>
         </div>
 
         </div>
@@ -188,6 +188,8 @@
 
         ?>
               </div></div></div>
+
+    <?php include_once("../footer.php");?>
     </body>
    <script src="../js/jquery.min.js"></script>
    <script src="../js/bootstrap.min.js"></script>

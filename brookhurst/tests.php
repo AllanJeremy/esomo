@@ -100,12 +100,14 @@
 
         if($sessionHandler->sessionActive()){
           echo $content;
+          include_once("footer.php"); 
         }
         else#do this if the user is not logged in
         {
           echo $errorMessage;
         }
-    ?>      
+    ?>
+     
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>

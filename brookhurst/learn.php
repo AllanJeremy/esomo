@@ -84,6 +84,7 @@
               //done generating content , close the div wrapper
               echo "</div>";
             }
+            include_once("footer.php"); #Footer if person is logged in
           }
           else #do this if the user is not logged in
           {
@@ -155,7 +156,7 @@ EOD;
 
 ?>
                                 
-         
+       
     </body>
    <script src="js/jquery.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
