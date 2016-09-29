@@ -62,22 +62,23 @@
       $content ='
                 <form class="form-horizontal" method="post" action="signup.php?" role="form" id="signupForm">
 
-                <!--First name Input-->
+                <!--First name Input (removed)
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="firstName" >First Name</label>
                   <div class="col-sm-9">
                     <input class="form-control required" type="text" name="fNameInput" id="firstName" placeholder="First Name">
                   </div>
                 </div>
-                
-                <!--Last name Input-->
+                -->
+                <!--Last name Input (removed)
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="lastName">Last Name</label>
                   <div class="col-sm-9">
                     <input class="form-control required" type="text" name="lNameInput" id="lastName" placeholder="Last Name">
                   </div>
                 </div>
-                
+                -->
+
                 <!--Username Input-->
                 <div class="form-group col-xs-11 col-sm-10 col-md-9 col-lg-8">
                   <label class="control-label col-sm-3 hidden-xs" for="username">Username</label>
@@ -145,8 +146,6 @@
           {
             require('../esomoDbConnect.php');//require the database connection
 
-            $fName = htmlspecialchars($_POST['fNameInput']);
-            $lName = htmlspecialchars($_POST['lNameInput']);
             $email = htmlspecialchars($_POST['emailInput']);
             $userName = htmlspecialchars($_POST['usernameInput']);
             $password = htmlspecialchars($_POST['passwordInput']);
@@ -157,14 +156,13 @@
             $passEncrypt = new PasswordEncrypt();
             
             $password = $passEncrypt->encryptPass($password); //encrypt the password
-            $query = "INSERT INTO accounts(first_name,last_name,email,username,student_id,password) VALUES (?,?,?,?,?,?) ";
+            $query = "INSERT INTO accounts(email,username,student_id,password) VALUES (?,?,?,?) ";
 
             if($stmt= $dbCon->prepare($query))
             {
-              $stmt->bind_param('ssssis',$tmp_first_name,$tmp_last_name,$tmp_email,$tmp_username,$tmp_student_id,$tmp_password);
+              $stmt->bind_param('ssis',$tmp_email,$tmp_username,$tmp_student_id,$tmp_password);
               
-              $tmp_first_name=$fName;
-              $tmp_last_name=$lName;
+
               $tmp_email=$email;
               $tmp_username=$userName;
               $tmp_student_id=$std_id;

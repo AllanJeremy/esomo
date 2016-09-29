@@ -228,23 +228,6 @@ EOD;
 
 		if (!$this->signupContainsEmpty())
 		{
-
-			$_POST['fNameInput'] = htmlspecialchars($_POST['fNameInput']);
-			
-			//if it contains special characters
-			if($this->containsSpecialChars($_POST['fNameInput']))
-			{
-				$error .= '<p>First name contains special characters. This field only allows for alphanumeric characters(A-Z 0-9)</p>';
-			}
-		
-			$_POST['lNameInput'] = htmlspecialchars($_POST['lNameInput']);
-			
-			//if the last name contains special characters
-			if($this->containsSpecialChars($_POST['lNameInput']))
-			{
-				$error .= '<p>Last name contains special characters. This field only allows for alphanumeric characters(A-Z  0-9). </p><br>';
-			}
-
 			$_POST['usernameInput']	 = htmlspecialchars($_POST['usernameInput']);
 
 			//if it contains special characters - consider allowing numbers to be appended for username
@@ -316,9 +299,9 @@ EOD;
 	function signupContainsEmpty()
 	{	
 		//checks if all the variables in the are set
-		if (isset($_POST['fNameInput']) && isset($_POST['lNameInput']) && isset($_POST['usernameInput']) && isset($_POST['emailInput']) && isset($_POST['std_id_Input']) && isset($_POST['passwordInput']) && isset($_POST['passConfirmInput'])
+		if (isset($_POST['usernameInput']) && isset($_POST['emailInput']) && isset($_POST['std_id_Input']) && isset($_POST['passwordInput']) && isset($_POST['passConfirmInput'])
 			&&
-			($_POST['fNameInput']!=='' && $_POST['lNameInput']!=='' && $_POST['usernameInput']!=='' && $_POST['emailInput']!=='' && $_POST['std_id_Input']!=='' && $_POST['passwordInput']!=='' && $_POST['passConfirmInput']!==''))
+			($_POST['usernameInput']!=='' && $_POST['emailInput']!=='' && $_POST['std_id_Input']!=='' && $_POST['passwordInput']!=='' && $_POST['passConfirmInput']!==''))
 		{
 			return false;
 

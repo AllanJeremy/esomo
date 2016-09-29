@@ -24,7 +24,7 @@ class TopicHolder{
 		
 		$subjectSelection="<a class='learnPrevBtn hidden-xs' href='?'><span class='glyphicon glyphicon-fast-backward' style='font-size:1.25em'>Subjects</span></a>";
 
-		$pageTitle =$backButton . $subjectSelection . "<h3 style='text-align:center;margin-bottom:1em'>". ( @htmlspecialchars($_GET['fId']) ) . " - " . $subjectName . "</h3>";
+		$pageTitle =$backButton . $subjectSelection . "<h3 style='text-align:center;margin-bottom:1em'> " . $subjectName . "</h3>";#TODO: Add subject grade before the subject name
 
 		echo "<div class='well clearfix'>";//open wrapper well div
 		echo $pageTitle;
@@ -242,7 +242,7 @@ EOD;
 				}
 				else {
 					# content header appears above the content output
-					$contentHeader = "<h3 class='center_text'> [CONTENT]". $this->getTopicName($curTopicId) ." </h3>";	
+					$contentHeader = "<h3 class='center_text'> \"". $this->getTopicName($curTopicId) ."\" </h3><br>";	
 				}
 
 
