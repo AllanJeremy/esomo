@@ -53,7 +53,7 @@
 
   #Session variables to be used in the body section
   $currentUsername = $_SESSION['std_username'];
-  $currentName = $_SESSION['std_name'];#student's name(s)
+  //$currentName = $_SESSION['std_name'];#student's name(s)
   
   $currentClass = $dbInfo->getClassName($_SESSION['std_class_id']);
   $currentStream = $dbInfo->getStreamName($_SESSION['std_stream_id']);
@@ -87,7 +87,6 @@
       <div class='tab-pane active clearfix' id='accInfo'>
         <h4 class='center_text'><b>Account Information ($currentUsername)</b></h4>
         <p><b>Username : </b>$currentUsername</p>
-        <p><b>Name(s) : </b>$currentName</p>
         <p><b>Class Name :</b> $currentClass</p>
         <p><b>Stream Name :</b> $currentStream</p>
       </div>
