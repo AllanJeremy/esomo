@@ -11,8 +11,6 @@ class SessionFunctions
 		if (   (@$_SESSION['std_username']!==''&& @$_SESSION['std_username']!==null)
 			&& (@$_SESSION['acc_id']!=='' && @$_SESSION['acc_id']!==null)
 			&& (@$_SESSION['std_id']!=='' && @$_SESSION['std_id']!==null)
-			&& (@$_SESSION['std_fName']!=='' && @$_SESSION['std_fName']!==null)
-			&& (@$_SESSION['std_lName']!=='' && @$_SESSION['std_lName']!==null)
 			&& (@$_SESSION['std_stream_id']!=='' && @$_SESSION['std_stream_id']!==null)
 			&& (@$_SESSION['std_class_id']!=='' && @$_SESSION['std_class_id']!==null)
 			)
@@ -86,8 +84,6 @@ class SessionFunctions
 		unset($_SESSION['std_username']);
 		unset($_SESSION['acc_id']);
 		unset($_SESSION['std_id']);
-		unset($_SESSION['std_fName']);
-		unset($_SESSION['std_lName']);
 		unset($_SESSION['std_stream_id']);
 		unset($_SESSION['std_class_id']);
 
