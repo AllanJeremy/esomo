@@ -12,6 +12,7 @@
     </head>
     
     <body>
+    <main>
      <?php 
         include_once('navigation.php');
         $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');

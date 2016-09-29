@@ -24,7 +24,7 @@ class TopicHolder{
 		
 		$subjectSelection="<a class='learnPrevBtn hidden-xs' href='?'><span class='glyphicon glyphicon-fast-backward' style='font-size:1.25em'>Subjects</span></a>";
 
-		$pageTitle =$backButton . $subjectSelection . "<h3 style='text-align:center;margin-bottom:1em'> Grade ". ( @htmlspecialchars($_GET['fId']) ) . " - " . $subjectName . "</h3>";
+		$pageTitle =$backButton . $subjectSelection . "<h3 style='text-align:center;margin-bottom:1em'>". ( @htmlspecialchars($_GET['fId']) ) . " - " . $subjectName . "</h3>";
 
 		echo "<div class='well clearfix'>";//open wrapper well div
 		echo $pageTitle;
@@ -298,12 +298,12 @@ EOD;
 						if($tmp_articlePath!='' && $tmp_articlePath!==null)
 						{
 							$pathExtension = $tmp_articlePath;	
-							$articleSnippet = "<tr><td>$tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+							$articleSnippet = "<tr><td>$tmp_articleName <a class='btn btn-default' target='blank' href='articles.php?article_id=$tmp_articleId'>Read</a></td>
 						<td><a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_articleName'>Download</a> </td></tr>\n";
 						}
 						else
 						{
-							$articleSnippet = "<tr><td>  $tmp_articleName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+							$articleSnippet = "<tr><td>  $tmp_articleName <a class='btn btn-default' target='blank' href='articles.php?article_id=$tmp_articleId'>Read</a></td>
 						<td> <a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a></td></tr>\n";
 						}
 						
@@ -357,9 +357,9 @@ EOD;
 
 				$booksContent .= "<table class='table table-hover'>";
 				foreach ($bookResult as $result) {
-					$tmp_bookName = $result['book_title'];#article title
-					$tmp_bookPath = $result['book_path'];#article path
-					$tmp_bookId = $result['book_id'];#article id
+					$tmp_bookName = $result['book_title'];#book title
+					$tmp_bookPath = $result['book_path'];#book path
+					$tmp_bookId = $result['book_id'];#book id
 					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
@@ -370,14 +370,15 @@ EOD;
 					if($tmp_bookPath!='' && $tmp_bookPath!==null)
 					{
 						$pathExtension = $tmp_bookPath;
-						#snippet that controls how content is viewd
-						$bookSnippet = "<tr><td> $tmp_bookName  <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						#snippet that controls how content is viewd - TODO : get the article_id of the clicked article
+						$bookSnippet = "<tr><td> $tmp_bookName  <a class='btn btn-default' target='blank' href='books.php?book_id=$tmp_bookId'>Read</a></td>
 						<td><a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_bookName'>Download</a></td></tr>\n";
+						
 				    }
 					else
 					{
 						#snippet that controls how content is viewd
-						$bookSnippet = "<tr><td> $tmp_bookName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						$bookSnippet = "<tr><td> $tmp_bookName <a class='btn btn-default' target='blank' href='books.php?book_id=$tmp_bookId'>Read</a></td>
 						<td><a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a></td></tr>\n";
 					}
 
@@ -430,9 +431,9 @@ EOD;
 				{
 				$videosContent .= "<table class='table table-hover'>";
 				foreach ($videoResult as $result) {
-					$tmp_videoName = $result['video_title'];#article title
-					$tmp_videoPath = $result['video_path'];#article path
-					$tmp_videoId = $result['video_id'];#article id
+					$tmp_videoName = $result['video_title'];#video title
+					$tmp_videoPath = $result['video_path'];#video path
+					$tmp_videoId = $result['video_id'];#video id
 					$tmp_dateAdded = $result['date_added'];
 
 					//path to the article document handler
@@ -444,12 +445,13 @@ EOD;
 					if($tmp_videoPath!='' && $tmp_videoPath!==null)
 					{
 						$pathExtension = $tmp_videoPath;
-						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						// TODO : get the article_id of the clicked video
+						$videoSnippet = "<tr><td> $tmp_videoName <a class='btn btn-default' target='blank' href='videos.php?vid_id=$tmp_videoId'>Watch</a></td>
 						<td> <a class='btn btn-default col-xs-12' href='$pathExtension' download='$tmp_videoName'>Download</a> </td></tr>\n";
 					}
 					else
 					{
-						$videoSnippet = "<tr><td> $tmp_videoName <i class='float_right'>- Added $tmp_dateAdded</i></td>
+						$videoSnippet = "<tr><td> $tmp_videoName <a class='btn btn-default' target='blank' href='videos.php?vid_id=$tmp_videoId'>Watch</a></td>
 						<td> <a class='btn btn-default col-xs-12' disabled href='$pathExtension'>Download</a> </td></tr>\n";
 					}
 					}#end of for loop	

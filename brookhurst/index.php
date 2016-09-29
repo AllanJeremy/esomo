@@ -12,6 +12,7 @@
     </head>
     
     <body id="homeBody">
+    <main>
       <?php 
         include_once('landing-navigation.php');
         $indexNav = new Navigation('#','learn.php','tests.php','account/signup.php','account/forgot.php','assignment.php');
