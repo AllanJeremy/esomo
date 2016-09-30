@@ -16,7 +16,7 @@
         
         <?php 
             include_once('navigation.php');
-            $learnNav = new Navigation('index.php','#','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
+            $learnNav = new Navigation('index.php','learn.php','tests.php','account/signup.php','account/forgot.php','assignment.php','account/account.php');
             $learnNav->loginHandlerPath = 'account/loginHandler.php';
             $learnNav->setLearnActive();
         ?>
@@ -95,7 +95,7 @@
                      
                     //echo $tmp_curVideoPath;
                         
-                    echo "<video width='800' controls autoplay><source src='$tmp_curVideoPath' type='video/mp4'>Your browser does not support the video.</video>";//Load content here. Video paths may be different between our project files/folders
+                    echo "<video class='col-xs-12 col-sm-10 col-sm-offset-1' controls autoplay><source src='$tmp_curVideoPath' type='video/mp4'>Your browser does not support the video.</video>";//Load content here. Video paths may be different between our project files/folders
                     echo "</div></div>";
                         
                 } else
