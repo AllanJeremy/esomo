@@ -4,7 +4,7 @@
 	$std_username='';
 	$acc_id='';
 	$std_id='';
-	//$std_name='';
+	$std_name='';
 	$std_stream_id='';
 	$std_class_id='';
 
@@ -17,7 +17,7 @@
 			
 			$_SESSION['std_id']=$GLOBALS['acc_id']; #student id - student id [used in profile]
 			
-			//$_SESSION['std_name']=$GLOBALS['std_name']; #std_name - student name(s) [used in profile]
+			$_SESSION['std_name']=$GLOBALS['std_name']; #std_name - student name(s) [used in profile]
 			
 			$_SESSION['std_stream_id']=$GLOBALS['std_stream_id']; #stream_id - student stream [used in assignments]
 			
