@@ -11,8 +11,6 @@ class SessionFunctions
 		if (   (@$_SESSION['std_username']!==''&& @$_SESSION['std_username']!==null)
 			&& (@$_SESSION['acc_id']!=='' && @$_SESSION['acc_id']!==null)
 			&& (@$_SESSION['std_id']!=='' && @$_SESSION['std_id']!==null)
-			&& (@$_SESSION['std_fName']!=='' && @$_SESSION['std_fName']!==null)
-			&& (@$_SESSION['std_lName']!=='' && @$_SESSION['std_lName']!==null)
 			&& (@$_SESSION['std_stream_id']!=='' && @$_SESSION['std_stream_id']!==null)
 			&& (@$_SESSION['std_class_id']!=='' && @$_SESSION['std_class_id']!==null)
 			)
@@ -86,8 +84,6 @@ class SessionFunctions
 		unset($_SESSION['std_username']);
 		unset($_SESSION['acc_id']);
 		unset($_SESSION['std_id']);
-		unset($_SESSION['std_fName']);
-		unset($_SESSION['std_lName']);
 		unset($_SESSION['std_stream_id']);
 		unset($_SESSION['std_class_id']);
 
@@ -108,8 +104,6 @@ class SessionFunctions
 		unset($_SESSION['std_username']);
 		unset($_SESSION['acc_id']);
 		unset($_SESSION['std_id']);
-		unset($_SESSION['std_fName']);
-		unset($_SESSION['std_lName']);
 		unset($_SESSION['std_stream_id']);
 		unset($_SESSION['std_class_id']);
 		}
@@ -157,15 +151,8 @@ class SessionFunctions
 	#updates the session variables explicitly
 	function updateSessionVars($dbPath)
 	{
-		// $_SESSION['std_username'];
-		// $_SESSION['acc_id'];
-		// ($_SESSION['std_id']);
-		// $_SESSION['std_fName'];
-		// $_SESSION['std_lName'];
-		// $_SESSION['std_stream_id'];
-		// $_SESSION['std_class_id'];
 		require($dbPath);
-		$acc_query = 'SELECT acc_id,username,first_name,last_name,student_id FROM accounts WHERE acc_id='.@$_SESSION['acc_id'];
+		$acc_query = 'SELECT acc_id,username,student_id FROM accounts WHERE acc_id='.@$_SESSION['acc_id'];
 		$std_query = 'SELECT class_id,stream_id FROM students WHERE student_id='.@$_SESSION['std_id'];
 
 		$acc_result = mysqli_query($dbCon,$acc_query);
@@ -178,8 +165,6 @@ class SessionFunctions
 			@$_SESSION['std_username'] = $account['username'];
 			@$_SESSION['acc_id'] = $account['acc_id'];
 			@$_SESSION['std_id'] = $account['student_id'];
-			@$_SESSION['std_fName'] = $account['first_name'];
-			@$_SESSION['std_lName'] = $account['last_name'];
 		}
 	}
 

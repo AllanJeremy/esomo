@@ -4,8 +4,7 @@
 	$std_username='';
 	$acc_id='';
 	$std_id='';
-	$std_fName='';
-	$std_lName='';
+	$std_name='';
 	$std_stream_id='';
 	$std_class_id='';
 
@@ -18,9 +17,7 @@
 			
 			$_SESSION['std_id']=$GLOBALS['acc_id']; #student id - student id [used in profile]
 			
-			$_SESSION['std_fName']=$GLOBALS['std_fName']; #std_fName - student first name [used in profile]
-			
-			$_SESSION['std_lName']=$GLOBALS['std_lName']; #std_lName - student last name [used in profile]
+			$_SESSION['std_name']=$GLOBALS['std_name']; #std_name - student name(s) [used in profile]
 			
 			$_SESSION['std_stream_id']=$GLOBALS['std_stream_id']; #stream_id - student stream [used in assignments]
 			
@@ -114,8 +111,8 @@
 						$GLOBALS['std_username'] = $item['username'];
 						$GLOBALS['acc_id'] = $item['acc_id'];
 						$GLOBALS['std_id'] = $student['student_id'];
-						$GLOBALS['std_fName'] = $item['first_name'];
-						$GLOBALS['std_lName'] = $item['last_name'];
+						//$GLOBALS['std_name'] = $item['first_name'];
+
 						$GLOBALS['std_stream_id'] = $student['stream_id'];
 						$GLOBALS['std_class_id'] = $student['class_id'];
 
