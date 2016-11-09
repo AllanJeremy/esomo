@@ -120,13 +120,13 @@
                 </div>
             </div>
             
-            <label class='control-label hidden-xs col-md-2' for='curPass'>Current Password :</label>
+            <label class='control-label hidden-xs col-md-3' for='f_curPass'>Current Password : </label>
             <input class='col-xs-12 col-md-4 required' type='password' placeholder='Current Password' id='f_curPass' name='f_curPassInput' ></input><br><br>
             
-            <label class='control-label hidden-xs col-md-2' for='f_newPass' required>New Password :</label>
+            <label class='control-label hidden-xs col-md-3' for='f_newPass' required>New Password : </label>
             <input class='col-xs-12 col-md-4 required' type='password' placeholder='New Password' id='f_newPassInput' name='f_newPassInput' minlength='8'></input><br><br>
 
-            <label class='control-label hidden-xs col-md-2' for='curPass' required>Confirm Password :</label>
+            <label class='control-label hidden-xs col-md-3' for='curPass' required>Confirm Password : </label>
             <input class='col-xs-12 col-md-4 required' type='password' placeholder='Confirm Password' id='f_confirmInput' name='f_confirmInput' minlength='8'></input><br><br>
 
             <button type='submit' class='btn btn-default col-xs-offset-4 col-md-offset-4'>CHANGE PASSWORD</button>
