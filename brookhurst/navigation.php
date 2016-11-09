@@ -79,13 +79,18 @@ class Navigation
 
 		$navPart = "
 		<nav class='navbar navbar-default navbar-static-top'>
+		     
+
           <div class='container-fluid'>
                 <div class='navbar-header'>
                     <a class='navbar-brand' href='#'>Brookhurst</a>
+					<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#main-nav'>
+						<span class='glyphicon glyphicon-menu-hamburger' style='color:#eee;'></span>
+					</button>
                 </div>
             
 
-    <div class='collapse navbar-collapse'>
+    <div class='collapse navbar-collapse' id='main-nav'>
         <ul class='nav navbar-nav'>
             <li $indexClass><a href='$indexPath'>HOME
             </a>

@@ -19,12 +19,30 @@ p{
 {
 	float:right;
 }
-
+object {
+    height: 1000px;
+    
+    overflow-x: hidden;
+}
 .primary-color-beige {
 	background-color: #d8b859;
 }
 .primary-color-maroon {
 	background-color: #781822;
+}
+.primary-text-color-beige {
+    color: #fff;
+    padding: 8px;
+	background-color: #d8b859;
+}
+.primary-text-color-maroon {
+	background-color: #781822;
+}
+
+.divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: #e0e0e0;
 }
 
 a:hover
@@ -411,3 +429,53 @@ main {
     
 }
 
+.black {
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    height: auto;
+    padding: 8px;
+}
+
+/*=========================================*/
+
+/*
+article, books and video content styles
+*/
+
+.article-container, .book-container, .video-container {
+    background-color: #fff;
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    
+    width: calc(900px - 32px);/*32px for the padding*/
+    height: auto;
+    
+    margin: 24px auto;
+    padding: 16px;
+    
+    border-radius: 2px;
+    
+    overflow-x: hidden;
+}
+
+.video-container video {
+    
+    border-radius: 1.5px;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+
+
+@media only screen and (max-width: 900px) {
+  .article-container, .book-container, .video-container {
+    width: 98%;
+  }
+}
+
+.article-container header, .book-container header, .video-container header {
+    font-size: 24px;
+    line-height: 26px;
+    padding: 16px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.78);
+    
+}

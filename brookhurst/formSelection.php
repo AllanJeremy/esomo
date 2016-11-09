@@ -72,7 +72,9 @@ class FormSelection
 	//returns the current name of a subject - or 0 if the name could not be retrieved
 	function getSubjectName($currSubId){
 		#convenience function
-		require_once('esomoDbConnect.php');
+        
+        
+		require('esomoDbConnect.php');// I've used require instead because it doesn't put an error of 'undefined variable dbCon'
 		$subjectNameQuery = "SELECT subject_name FROM subjects WHERE subject_id=$currSubId";
 		$currentSubjectName = "";#the name of the current subject
 

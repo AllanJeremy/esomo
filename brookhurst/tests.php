@@ -61,9 +61,9 @@
               $tmp_title = $result['test_title'];
               $tmp_path = $result['test_path'];
               $content .= "<tr>
-              <td>$tmp_subject</td>
-              <td>$tmp_class</td>
-              <td>$tmp_title</td>";
+              <td class='center_text'>$tmp_subject</td>
+              <td class='center_text'>$tmp_class</td>
+              <td class='center_text'>$tmp_title</td>";
 
               $content .= "<td>";
               #if the path is empty then don't download anything - else download item in the path specified (tmp_path)
@@ -85,14 +85,14 @@
           }
           else #if no tests have been posted yet
           {
-            $content .= "<div class='panel pane-info col-lg-12'>
+            $content .= "<div class='panel panel-info col-lg-12'>
             <h4>No tests posted yet</h4>
             <p>No tests have been posted yet. Please check back later</p>
             </div>";
           }
         }
         else {// Was unable to fetch the results
-          $content .= "<div class='panel pane-warning col-lg-12'><h4>Unable to retrieve tests</h4><p>If the problem persists, contact the web administrator</p></div>";
+          $content .= "<div class='panel panel-warning col-lg-12'><h4>Unable to retrieve tests</h4><p>If the problem persists, contact the web administrator</p></div>";
         }
 
         $content .= "</div>";
