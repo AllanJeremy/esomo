@@ -2,7 +2,7 @@
 
 <html lang="en">
     <head>
-        <title>Esomo</title>
+        <title>Brookhurst E-Learning</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
        <link  rel="stylesheet" type="text/css" href="css/theme.min.css"/>
