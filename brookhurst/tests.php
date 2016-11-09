@@ -85,14 +85,14 @@
           }
           else #if no tests have been posted yet
           {
-            $content .= "<div class='panel pane-info col-lg-12'>
+            $content .= "<div class='panel panel-info col-lg-12'>
             <h4>No tests posted yet</h4>
             <p>No tests have been posted yet. Please check back later</p>
             </div>";
           }
         }
         else {// Was unable to fetch the results
-          $content .= "<div class='panel pane-warning col-lg-12'><h4>Unable to retrieve tests</h4><p>If the problem persists, contact the web administrator</p></div>";
+          $content .= "<div class='panel panel-warning col-lg-12'><h4>Unable to retrieve tests</h4><p>If the problem persists, contact the web administrator</p></div>";
         }
 
         $content .= "</div>";
