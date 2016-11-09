@@ -61,9 +61,9 @@
               $tmp_title = $result['test_title'];
               $tmp_path = $result['test_path'];
               $content .= "<tr>
-              <td>$tmp_subject</td>
-              <td>$tmp_class</td>
-              <td>$tmp_title</td>";
+              <td class='center_text'>$tmp_subject</td>
+              <td class='center_text'>$tmp_class</td>
+              <td class='center_text'>$tmp_title</td>";
 
               $content .= "<td>";
               #if the path is empty then don't download anything - else download item in the path specified (tmp_path)
